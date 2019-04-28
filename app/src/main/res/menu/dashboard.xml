@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/dash_acceuil"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/dashboard_acceuil" />
+    <item
+        android:id="@+id/dash_planification"
+        android:icon="@drawable/ic_view_agenda_black_24dp"
+        android:title="@string/dashboard_planification" />
+    <item
+        android:id="@+id/dash_parametres"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="@string/dashboard_param" />
+</menu>
