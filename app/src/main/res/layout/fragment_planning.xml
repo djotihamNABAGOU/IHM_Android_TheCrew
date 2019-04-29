@@ -1,14 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/Blue_100"
     tools:context=".fragments.PlanningFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Plan" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/planningText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="Planification"
+            android:textAlignment="textStart"
+            android:textColor="@color/colorWhite"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="8dp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/addPurchaseImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="68dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_add_shopping_cart_black_24dp"
+                    app:layout_constraintTop_toBottomOf="@+id/planningText"
+                    tools:layout_editor_absoluteX="0dp" />
+
+                <TextView
+                    android:id="@+id/addPurchaseText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Planifier une dépense"
+                    android:textAlignment="center"
+                    android:textSize="20dp"
+                    app:layout_constraintTop_toBottomOf="@+id/addPurchaseImage"
+                    tools:layout_editor_absoluteX="0dp" />
+
+                <ImageView
+                    android:id="@+id/expendituresImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="52dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_widgets_black_24dp"
+                    app:layout_constraintTop_toBottomOf="@+id/addPurchaseText"
+                    tools:layout_editor_absoluteX="0dp" />
+
+                <TextView
+                    android:id="@+id/expendituresText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Dépenses planifiées"
+                    android:textAlignment="center"
+                    android:textSize="20dp"
+                    app:layout_constraintTop_toBottomOf="@+id/expendituresImage"
+                    tools:layout_editor_absoluteX="16dp" />
+
+                <ImageView
+                    android:id="@+id/historyImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="56dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_history_black_24dp"
+                    app:layout_constraintTop_toBottomOf="@+id/expendituresText"
+                    tools:layout_editor_absoluteX="0dp" />
+
+                <TextView
+                    android:id="@+id/historyText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Historique"
+                    android:textAlignment="center"
+                    android:textSize="20dp"
+                    app:layout_constraintTop_toBottomOf="@+id/historyImage"
+                    tools:layout_editor_absoluteX="0dp" />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </android.support.constraint.ConstraintLayout>
+
+
 
 </FrameLayout>
