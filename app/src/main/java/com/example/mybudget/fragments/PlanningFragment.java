@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.mybudget.R;
+import com.example.mybudget.activities.AddSpending;
 import com.example.mybudget.activities.PlanningSpending;
 
 /**
@@ -18,6 +19,7 @@ import com.example.mybudget.activities.PlanningSpending;
 public class PlanningFragment extends Fragment {
 
     ImageView planningSpending;
+    ImageView addSpending;
 
     public PlanningFragment() {
         // Required empty public constructor
@@ -36,6 +38,15 @@ public class PlanningFragment extends Fragment {
                 startActivity(new Intent(getContext(), PlanningSpending.class));
             }
         });
+
+        addSpending = (ImageView) planningView.findViewById(R.id.savePurchaseImage);
+        addSpending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), AddSpending.class));
+            }
+        });
+
         return planningView;
     }
 
