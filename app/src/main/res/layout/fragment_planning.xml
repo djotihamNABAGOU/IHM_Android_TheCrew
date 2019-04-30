@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!--
         <TextView
             android:id="@+id/planningText"
             android:layout_width="match_parent"
@@ -25,6 +26,7 @@
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="8dp" />
+            -->
 
         <ScrollView
             android:layout_width="match_parent"
@@ -33,7 +35,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <ImageView
@@ -42,8 +44,9 @@
                     android:layout_height="100dp"
                     android:layout_marginTop="68dp"
                     android:clickable="true"
+                    android:contentDescription="@string/app_name"
+                    android:focusable="true"
                     android:src="@drawable/ic_save_black_24dp"
-                    app:layout_constraintTop_toBottomOf="@+id/planningText"
                     tools:layout_editor_absoluteX="0dp" />
 
                 <TextView
