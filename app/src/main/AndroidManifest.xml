@@ -20,7 +20,22 @@
         </activity>
         <activity
             android:name=".activities.AddSpending"
-            android:parentActivityName=".activities.MainActivity"></activity>
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
+            android:name=".activities.Account"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
+            android:name=".activities.Help"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
+            android:name=".activities.Revenus"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
+            android:name=".activities.About"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
+            android:name=".activities.Share"
+            android:parentActivityName=".activities.MainActivity" />
         <activity
             android:name=".activities.SpendingHistory"
             android:parentActivityName=".activities.MainActivity" />
@@ -31,6 +46,7 @@
             android:name=".activities.PlanningSpending"
             android:parentActivityName=".activities.MainActivity" />
         <activity android:name=".activities.MainActivity">
+
             <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
