@@ -19,5 +19,6 @@ public class SpendingHistory extends AppCompatActivity {
         toolbar.setTitle(R.string.dashboard_planification);
         toolbar.setSubtitle(R.string.sub_spendingHistory);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         /**ToolBar*/
         toolbar = findViewById(R.id.toolBar);
         toolbar.setTitle(R.string.app_name);
-        //toolbar.setSubtitle(R.string.dashboard_acceuil);
         setSupportActionBar(toolbar);
 
         /**BottomNavigation*/
@@ -39,27 +38,11 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case R.id.dash_acceuil:
-                        toolbar.setTitle(R.string.toolbar_acceuil);
-                        setFragment(homeFragment);
-                        return true;
-
-                    case R.id.dash_planification:
-                        toolbar.setTitle(R.string.toolbar_planification);
-                        setFragment(planningFragment);
-                        return true;
-
-                    case R.id.dash_parametres:
-                        toolbar.setTitle(R.string.toolbar_param);
-                        setFragment(settingsFragment);
-                        return true;
-
-                    default: return false;
-                }
+                return setAppropriateFragment(menuItem.getItemId());
             }
         });
 
+        //set a default fragment depends on the first launching app or a back from another activity
         setDefaultFragment();
     }
 
@@ -70,23 +53,41 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setDefaultFragment(){
-        switch (bottomNavigationView.getSelectedItemId()) {
+        Constants constants = (Constants) this.getApplication();
+
+        if (constants.getFragmentActivated() == -1) {
+            System.out.println(constants.getFragmentActivated());
+            setAppropriateFragment(bottomNavigationView.getSelectedItemId());
+            constants.setFragmentActivated(bottomNavigationView.getSelectedItemId());
+            System.out.println(constants.getFragmentActivated());
+        } else {
+            setAppropriateFragment(constants.getFragmentActivated());
+            bottomNavigationView.setSelectedItemId(constants.getFragmentActivated());
+        }
+    }
+
+    private boolean setAppropriateFragment(int item) {
+        switch (item) {
             case R.id.dash_acceuil:
                 toolbar.setTitle(R.string.toolbar_acceuil);
                 setFragment(homeFragment);
-                break;
+                ((Constants) this.getApplication()).setFragmentActivated(R.id.dash_acceuil);
+                return true;
 
             case R.id.dash_planification:
                 toolbar.setTitle(R.string.toolbar_planification);
                 setFragment(planningFragment);
-                break;
+                ((Constants) this.getApplication()).setFragmentActivated(R.id.dash_planification);
+                return true;
 
             case R.id.dash_parametres:
                 toolbar.setTitle(R.string.toolbar_param);
                 setFragment(settingsFragment);
-                break;
+                ((Constants) this.getApplication()).setFragmentActivated(R.id.dash_parametres);
+                return true;
 
-            default: break;
+            default:
+                return false;
         }
     }
 

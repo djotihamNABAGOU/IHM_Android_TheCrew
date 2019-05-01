@@ -19,5 +19,6 @@ public class PlanningSpending extends AppCompatActivity {
         toolbar.setTitle(R.string.dashboard_planification);
         toolbar.setSubtitle(R.string.sub_planningSpending);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

@@ -24,6 +24,7 @@ public class AddSpending extends AppCompatActivity {
         toolbar.setTitle(R.string.dashboard_planification);
         toolbar.setSubtitle(R.string.sub_addSpending);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setSpendingDate();
     }
