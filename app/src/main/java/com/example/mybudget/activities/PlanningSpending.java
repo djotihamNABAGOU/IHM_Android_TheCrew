@@ -1,5 +1,6 @@
 package com.example.mybudget.activities;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -16,7 +17,10 @@ import android.widget.Toast;
 
 import com.example.mybudget.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class PlanningSpending extends AppCompatActivity {
     private Toolbar toolbar;
@@ -27,7 +31,7 @@ public class PlanningSpending extends AppCompatActivity {
     private ProgressDialog progressDialog;
 
     int year_x, month_x, day_x;
-    private String dateDebut;
+    private String dateDebut, dateDuJour;
     static final int DIALOG_ID_NAISSANCE = 1;
 
     @Override
@@ -78,11 +82,14 @@ public class PlanningSpending extends AppCompatActivity {
     protected Dialog onCreateDialog(int id) {
         if (id == DIALOG_ID_NAISSANCE) {
             Calendar c = Calendar.getInstance();
+
             year_x = c.get(Calendar.YEAR);
             month_x = c.get(Calendar.MONTH);
             day_x = c.get(Calendar.DAY_OF_MONTH);
-            //dateactuel= year_x+"-"+month_x+"-"+day_x;
+            dateDuJour = year_x + "-" + month_x + "-" + day_x;
             dateDebut = year_x + "-" + month_x + "-" + day_x;
+            //dateDuJour = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
+            //dateDebut = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
             DatePickerDialog datePickerDialog = new DatePickerDialog(this, dpickerListener, year_x, month_x, day_x);
             datePickerDialog.setCanceledOnTouchOutside(false);
             return datePickerDialog;
@@ -97,34 +104,51 @@ public class PlanningSpending extends AppCompatActivity {
             month_x = month;
             day_x = dayOfMonth;
             dateDebut = year_x + "-" + month_x + "-" + day_x;
-            btDateDebut.setText("Date de début: " + dateDebut);
+            //Affichage
+            Date date = new Date(year_x - 1900, month_x, day_x);
+            String dateString = DateFormat.getDateInstance(DateFormat.FULL).format(date);
+            btDateDebut.setText("Date de début: " + dateString);
         }
     };
 
     private boolean verifierDonnees() {
         if (!controlchampsvide(edAliment) && !controlchampsvide(edDuree) && !controlchampsvide(edCout)) {
-            return true;
-            /*if (dateDebut != null) {
+            //return true;
+            if (dateDebut != null) {
 
 
-                if (Daybetween(dateactuel, datenaissance, "yyyy-mm-dd") < 6205) {
+                if (Daybetween(dateDuJour, dateDebut, "yyyy-mm-dd") < 0) {
                     return true;
                 } else {
+                    alert("EREUR", "Vous ne pouvez planifier une dépense antérieure à la date d'aujourd'hui, veuillez modifier la date de début.");
                     //Toasty.error(this, "Vous devez avoir au moins 17 ans.", Toast.LENGTH_LONG, true).show();
                     return false;
 
                 }
             } else {
+                alert("EREUR", "Veuillez renseigner la date de début.");
                 //Toasty.error(this, "Veuillez renseigner votre date de naissance.", Toast.LENGTH_LONG, true).show();
                 return false;
-            }*/
+            }
         }
         return false;
     }
 
-    public static boolean controlchampsvide(EditText champ){
+    public static int Daybetween(String date1, String date2, String pattern) {
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        Date Date1 = null, Date2 = null;
+        try {
+            Date1 = sdf.parse(date1);
+            Date2 = sdf.parse(date2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return (int) ((Date2.getTime() - Date1.getTime()) / (24 * 60 * 60 * 1000));
+    }
+
+    public static boolean controlchampsvide(EditText champ) {
         //verifie si le champ est vide
-        if (champ.getText().toString().length() ==0){
+        if (champ.getText().toString().length() == 0) {
             champ.setFocusable(true);
             View focus = null;
             focus = champ;
@@ -132,8 +156,17 @@ public class PlanningSpending extends AppCompatActivity {
             focus.requestFocus();
             return true;
 
-        }else {
+        } else {
             return false;
         }
+    }
+
+    private void alert(String alertType, String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        builder.setTitle(alertType);
+        builder.setMessage(message);
+        builder.setNeutralButton("OK", null);
+        builder.create();
+        //builder.show();
     }
 }
