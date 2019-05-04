@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.mybudget.R;
+import com.example.mybudget.database.MyBudgetDB;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -33,6 +34,8 @@ public class PlanningSpending extends AppCompatActivity {
     int year_x, month_x, day_x;
     private String dateDebut, dateDuJour;
     static final int DIALOG_ID_NAISSANCE = 1;
+
+    MyBudgetDB myBudgetDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +69,8 @@ public class PlanningSpending extends AppCompatActivity {
             public void onClick(View v) {
                 //check data before save them
                 if (v == btPlanifier && verifierDonnees()) {
-
+                    //alert de confirmation ou non
+                    registerPlanningSpending();
                 }
             }
         });
@@ -76,6 +80,23 @@ public class PlanningSpending extends AppCompatActivity {
 
         //ProgressBar
         progressDialog = new ProgressDialog(this);
+
+        //database
+        myBudgetDB = new MyBudgetDB(getApplicationContext());
+    }
+
+    private void registerPlanningSpending() {
+        final String libelle_aliment = edAliment.getText().toString().trim();
+        final String date_debut = btDateDebut.getText().toString().trim();
+        final String frequence = spFrequence.getSelectedItem().toString().trim();
+        final int duree = Integer.parseInt(edDuree.getText().toString().trim());
+        final float cout = Float.parseFloat(edCout.getText().toString().trim());
+
+        if (myBudgetDB.insertSpending(libelle_aliment, date_debut, frequence, duree, cout)) {
+            alert("INFORMATION", "Dépense planifiée avec succès");
+            //finish();
+        } else
+            alert("ERREUR", "Données non sauvegardées");
     }
 
     @Override
@@ -115,8 +136,8 @@ public class PlanningSpending extends AppCompatActivity {
         if (!controlchampsvide(edAliment) && !controlchampsvide(edDuree) && !controlchampsvide(edCout)) {
             if (dateDebut != null) {
                 int diff = Daybetween(dateDuJour, dateDebut, "yyyy-mm-dd");
-                System.out.println("difference: "+diff);
-                if ( diff > 0) {
+                System.out.println("difference: " + diff);
+                if (diff > 0) {
                     return true;
                 } else {
                     alert("ERREUR", "Vous ne pouvez planifier une dépense antérieure à la date d'aujourd'hui, veuillez modifier la date de début.");
@@ -157,7 +178,7 @@ public class PlanningSpending extends AppCompatActivity {
         }
     }
 
-    private void alert(String alertType, String message){
+    private void alert(String alertType, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(PlanningSpending.this);
         builder.setTitle(alertType);
         builder.setMessage(message);
