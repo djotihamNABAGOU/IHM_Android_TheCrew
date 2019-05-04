@@ -113,21 +113,17 @@ public class PlanningSpending extends AppCompatActivity {
 
     private boolean verifierDonnees() {
         if (!controlchampsvide(edAliment) && !controlchampsvide(edDuree) && !controlchampsvide(edCout)) {
-            //return true;
             if (dateDebut != null) {
-
-
-                if (Daybetween(dateDuJour, dateDebut, "yyyy-mm-dd") < 0) {
+                int diff = Daybetween(dateDuJour, dateDebut, "yyyy-mm-dd");
+                System.out.println("difference: "+diff);
+                if ( diff > 0) {
                     return true;
                 } else {
-                    alert("EREUR", "Vous ne pouvez planifier une dépense antérieure à la date d'aujourd'hui, veuillez modifier la date de début.");
-                    //Toasty.error(this, "Vous devez avoir au moins 17 ans.", Toast.LENGTH_LONG, true).show();
+                    alert("ERREUR", "Vous ne pouvez planifier une dépense antérieure à la date d'aujourd'hui, veuillez modifier la date de début.");
                     return false;
-
                 }
             } else {
-                alert("EREUR", "Veuillez renseigner la date de début.");
-                //Toasty.error(this, "Veuillez renseigner votre date de naissance.", Toast.LENGTH_LONG, true).show();
+                alert("ERREUR", "Veuillez renseigner la date de début.");
                 return false;
             }
         }
@@ -162,11 +158,11 @@ public class PlanningSpending extends AppCompatActivity {
     }
 
     private void alert(String alertType, String message){
-        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(PlanningSpending.this);
         builder.setTitle(alertType);
         builder.setMessage(message);
         builder.setNeutralButton("OK", null);
         builder.create();
-        //builder.show();
+        builder.show();
     }
 }
