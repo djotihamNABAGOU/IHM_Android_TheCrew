@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.example.mybudget.R;
 import com.example.mybudget.activities.AddSpending;
 import com.example.mybudget.activities.PlanningSpending;
+import com.example.mybudget.activities.SpendingHistory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,6 +21,7 @@ public class PlanningFragment extends Fragment {
 
     ImageView planningSpending;
     ImageView addSpending;
+    ImageView historySpending;
 
     public PlanningFragment() {
         // Required empty public constructor
@@ -44,6 +46,14 @@ public class PlanningFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), AddSpending.class));
+            }
+        });
+
+        historySpending = (ImageView) planningView.findViewById(R.id.historyImage);
+        historySpending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), SpendingHistory.class));
             }
         });
 

@@ -6,16 +6,41 @@
     android:layout_height="match_parent"
     tools:context=".activities.SpendingHistory">
 
-    <include
-        layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
 
-    <android.support.constraint.ConstraintLayout
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/toolBar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize">
 
-    </android.support.constraint.ConstraintLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ViewStub
+                android:id="@+id/stub_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:inflatedId="@+id/showlayout"
+                android:layout="@layout/fragment_spending_list_view"/>
+
+            <ViewStub
+                android:id="@+id/stub_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:inflatedId="@+id/showlayout"
+                android:layout="@layout/fragment_spending_grid_view"/>
+        </LinearLayout>
+
+
+
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
