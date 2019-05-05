@@ -41,7 +41,7 @@ public class MyBudgetDB extends SQLiteOpenHelper {
     public boolean insertSpending(String libelle_aliment, String date_debut, String frequence, int duree, float cout) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(ID, 0);
+        //contentValues.put(ID, 0);
         contentValues.put(LIBELLE_ALIMENT, libelle_aliment);
         contentValues.put(DATE_DEBUT, date_debut);
         contentValues.put(FREQUENCE, frequence);
