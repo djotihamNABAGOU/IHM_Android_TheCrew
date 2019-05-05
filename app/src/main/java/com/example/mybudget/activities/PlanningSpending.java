@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -32,7 +34,8 @@ public class PlanningSpending extends AppCompatActivity {
     private ProgressDialog progressDialog;
 
     int year_x, month_x, day_x;
-    private String dateDebut, dateDuJour;
+    //private String dateDebut, dateDuJour;
+    private Date beginingDate, dateOfDay;
     static final int DIALOG_ID_NAISSANCE = 1;
 
     MyBudgetDB myBudgetDB;
@@ -70,7 +73,7 @@ public class PlanningSpending extends AppCompatActivity {
                 //check data before save them
                 if (v == btPlanifier && verifierDonnees()) {
                     //alert de confirmation ou non
-                    registerPlanningSpending();
+                    alert("INFORMATION","Êtes vous sûr de vouloir planifier cette dépense?",true,2);
                 }
             }
         });
@@ -87,16 +90,16 @@ public class PlanningSpending extends AppCompatActivity {
 
     private void registerPlanningSpending() {
         final String libelle_aliment = edAliment.getText().toString().trim();
-        final String date_debut = btDateDebut.getText().toString().trim();
+        final String date_debut = DateFormat.getDateInstance(DateFormat.DATE_FIELD).format(beginingDate);
         final String frequence = spFrequence.getSelectedItem().toString().trim();
         final int duree = Integer.parseInt(edDuree.getText().toString().trim());
         final float cout = Float.parseFloat(edCout.getText().toString().trim());
 
         if (myBudgetDB.insertSpending(libelle_aliment, date_debut, frequence, duree, cout)) {
-            alert("INFORMATION", "Dépense planifiée avec succès");
+            alert("INFORMATION", "Dépense planifiée avec succès",true,1);
             //finish();
         } else
-            alert("ERREUR", "Données non sauvegardées");
+            alert("ERREUR", "Données non sauvegardées",false,0);
     }
 
     @Override
@@ -107,10 +110,11 @@ public class PlanningSpending extends AppCompatActivity {
             year_x = c.get(Calendar.YEAR);
             month_x = c.get(Calendar.MONTH);
             day_x = c.get(Calendar.DAY_OF_MONTH);
-            dateDuJour = year_x + "-" + month_x + "-" + day_x;
-            dateDebut = year_x + "-" + month_x + "-" + day_x;
-            //dateDuJour = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
-            //dateDebut = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
+            //dateDuJour = year_x + "-" + month_x + "-" + day_x;
+            //dateDebut = year_x + "-" + month_x + "-" + day_x;
+            dateOfDay = new Date(year_x - 1900, month_x, day_x);
+            //Log.d("Date du jour", dateDuJour);
+            //Log.d("Date debut", dateDebut);
             DatePickerDialog datePickerDialog = new DatePickerDialog(this, dpickerListener, year_x, month_x, day_x);
             datePickerDialog.setCanceledOnTouchOutside(false);
             return datePickerDialog;
@@ -124,43 +128,34 @@ public class PlanningSpending extends AppCompatActivity {
             year_x = year;
             month_x = month;
             day_x = dayOfMonth;
-            dateDebut = year_x + "-" + month_x + "-" + day_x;
+            //dateDebut = year_x + "-" + month_x + "-" + day_x;
+            //Log.d("Date debut modif", dateDebut);
             //Affichage
-            Date date = new Date(year_x - 1900, month_x, day_x);
-            String dateString = DateFormat.getDateInstance(DateFormat.FULL).format(date);
+            beginingDate = new Date(year_x - 1900, month_x, day_x);
+            String dateString = DateFormat.getDateInstance(DateFormat.FULL).format(beginingDate);
             btDateDebut.setText("Date de début: " + dateString);
         }
     };
 
     private boolean verifierDonnees() {
         if (!controlchampsvide(edAliment) && !controlchampsvide(edDuree) && !controlchampsvide(edCout)) {
-            if (dateDebut != null) {
-                int diff = Daybetween(dateDuJour, dateDebut, "yyyy-mm-dd");
-                System.out.println("difference: " + diff);
+            if (beginingDate != null) {
+                //Log.d("beginning date", beginingDate.toString());
+                //Log.d("date of day", dateOfDay.toString());
+                int diff = (int) ((beginingDate.getTime() - dateOfDay.getTime()) / (24 * 60 * 60 * 1000));
+                //Log.d("Difference :", Integer.toString(diff));
                 if (diff > 0) {
                     return true;
                 } else {
-                    alert("ERREUR", "Vous ne pouvez planifier une dépense antérieure à la date d'aujourd'hui, veuillez modifier la date de début.");
+                    alert("ERREUR", "Vous ne pouvez planifier une dépense aujourd'hui ou antérieure à la date d'aujourd'hui, veuillez modifier la date de début.",false,0);
                     return false;
                 }
             } else {
-                alert("ERREUR", "Veuillez renseigner la date de début.");
+                alert("ERREUR", "Veuillez renseigner la date de début.",false,0);
                 return false;
             }
         }
         return false;
-    }
-
-    public static int Daybetween(String date1, String date2, String pattern) {
-        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-        Date Date1 = null, Date2 = null;
-        try {
-            Date1 = sdf.parse(date1);
-            Date2 = sdf.parse(date2);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return (int) ((Date2.getTime() - Date1.getTime()) / (24 * 60 * 60 * 1000));
     }
 
     public static boolean controlchampsvide(EditText champ) {
@@ -178,11 +173,28 @@ public class PlanningSpending extends AppCompatActivity {
         }
     }
 
-    private void alert(String alertType, String message) {
+    private void alert(String alertType, String message, boolean doAction, int nbActions) {
         AlertDialog.Builder builder = new AlertDialog.Builder(PlanningSpending.this);
         builder.setTitle(alertType);
         builder.setMessage(message);
-        builder.setNeutralButton("OK", null);
+        if (!doAction)
+            builder.setNeutralButton("OK", null);
+        else {
+            if (nbActions == 1)
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+            if (nbActions == 2)
+                builder.setPositiveButton("OUI", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        registerPlanningSpending();
+                    }
+                }).setNegativeButton("NON", null);
+        }
         builder.create();
         builder.show();
     }

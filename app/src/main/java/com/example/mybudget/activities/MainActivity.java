@@ -56,10 +56,10 @@ public class MainActivity extends AppCompatActivity {
         Constants constants = (Constants) this.getApplication();
 
         if (constants.getFragmentActivated() == -1) {
-            System.out.println(constants.getFragmentActivated());
+            //System.out.println(constants.getFragmentActivated());
             setAppropriateFragment(bottomNavigationView.getSelectedItemId());
             constants.setFragmentActivated(bottomNavigationView.getSelectedItemId());
-            System.out.println(constants.getFragmentActivated());
+            //System.out.println(constants.getFragmentActivated());
         } else {
             setAppropriateFragment(constants.getFragmentActivated());
             bottomNavigationView.setSelectedItemId(constants.getFragmentActivated());
