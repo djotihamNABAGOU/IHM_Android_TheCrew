@@ -7,21 +7,24 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.example.mybudget.R;
 
 public class LaunchingActivity extends AppCompatActivity {
 
-    ImageView logo;
+    RelativeLayout logo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launching);
 
-        logo = (ImageView)findViewById(R.id.logo);
+        logo = (RelativeLayout) findViewById(R.id.loadingPanel);
+        //findViewById(R.id.loadingPanel).setVisibility(View.GONE);
 
-        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.launching);
+        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.launching);
         logo.setAnimation(anim);
 
         anim.setAnimationListener(new Animation.AnimationListener() {
@@ -32,9 +35,9 @@ public class LaunchingActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                finish();
                 logo.setVisibility(View.GONE);
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                finish();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
             }
 

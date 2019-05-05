@@ -15,6 +15,7 @@ public class MyBudgetDB extends SQLiteOpenHelper {
     public static final String ID = "id";
     public static final String LIBELLE_ALIMENT = "libelle_aliment";
     public static final String DATE_DEBUT = "date_debut";
+    public static final String DATE_FIN = "date_fin";
     public static final String FREQUENCE = "frequence";
     public static final String DUREE = "duree";
     public static final String COUT = "cout";
@@ -28,7 +29,7 @@ public class MyBudgetDB extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(" create table " + PLANNING_SPENDING_TABLE +
                 " ( id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "libelle_aliment TEXT NOT NULL, date_debut TEXT NOT NULL, " +
+                "libelle_aliment TEXT NOT NULL, date_debut TEXT NOT NULL, date_fin TEXT NOT NULL, " +
                 "frequence TEXT NOT NULL, duree INTEGER NOT NULL, cout FLOAT NOT NULL)");
     }
 
@@ -44,6 +45,20 @@ public class MyBudgetDB extends SQLiteOpenHelper {
         //contentValues.put(ID, 0);
         contentValues.put(LIBELLE_ALIMENT, libelle_aliment);
         contentValues.put(DATE_DEBUT, date_debut);
+        //Calcul de la date de fin
+        Cursor dateFin = null;
+        if (frequence.equals("Journalier"))
+            dateFin = db.rawQuery(" select date('" + date_debut + "','+" + duree + " day') ", null);
+        if (frequence.equals("Hebdomadaire"))
+            dateFin = db.rawQuery(" select date('" + date_debut + "','+" + duree * 7 + " day') ", null);
+        if (frequence.equals("Mensuel"))
+            dateFin = db.rawQuery(" select date('" + date_debut + "','+" + duree + " month') ", null);
+        if (frequence.equals("Annuel"))
+            dateFin = db.rawQuery(" select date('" + date_debut + "','+" + duree + " year') ", null);
+        dateFin.moveToNext();
+        //System.out.println("Date fin:"+dateFin.getString(0));
+        contentValues.put(DATE_FIN, dateFin.getString(0));
+
         contentValues.put(FREQUENCE, frequence);
         contentValues.put(DUREE, duree);
         contentValues.put(COUT, cout);

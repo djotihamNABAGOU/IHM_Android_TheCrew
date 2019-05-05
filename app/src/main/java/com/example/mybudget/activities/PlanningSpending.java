@@ -90,7 +90,8 @@ public class PlanningSpending extends AppCompatActivity {
 
     private void registerPlanningSpending() {
         final String libelle_aliment = edAliment.getText().toString().trim();
-        final String date_debut = DateFormat.getDateInstance(DateFormat.DATE_FIELD).format(beginingDate);
+        final String date_debut = android.text.format.DateFormat.format("yyyy-MM-dd",beginingDate).toString();
+        //System.out.println(DateFormat.getDateInstance(DateFormat.WEEK_OF_MONTH_FIELD+2).format(beginingDate));
         final String frequence = spFrequence.getSelectedItem().toString().trim();
         final int duree = Integer.parseInt(edDuree.getText().toString().trim());
         final float cout = Float.parseFloat(edCout.getText().toString().trim());
@@ -140,6 +141,7 @@ public class PlanningSpending extends AppCompatActivity {
     private boolean verifierDonnees() {
         if (!controlchampsvide(edAliment) && !controlchampsvide(edDuree) && !controlchampsvide(edCout)) {
             if (beginingDate != null) {
+                //System.out.println("Date de test : "+android.text.format.DateFormat.format("yyyy-MM-dd",beginingDate).toString());
                 //Log.d("beginning date", beginingDate.toString());
                 //Log.d("date of day", dateOfDay.toString());
                 int diff = (int) ((beginingDate.getTime() - dateOfDay.getTime()) / (24 * 60 * 60 * 1000));
