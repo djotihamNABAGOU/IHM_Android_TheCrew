@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ListView;
 
@@ -38,17 +39,40 @@ public class SpendingHistory extends AppCompatActivity {
     static final int VIEW_MODE_LISTVIEW = 0;
     static final int VIEW_MODE_GRIDVIEW = 1;
 
+    private Button btH;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spending_history);
 
         /**ToolBar*/
-        toolbar = findViewById(R.id.toolBar);
+        toolbar = findViewById(R.id.include);
         toolbar.setTitle(R.string.dashboard_planification);
         toolbar.setSubtitle(R.string.sub_spendingHistory);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //Button
+        btH = (Button) findViewById(R.id.ok);
+        btH.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                System.out.println("ici");
+//                if(VIEW_MODE_LISTVIEW == currentViewMode) {
+//                    currentViewMode = VIEW_MODE_GRIDVIEW;
+//                } else {
+//                    currentViewMode = VIEW_MODE_LISTVIEW;
+//                }
+//                //Switch view
+//                switchView();
+//                //Save view mode in share reference
+//                SharedPreferences sharedPreferences = getSharedPreferences("ViewMode", MODE_PRIVATE);
+//                SharedPreferences.Editor editor = sharedPreferences.edit();
+//                editor.putInt("currentViewMode", currentViewMode);
+//                editor.commit();
+            }
+        });
 
 
         stubList = (ViewStub) findViewById(R.id.stub_list);

@@ -6,53 +6,46 @@
     android:layout_height="match_parent"
     tools:context=".activities.SpendingHistory">
 
-    <include layout="@layout/toolbar" />
-
-    <!--<ScrollView-->
-        <!--android:id="@+id/scrollView"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_marginTop="?attr/actionBarSize">-->
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar" />
 
     <Button
-        android:id="@+id/btnAddSpending"
-        android:layout_width="wrap_content"
+        android:id="@+id/ok"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Historique complet"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edSpendingDate"
-        app:layout_constraintVertical_bias="0.04" />
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
+    <!--<ScrollView-->
+    <!--android:id="@+id/scrollView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_marginTop="?attr/actionBarSize">-->
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ViewStub
+            android:id="@+id/stub_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:inflatedId="@+id/showlayout"
+            android:layout="@layout/fragment_spending_list_view" />
 
-            <ViewStub
-                android:id="@+id/stub_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:inflatedId="@+id/showlayout"
-                android:layout="@layout/fragment_spending_list_view"/>
-
-            <ViewStub
-                android:id="@+id/stub_grid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:inflatedId="@+id/showlayout"
-                android:layout="@layout/fragment_spending_grid_view"/>
-        </LinearLayout>
-
+        <ViewStub
+            android:id="@+id/stub_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:inflatedId="@+id/showlayout"
+            android:layout="@layout/fragment_spending_grid_view" />
+    </LinearLayout>
 
 
     <!--</ScrollView>-->
