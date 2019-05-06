@@ -68,7 +68,7 @@ public class NotifyService extends Service {
 
         Log.d(TAG,"NotifyService:registerReceiver");
         registerReceiver(notifyServiceReceiver,intentFilter);
-        sendNotification("NOTIFICATION WORKING WITH SERVICE !","I GOT IT");
+        //sendNotification("NOTIFICATION WORKING WITH SERVICE !","I GOT IT");
 
         return START_NOT_STICKY;
     }

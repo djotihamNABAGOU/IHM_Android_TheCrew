@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.dash_depenses:
-                toolbar.setTitle(R.string.toolbar_spendings);
+                //toolbar.setTitle(R.string.toolbar_spendings);
                 setFragment(spendingsFragment);
                 ((Constants) this.getApplication()).setFragmentActivated(R.id.dash_depenses);
                 return true;

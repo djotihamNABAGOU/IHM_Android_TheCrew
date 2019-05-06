@@ -6,12 +6,14 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +23,7 @@ import android.widget.TextView;
 
 import com.example.mybudget.R;
 import com.example.mybudget.database.MyBudgetDB;
+import com.example.mybudget.services.NotifyService;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -32,8 +35,16 @@ public class AddSpending extends AppCompatActivity {
     private Button btEnregistrer;
 
     MyBudgetDB myBudgetDB;
+    private static final String TAG = "AddSpending";
     public static final String CHANNEL_ID = "channelSpendind";
     public static final int NOTIFICATION_ID = 12345;
+
+
+    final static String SERVICE_RECEIVER = "registerReceiver";
+    final static String SERVICE_BROADCAST_KEY = "MyBudgetService";
+    final static int RQS_SEND_SERVICE = 2;
+
+    private NotifyService.NotifyServiceReceiver notifyServiceReceiver;
 
 
     @Override
@@ -83,6 +94,20 @@ public class AddSpending extends AppCompatActivity {
 
         //Button
         btEnregistrer = (Button) findViewById(R.id.btnAddSpendingImprevu);
+        Button btnTesting = (Button) findViewById(R.id.btnTesting);
+        Intent intent = new Intent(this,NotifyService.class);
+        startService(intent);
+        btnTesting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                Log.d(TAG,"TEST STARTED");
+                Intent intent = new Intent();
+                intent.setAction(SERVICE_RECEIVER);
+                intent.putExtra(SERVICE_BROADCAST_KEY,RQS_SEND_SERVICE);
+                sendBroadcast(intent);
+            }
+
+        });
         btEnregistrer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
