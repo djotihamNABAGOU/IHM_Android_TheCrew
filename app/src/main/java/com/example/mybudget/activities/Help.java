@@ -25,5 +25,7 @@ public class Help extends AppCompatActivity {
         toolbar.setTitle(bundle.getString("Activity"));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
     }
 }
