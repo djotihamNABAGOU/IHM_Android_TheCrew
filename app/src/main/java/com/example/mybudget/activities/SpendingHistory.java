@@ -56,7 +56,7 @@ public class SpendingHistory extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Button
-        btH = (Button) findViewById(R.id.ok);
+        btH = (Button) findViewById(R.id.completeHistory);
         btH.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
