@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">myBudget</string>
     <string name="dashboard_acceuil">Acceuil</string>
+    <string name="dashboard_depenses">Dépenses</string>
     <string name="dashboard_planification">Planification</string>
     <string name="dashboard_param">Paramètres</string>
 
