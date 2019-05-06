@@ -17,7 +17,6 @@ import com.example.mybudget.activities.AddSpending;
  */
 public class HomeFragment extends Fragment {
 
-    ImageView addSpending;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -30,13 +29,6 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         final View homeView = inflater.inflate(R.layout.fragment_home, container, false);
 
-        addSpending = (ImageView) homeView.findViewById(R.id.savePurchaseImage);
-        addSpending.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), AddSpending.class));
-            }
-        });
         return homeView;
     }
 

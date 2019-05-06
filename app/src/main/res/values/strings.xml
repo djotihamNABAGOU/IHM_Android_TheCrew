@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">myBudget</string>
     <string name="dashboard_acceuil">Acceuil</string>
+    <string name="dashboard_depenses">Dépenses</string>
     <string name="dashboard_planification">Planification</string>
     <string name="dashboard_param">Paramètres</string>
 
     <!-- ToolBar titles-->
     <string name="toolbar_acceuil">myBudget - Acceuil</string>
+    <string name="toolbar_spendings">myBudget - Dépenses</string>
     <string name="toolbar_planification">myBudget - Planification</string>
     <string name="toolbar_param">myBudget - Paramètres</string>
 

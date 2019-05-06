@@ -5,6 +5,10 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/dashboard_acceuil" />
     <item
+        android:id="@+id/dash_depenses"
+        android:icon="@drawable/ic_account_balance_wallet_black_24dp"
+        android:title="@string/dashboard_depenses" />
+    <item
         android:id="@+id/dash_planification"
         android:icon="@drawable/ic_view_agenda_black_24dp"
         android:title="@string/dashboard_planification" />

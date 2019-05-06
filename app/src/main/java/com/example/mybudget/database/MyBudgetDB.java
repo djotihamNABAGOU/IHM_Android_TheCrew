@@ -54,6 +54,8 @@ public class MyBudgetDB extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(" drop table if exists " + PLANNING_SPENDING_TABLE);
+        db.execSQL(" drop table if exists " + UNEXPECTED_SPENDING_TABLE);
+        db.execSQL(" drop table if exists " + PAST_SPENDING_TABLE);
         onCreate(db);
     }
 

@@ -1,67 +1,243 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout"
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <!--
-        <TextView
-            android:id="@+id/planningText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:text="Planification"
-            android:textAlignment="textStart"
-            android:textColor="@color/colorWhite"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="8dp" />
-            -->
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:ignore="MissingConstraints">
+            android:layout_height="match_parent">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/savePurchaseImage"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="68dp"
-                    android:clickable="true"
-                    android:contentDescription="@string/app_name"
-                    android:focusable="true"
-                    android:src="@drawable/ic_save_black_24dp"
-                    tools:layout_editor_absoluteX="0dp" />
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/savePurchaseText"
+                    <TextView
+                        android:id="@+id/recap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:text="RECAPITULATIF DE LA PERIODE"
+                        android:textColor="@color/Green_900"
+                        android:textSize="18sp"
+                        android:textStyle="normal|bold|italic" />
+                </FrameLayout>
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Ajouter une dépense imprévue"
-                    android:textAlignment="center"
-                    android:textSize="20dp"
-                    app:layout_constraintTop_toBottomOf="@+id/savePurchaseImage"
-                    tools:layout_editor_absoluteX="0dp" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:id="@+id/revenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:text="Revenu ou salaire mensuel : "
+                        android:textColor="@color/Black"
+                        android:textSize="18sp"
+                        android:textStyle="normal|bold" />
+
+                    <TextView
+                        android:id="@+id/edRevenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="16dp"
+                        android:text="Revenu"
+                        android:textColor="@color/Red_900"
+                        android:textSize="18sp"
+                        android:textStyle="normal|bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:id="@+id/epargne"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:text="Epargne souhaité : "
+                        android:textColor="@color/Black"
+                        android:textSize="18sp"
+                        android:textStyle="normal|bold" />
+
+                    <TextView
+                        android:id="@+id/edEpargne"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="16dp"
+                        android:text="Epargne"
+                        android:textColor="@color/Green_900"
+                        android:textSize="18sp"
+                        android:textStyle="normal|bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:id="@+id/solde"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:text="Votre solde à ce jour : "
+                        android:textColor="@color/Black"
+                        android:textSize="18sp"
+                        android:textStyle="normal|bold" />
+
+                    <TextView
+                        android:id="@+id/edSolde"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="16dp"
+                        android:text="Epargne"
+                        android:textColor="@color/Orange_900"
+                        android:textSize="18sp"
+                        android:textStyle="normal|bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:id="@+id/situation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:text="Situation : "
+                        android:textColor="@color/Black"
+                        android:textSize="18sp"
+                        android:textStyle="normal|bold" />
+
+                    <TextView
+                        android:id="@+id/edSituation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="16dp"
+                        android:text="Déficitaire ou  excédentaire (code couleur en fonction de la requête)"
+                        android:textColor="@color/Green_900"
+                        android:textSize="18sp"
+                        android:textStyle="normal|bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/alert_circle_red_512" />
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/alert_circle_orange_512" />
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/warning_green" />
+
+                    <TextView
+                        android:id="@+id/recommendation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:text="Recommandation : "
+                        android:textColor="@color/Black"
+                        android:textSize="18sp"
+                        android:textStyle="normal|bold" />
+
+                    <TextView
+                        android:id="@+id/edRecommendation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="16dp"
+                        android:text="Vous devez réduire vos dépenses/ Vous dépensez raisonnablement, continuez ainsi afin de réussir votre épargne / Vous devez limiter vos dépenses pour accoître votre épargne (code couleur en fonction de la requête)"
+                        android:textColor="@color/Green_900"
+                        android:textSize="18sp"
+                        android:textStyle="normal|bold" />
+                </LinearLayout>
+
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/recentesDepenses"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:text="VOS RECENTES DEPENSES"
+                        android:textColor="@color/Green_900"
+                        android:textSize="18sp"
+                        android:textStyle="normal|bold|italic" />
+                </FrameLayout>
+
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/graphe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:text="GRAPHE DE CONSOMMATION"
+                        android:textColor="@color/Green_900"
+                        android:textSize="18sp"
+                        android:textStyle="normal|bold|italic" />
+                </FrameLayout>
+
 
             </LinearLayout>
         </ScrollView>
 
-    </android.support.constraint.ConstraintLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
 
 </FrameLayout>

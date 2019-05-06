@@ -13,6 +13,7 @@ import com.example.mybudget.R;
 import com.example.mybudget.fragments.HomeFragment;
 import com.example.mybudget.fragments.PlanningFragment;
 import com.example.mybudget.fragments.SettingsFragment;
+import com.example.mybudget.fragments.SpendingsFragment;
 
 public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
 
     private HomeFragment homeFragment = new HomeFragment();
+    private SpendingsFragment spendingsFragment = new SpendingsFragment();
     private PlanningFragment planningFragment = new PlanningFragment();
     private SettingsFragment settingsFragment = new SettingsFragment();
 
@@ -72,6 +74,12 @@ public class MainActivity extends AppCompatActivity {
                 toolbar.setTitle(R.string.toolbar_acceuil);
                 setFragment(homeFragment);
                 ((Constants) this.getApplication()).setFragmentActivated(R.id.dash_acceuil);
+                return true;
+
+            case R.id.dash_depenses:
+                toolbar.setTitle(R.string.toolbar_spendings);
+                setFragment(spendingsFragment);
+                ((Constants) this.getApplication()).setFragmentActivated(R.id.dash_depenses);
                 return true;
 
             case R.id.dash_planification:
