@@ -1,88 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
     tools:context=".activities.SpendingHistory">
 
     <include
         android:id="@+id/include"
         layout="@layout/toolbar" />
 
-    <ImageView
-        android:id="@+id/previousMonth"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="56dp"
-        android:src="@drawable/ic_round_chevron_left_24px"/>
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp">
-
-        <ImageView
-            android:id="@+id/nextMonth"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/ic_round_chevron_right_24px"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:ignore="MissingConstraints" />
-    </android.support.constraint.ConstraintLayout>
-
-
-
-    <Button
-        android:id="@+id/month"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginTop="66dp"
-        android:layout_marginRight="60dp"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/colorWhite"
-        android:text="Mois Année"/>
-
-    <Button
-        android:id="@+id/completeHistory"
-        android:layout_width="160dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="120dp"
-        android:layout_marginLeft="10dp"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/colorWhite"
-        android:text="Historique complet"/>
-
-    <ImageView
-        android:id="@+id/sortSpendings"
-        android:layout_width="48dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="120dp"
-        android:layout_marginLeft="200dp"
-        android:textColor="@color/colorWhite"
-        android:src="@drawable/ic_round_sort_24px"/>
-    <!--
     <Button
         android:id="@+id/ok"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"/>
-       -->
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+
+    <!--<ScrollView-->
+    <!--android:id="@+id/scrollView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_marginTop="?attr/actionBarSize">-->
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="170dp"
         android:orientation="vertical">
 
         <ViewStub
             android:id="@+id/stub_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:inflatedId="@+id/showlayout"
             android:layout="@layout/fragment_spending_list_view" />
 
@@ -90,12 +42,12 @@
             android:id="@+id/stub_grid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:inflatedId="@+id/showlayout"
             android:layout="@layout/fragment_spending_grid_view" />
-
     </LinearLayout>
 
 
     <!--</ScrollView>-->
 
-</android.support.design.widget.CoordinatorLayout>
+</android.support.constraint.ConstraintLayout>

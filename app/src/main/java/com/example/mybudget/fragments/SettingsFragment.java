@@ -44,10 +44,10 @@ public class SettingsFragment extends Fragment {
                 "Revenus et préférences",
                 "Aide",
                 "Á propos",
-                "Partager"
+                "Partager",
         };
 
-        final ListView listView = (ListView) settingsView.findViewById(R.id.paramLystview);
+        final ListView listView = (ListView) settingsView.findViewById(R.id.paramListview);
 
         ListAdapter adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_1,

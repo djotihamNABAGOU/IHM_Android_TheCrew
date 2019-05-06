@@ -1,8 +1,14 @@
 package com.example.mybudget.activities;
 
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.os.Build;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -26,6 +32,38 @@ public class AddSpending extends AppCompatActivity {
     private Button btEnregistrer;
 
     MyBudgetDB myBudgetDB;
+    public static final String CHANNEL_ID = "channelSpendind";
+    public static final int NOTIFICATION_ID = 12345;
+
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        // Create Notification (API 26+)
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            CharSequence name = "Channel Spending";
+            String description = "Chanel for Spending Notification";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT; //Importance par defaut
+
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,name,importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+
+        }
+    }
+
+    public void showNotification(String title,String content){
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this,CHANNEL_ID)
+                .setSmallIcon(R.drawable.saved)
+                .setContentTitle(title)
+                .setContentText(content)
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
+
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+        notificationManagerCompat.notify(NOTIFICATION_ID,notificationBuilder.build());
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +93,7 @@ public class AddSpending extends AppCompatActivity {
                 }
             }
         });
+
 
         //database
         myBudgetDB = new MyBudgetDB(getApplicationContext());
@@ -117,9 +156,12 @@ public class AddSpending extends AppCompatActivity {
         final float cout = Float.parseFloat(edCout.getText().toString().trim());
 
         if (myBudgetDB.insertUnexpectedSpending("imprevu",libelle_aliment, date_debut, cout)) {
+            showNotification("Enregistrement Dépense","Dépense enregitrée avec succes");
             alert("INFORMATION", "Dépense enregistrée avec succès", true, 1);
             //finish();
         } else
             alert("ERREUR", "Données non sauvegardées", false, 0);
+
+
     }
 }
