@@ -59,18 +59,18 @@ public class SpendingHistory extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                System.out.println("ici");
-//                if(VIEW_MODE_LISTVIEW == currentViewMode) {
-//                    currentViewMode = VIEW_MODE_GRIDVIEW;
-//                } else {
-//                    currentViewMode = VIEW_MODE_LISTVIEW;
-//                }
-//                //Switch view
-//                switchView();
-//                //Save view mode in share reference
-//                SharedPreferences sharedPreferences = getSharedPreferences("ViewMode", MODE_PRIVATE);
-//                SharedPreferences.Editor editor = sharedPreferences.edit();
-//                editor.putInt("currentViewMode", currentViewMode);
-//                editor.commit();
+                if(VIEW_MODE_LISTVIEW == currentViewMode) {
+                    currentViewMode = VIEW_MODE_GRIDVIEW;
+                } else {
+                    currentViewMode = VIEW_MODE_LISTVIEW;
+                }
+                //Switch view
+                switchView();
+                //Save view mode in share reference
+                SharedPreferences sharedPreferences = getSharedPreferences("ViewMode", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("currentViewMode", currentViewMode);
+                editor.commit();
             }
         });
 
@@ -91,7 +91,7 @@ public class SpendingHistory extends AppCompatActivity {
 
         //Get current view mode in share reference
         SharedPreferences sharedPreferences = getSharedPreferences("ViewMode", MODE_PRIVATE);
-        currentViewMode = sharedPreferences.getInt("currentViewMode", VIEW_MODE_LISTVIEW);//Default is view listview
+        currentViewMode = sharedPreferences.getInt("currentViewMode", VIEW_MODE_GRIDVIEW);//Default is view listview
 
 
         //Register item lick

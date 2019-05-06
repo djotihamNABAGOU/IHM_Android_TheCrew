@@ -34,11 +34,12 @@ public class SpendingGridViewAdapter extends ArrayAdapter<Spending> {
         }
         Spending spending = getItem(position);
 //        ImageView img = (ImageView) v.findViewById(R.id.imageView);
-        TextView txtCout = (TextView) v.findViewById(R.id.textCout);
-        TextView txtFrequence = (TextView) v.findViewById(R.id.textFrequence);
-        TextView txtLibelle = (TextView) v.findViewById(R.id.textLibelle);
+        TextView txtCout = (TextView) v.findViewById(R.id.txtCout);
+        txtCout.setText("oki");
+        TextView txtFrequence = (TextView) v.findViewById(R.id.txtFrequence);
+        TextView txtLibelle = (TextView) v.findViewById(R.id.txtLibelle);
 
-
+        System.out.println(spending.getCout());
 //        img.setImageResource(product.getImageId());
         txtCout.setText(spending.getCout());
         txtFrequence.setText(spending.getFrequence());
