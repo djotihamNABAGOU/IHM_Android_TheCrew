@@ -44,7 +44,7 @@ public class SettingsFragment extends Fragment {
                 "Revenus et préférences",
                 "Aide",
                 "Á propos",
-                "Partager"
+                "Partager",
         };
 
         final ListView listView = (ListView) settingsView.findViewById(R.id.paramListview);
