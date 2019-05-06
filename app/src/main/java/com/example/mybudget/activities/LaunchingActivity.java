@@ -11,15 +11,20 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.example.mybudget.R;
+import com.example.mybudget.database.MyBudgetDB;
 
 public class LaunchingActivity extends AppCompatActivity {
 
     RelativeLayout logo;
+    MyBudgetDB myBudgetDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launching);
+
+        myBudgetDB = new MyBudgetDB(getApplicationContext());
+        myBudgetDB.UpdateSpendingHistory();
 
         logo = (RelativeLayout) findViewById(R.id.loadingPanel);
         //findViewById(R.id.loadingPanel).setVisibility(View.GONE);
