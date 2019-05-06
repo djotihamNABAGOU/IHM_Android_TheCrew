@@ -142,7 +142,7 @@ public class SpendingHistory extends AppCompatActivity {
         PlannedSpendingList = new ArrayList<>();
         //database
         myBudgetDB = new MyBudgetDB(getApplicationContext());
-        Cursor res = myBudgetDB.getSpending();
+        Cursor res = myBudgetDB.getPastSpending();
         while (res.moveToNext()) {
             PlannedSpending spending = new PlannedSpending(
                     res.getString(0),
