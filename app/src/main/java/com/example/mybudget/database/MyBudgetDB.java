@@ -6,6 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.mybudget.activities.PlannedSpending;
+import com.example.mybudget.activities.Spending;
+
+import java.util.List;
+
 public class MyBudgetDB extends SQLiteOpenHelper {
 
     //database name
@@ -13,6 +18,7 @@ public class MyBudgetDB extends SQLiteOpenHelper {
     //Planning Spending table
     public static final String PLANNING_SPENDING_TABLE = "PlanningSpending";
     public static final String UNEXPECTED_SPENDING_TABLE = "UnexpectedSpending";
+    public static final String PAST_SPENDING_TABLE = "PastSpending";
     public static final String ID = "id";
     public static final String SPENDING_TYPE = "spending_type";
     public static final String LIBELLE_ALIMENT = "libelle_aliment";
@@ -38,6 +44,11 @@ public class MyBudgetDB extends SQLiteOpenHelper {
                 " ( id INTEGER PRIMARY KEY AUTOINCREMENT, spending_type TEXT NOT NULL, " +
                 "libelle_aliment TEXT NOT NULL, date_debut TEXT NOT NULL, date_fin TEXT NOT NULL, " +
                 "cout FLOAT NOT NULL)");
+
+        db.execSQL(" create table " + PAST_SPENDING_TABLE +
+                " ( id INTEGER PRIMARY KEY AUTOINCREMENT, spending_type TEXT NOT NULL, " +
+                "libelle_aliment TEXT NOT NULL, date_debut TEXT NOT NULL, date_fin TEXT NOT NULL, " +
+                "frequence TEXT NOT NULL, duree INTEGER NOT NULL, cout FLOAT NOT NULL)");
     }
 
     @Override
@@ -95,4 +106,13 @@ public class MyBudgetDB extends SQLiteOpenHelper {
         Cursor res = db.rawQuery(" select * from " + PLANNING_SPENDING_TABLE + " order by libelle_aliment ", null);
         return res;
     }
+
+
+    //    ### Avoir la liste des dépenses imprévues
+    public Cursor getUnexpectedSpending() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery(" select * from " + UNEXPECTED_SPENDING_TABLE + " order by libelle_aliment ", null);
+        return res;
+    }
+
 }

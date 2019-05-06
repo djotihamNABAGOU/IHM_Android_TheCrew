@@ -1,5 +1,6 @@
 package com.example.mybudget.activities;
 
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.mybudget.R;
+import com.example.mybudget.database.MyBudgetDB;
 
 public class SpendingHistory extends AppCompatActivity {
     private Toolbar toolbar;
@@ -33,9 +35,9 @@ public class SpendingHistory extends AppCompatActivity {
     private GridView gridView;
     private SpendingListViewAdapter listViewAdapter;
     private SpendingGridViewAdapter gridViewAdapter;
-    private List<Spending> spendingList;
+    private List<PlannedSpending> PlannedSpendingList;
     private int currentViewMode = 0;
-
+    MyBudgetDB myBudgetDB;
     static final int VIEW_MODE_LISTVIEW = 0;
     static final int VIEW_MODE_GRIDVIEW = 1;
 
@@ -126,27 +128,35 @@ public class SpendingHistory extends AppCompatActivity {
 
     private void setAdapters() {
         if(VIEW_MODE_LISTVIEW == currentViewMode) {
-            listViewAdapter = new SpendingListViewAdapter(this, R.layout.spending_list_item, spendingList);
+            listViewAdapter = new SpendingListViewAdapter(this, R.layout.spending_list_item, PlannedSpendingList);
             listView.setAdapter(listViewAdapter);
         } else {
-            gridViewAdapter = new SpendingGridViewAdapter(this, R.layout.spending_grid_item, spendingList);
+            gridViewAdapter = new SpendingGridViewAdapter(this, R.layout.spending_grid_item, PlannedSpendingList);
             gridView.setAdapter(gridViewAdapter);
         }
     }
 
 
 
-    public List<Spending> getSpendingList() {
-        spendingList = new ArrayList<>();
-        spendingList.add(new Spending("1", "Banane", "01/01/01", "journalier", "5", "5€"));
-        spendingList.add(new Spending("1", "Saumon", "01/01/01", "journalier", "5", "40€"));
-        spendingList.add(new Spending("1", "KFC", "01/01/01", "Mensuel", "5", "20€"));
-        spendingList.add(new Spending("1", "Burger", "01/01/01", "hebdomadaire", "5", "7€"));
-        spendingList.add(new Spending("1", "Pizza", "01/01/01", "journalier", "5", "12€"));
-        spendingList.add(new Spending("1", "Salade", "01/01/01", "journalier", "5", "5€"));
-        spendingList.add(new Spending("1", "Orange", "01/01/01", "Mensuel", "5", "8€"));
-//        spendingList.add(new Spending("1", "", "01/01/01", "jour", "5", "200"));
-        return spendingList;
+    public List<PlannedSpending> getSpendingList() {
+        PlannedSpendingList = new ArrayList<>();
+        //database
+        myBudgetDB = new MyBudgetDB(getApplicationContext());
+        Cursor res = myBudgetDB.getSpending();
+        while (res.moveToNext()) {
+            PlannedSpending spending = new PlannedSpending(
+                    res.getString(0),
+                    res.getString(1),
+                    res.getString(2),
+                    res.getString(3),
+                    res.getString(4),
+                    res.getString(7),
+                    res.getString(5),
+                    res.getString(6)
+                    );
+          PlannedSpendingList.add(spending);
+        }
+        return PlannedSpendingList;
     }
 
 }
