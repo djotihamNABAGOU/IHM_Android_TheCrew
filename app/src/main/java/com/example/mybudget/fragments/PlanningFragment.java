@@ -20,7 +20,6 @@ import com.example.mybudget.activities.SpendingHistory;
 public class PlanningFragment extends Fragment {
 
     ImageView planningSpending;
-    ImageView addSpending;
     ImageView historySpending;
 
     public PlanningFragment() {
@@ -38,14 +37,6 @@ public class PlanningFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), PlanningSpending.class));
-            }
-        });
-
-        addSpending = (ImageView) planningView.findViewById(R.id.savePurchaseImage);
-        addSpending.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), AddSpending.class));
             }
         });
 
