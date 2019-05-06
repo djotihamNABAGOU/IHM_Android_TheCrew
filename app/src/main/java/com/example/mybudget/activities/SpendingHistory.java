@@ -56,7 +56,7 @@ public class SpendingHistory extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Button
-        btH = (Button) findViewById(R.id.completeHistory);
+        btH = (Button) findViewById(R.id.ok);
         btH.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,7 +93,7 @@ public class SpendingHistory extends AppCompatActivity {
 
         //Get current view mode in share reference
         SharedPreferences sharedPreferences = getSharedPreferences("ViewMode", MODE_PRIVATE);
-        currentViewMode = sharedPreferences.getInt("currentViewMode", VIEW_MODE_GRIDVIEW);//Default is view listview
+        currentViewMode = sharedPreferences.getInt("currentViewMode", VIEW_MODE_LISTVIEW);//Default is view listview
 
 
         //Register item lick

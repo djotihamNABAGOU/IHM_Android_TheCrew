@@ -94,10 +94,28 @@ public class MyBudgetDB extends SQLiteOpenHelper {
         contentValues.put(DATE_DEBUT, date_debut);
         contentValues.put(DATE_FIN, date_debut);
         contentValues.put(COUT, cout);
-
         long result = db.insert(UNEXPECTED_SPENDING_TABLE, null, contentValues);
         if (result == -1) return false;
         else return true;
+    }
+
+    //    ### Met à jour lhistorique
+    public void UpdateSpendingHistory() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery(" select * from " + PLANNING_SPENDING_TABLE + " order by libelle_aliment ", null);
+        while (res.moveToNext()) {
+            PlannedSpending spending = new PlannedSpending(
+                    res.getString(0),
+                    res.getString(1),
+                    res.getString(2),
+                    res.getString(3),
+                    res.getString(4),
+                    res.getString(7),
+                    res.getString(5),
+                    res.getString(6)
+            );
+            System.out.println("Date " + spending.getDate_fin());
+        }
     }
 
     //Getters par défaut (Toutes les infos de la BD)
