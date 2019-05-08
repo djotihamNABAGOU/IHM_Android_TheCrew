@@ -11,15 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.mybudget.R;
-import com.example.mybudget.activities.AddSpending;
-import com.example.mybudget.activities.PlannedSpending;
+import com.example.mybudget.models.PlannedSpending;
 import com.example.mybudget.activities.SpendingHistory;
 import com.example.mybudget.adapters.SpendingGridViewAdapter;
 import com.example.mybudget.adapters.SpendingListViewAdapter;
@@ -129,7 +126,7 @@ public class HomeFragment extends Fragment {
         PlannedSpendingList = new ArrayList<>();
         //database
         myBudgetDB = new MyBudgetDB(getContext());
-        Cursor res = myBudgetDB.getSpending();
+        Cursor res = myBudgetDB.getCurrentPlanningSpending();
         if (res.getCount() == 0){
             edDepensesVide.setVisibility(View.VISIBLE);
         }

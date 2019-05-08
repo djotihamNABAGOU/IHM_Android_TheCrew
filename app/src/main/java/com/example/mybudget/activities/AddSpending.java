@@ -180,7 +180,7 @@ public class AddSpending extends AppCompatActivity {
         final int duree = 0;
         final float cout = Float.parseFloat(edCout.getText().toString().trim());
 
-        if (myBudgetDB.insertUnexpectedSpending("imprevu",libelle_aliment, date_debut, cout)) {
+        if (myBudgetDB.insertSpending("imprevu",libelle_aliment, date_debut, cout, true)) {
             showNotification("Enregistrement Dépense","Dépense enregitrée avec succes");
             alert("INFORMATION", "Dépense enregistrée avec succès", true, 1);
             //finish();

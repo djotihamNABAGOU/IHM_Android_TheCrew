@@ -1,4 +1,4 @@
-package com.example.mybudget.activities;
+package com.example.mybudget.models;
 
 public class Spending {
 
@@ -6,18 +6,18 @@ public class Spending {
     public  String id;
     public String spending_type;
     public  String libelle_aliment;
-    public  String date_debut;
-    public  String date_fin;
+    public  String date;
     public  String cout;
+    public boolean past;
 
 
-    public Spending(String id,String spending_type,String libelle_aliment,String date_debut,String date_fin,String cout) {
+    public Spending(String id,String spending_type,String libelle_aliment,String date,String cout, boolean past) {
         this.id =  id;
         this.spending_type = spending_type;
         this.libelle_aliment = libelle_aliment;
-        this.date_debut = date_debut;
-        this.date_fin = date_fin;
+        this.date = date;
         this.cout = cout;
+        this.past = past;
     }
 
     public String getId() {
@@ -28,18 +28,21 @@ public class Spending {
         return spending_type;
     }
 
-    public String getDate_fin() {
-        return date_fin;
-    }
-
     public String getLibelle_aliment() {
         return libelle_aliment;
     }
 
-    public String getDate_debut() {
-        return date_debut;
+    public String getDate() {
+        return date;
     }
 
+    public String getCout() {
+        return cout;
+    }
+
+    public boolean isPast() {
+        return past;
+    }
 
     public void setId(String id) {
         this.id = id;
@@ -49,8 +52,8 @@ public class Spending {
         this.libelle_aliment = libelle_aliment;
     }
 
-    public void setDate_debut(String date_debut) {
-        this.date_debut = date_debut;
+    public void setDate(String date) {
+        this.date = date;
     }
 
 
@@ -58,16 +61,11 @@ public class Spending {
         this.cout = cout;
     }
 
-
-    public String getCout() {
-        return cout;
-    }
-
     public void setSpending_type(String spending_type) {
         this.spending_type = spending_type;
     }
 
-    public void setDate_fin(String date_fin) {
-        this.date_fin = date_fin;
+    public void setPast(boolean past) {
+        this.past = past;
     }
 }

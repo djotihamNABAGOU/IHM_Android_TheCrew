@@ -2,7 +2,7 @@ package com.example.mybudget.adapters;
 
 import android.widget.ArrayAdapter;
 
-import com.example.mybudget.activities.PlannedSpending;
+import com.example.mybudget.models.PlannedSpending;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,8 +10,6 @@ import com.example.mybudget.R;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;

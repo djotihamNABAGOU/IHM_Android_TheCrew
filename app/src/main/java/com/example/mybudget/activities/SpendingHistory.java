@@ -5,11 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.content.SharedPreferences;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewStub;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ListView;
@@ -17,13 +14,12 @@ import android.widget.ListView;
 import com.example.mybudget.adapters.SpendingListViewAdapter;
 import com.example.mybudget.adapters.SpendingGridViewAdapter;
 
-import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import com.example.mybudget.R;
 import com.example.mybudget.database.MyBudgetDB;
+import com.example.mybudget.models.PlannedSpending;
 
 public class SpendingHistory extends AppCompatActivity {
     private Toolbar toolbar;
@@ -142,7 +138,7 @@ public class SpendingHistory extends AppCompatActivity {
         PlannedSpendingList = new ArrayList<>();
         //database
         myBudgetDB = new MyBudgetDB(getApplicationContext());
-        Cursor res = myBudgetDB.getPastSpending();
+        Cursor res = myBudgetDB.getPastPlanningSpending();
         while (res.moveToNext()) {
             PlannedSpending spending = new PlannedSpending(
                     res.getString(0),

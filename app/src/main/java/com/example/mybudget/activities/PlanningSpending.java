@@ -96,7 +96,7 @@ public class PlanningSpending extends AppCompatActivity {
         final int duree = Integer.parseInt(edDuree.getText().toString().trim());
         final float cout = Float.parseFloat(edCout.getText().toString().trim());
 
-        if (myBudgetDB.insertSpending("plannifie",libelle_aliment, date_debut, frequence, duree, cout)) {
+        if (myBudgetDB.insertPlanningSpending("plannifie",libelle_aliment, date_debut, frequence, duree, cout)) {
             alert("INFORMATION", "Dépense planifiée avec succès",true,1);
             //finish();
         } else
