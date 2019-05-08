@@ -1,24 +1,23 @@
 package com.example.mybudget.adapters;
 
-import android.widget.ArrayAdapter;
-
-import com.example.mybudget.models.PlannedSpending;
-
 import android.content.Context;
 import android.support.annotation.NonNull;
-import com.example.mybudget.R;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.example.mybudget.R;
+import com.example.mybudget.models.Spending;
 
 import java.util.List;
 
-public class SpendingListViewAdapter extends ArrayAdapter<PlannedSpending> {
+public class SpendingListViewAdapter extends ArrayAdapter<Spending> {
 
 
     //    ### Constructeur
-    public SpendingListViewAdapter(Context context, int resource, List<PlannedSpending> objects) {
+    public SpendingListViewAdapter(Context context, int resource, List<Spending> objects) {
         super(context, resource, objects);
     }
 
@@ -32,7 +31,7 @@ public class SpendingListViewAdapter extends ArrayAdapter<PlannedSpending> {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = inflater.inflate(R.layout.spending_list_item, null);
         }
-        PlannedSpending spending = getItem(position);
+        Spending spending = getItem(position);
 //        ImageView img = (ImageView) v.findViewById(R.id.imageView);
         TextView txtCout = (TextView) v.findViewById(R.id.textCout);
         TextView txtFrequence = (TextView) v.findViewById(R.id.textFrequence);
@@ -41,7 +40,7 @@ public class SpendingListViewAdapter extends ArrayAdapter<PlannedSpending> {
 
 //        img.setImageResource(product.getImageId());
         txtCout.setText(spending.getCout());
-        txtFrequence.setText(spending.getFrequence());
+        txtFrequence.setVisibility(View.INVISIBLE);
         txtLibelle.setText(spending.getLibelle_aliment());
         return v;
     }

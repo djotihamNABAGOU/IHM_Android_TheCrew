@@ -217,7 +217,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="16dp"
-                        android:text="VOS RECENTES DEPENSES"
+                        android:text="VOS RECENTES PLANIFICATIONS"
                         android:textColor="@color/Green_900"
                         android:textSize="18sp"
                         android:textStyle="normal|bold|italic" />

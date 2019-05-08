@@ -1,9 +1,14 @@
 package com.example.mybudget.activities;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -20,8 +25,11 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
 
+    private NavigationView navigationView;
+    private DrawerLayout drawerLayout;
+
     private HomeFragment homeFragment = new HomeFragment();
-    private SpendingsFragment spendingsFragment = new SpendingsFragment();
+    //private SpendingsFragment spendingsFragment = new SpendingsFragment();
     private PlanningFragment planningFragment = new PlanningFragment();
     private SettingsFragment settingsFragment = new SettingsFragment();
 
@@ -35,12 +43,39 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.app_name);
         setSupportActionBar(toolbar);
 
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+
         /**BottomNavigation*/
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 return setAppropriateFragment(menuItem.getItemId());
+            }
+        });
+
+        drawerLayout = findViewById(R.id.drawer);
+        navigationView = findViewById(R.id.navigation_view);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.drawer_add_spending_imp:
+                        menuItem.setChecked(true);
+                        drawerLayout.closeDrawers();
+                        startActivity(new Intent(getApplicationContext(), AddSpending.class));
+                        return true;
+
+                    case R.id.drawer_history:
+                        menuItem.setChecked(true);
+                        drawerLayout.closeDrawers();
+                        startActivity(new Intent(getApplicationContext(), SpendingHistory.class));
+                        return true;
+                }
+                return false;
             }
         });
 
@@ -76,11 +111,12 @@ public class MainActivity extends AppCompatActivity {
                 ((Constants) this.getApplication()).setFragmentActivated(R.id.dash_acceuil);
                 return true;
 
+                /*
             case R.id.dash_depenses:
                 toolbar.setTitle(R.string.toolbar_spendings);
                 setFragment(spendingsFragment);
                 ((Constants) this.getApplication()).setFragmentActivated(R.id.dash_depenses);
-                return true;
+                return true;*/
 
             case R.id.dash_planification:
                 toolbar.setTitle(R.string.toolbar_planification);
@@ -104,5 +140,17 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

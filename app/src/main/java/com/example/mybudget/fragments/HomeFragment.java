@@ -17,9 +17,8 @@ import android.widget.TextView;
 
 import com.example.mybudget.R;
 import com.example.mybudget.models.PlannedSpending;
-import com.example.mybudget.activities.SpendingHistory;
-import com.example.mybudget.adapters.SpendingGridViewAdapter;
-import com.example.mybudget.adapters.SpendingListViewAdapter;
+import com.example.mybudget.adapters.PlanningSpendingGridViewAdapter;
+import com.example.mybudget.adapters.PlanningSpendingListViewAdapter;
 import com.example.mybudget.database.MyBudgetDB;
 
 import java.util.ArrayList;
@@ -36,8 +35,8 @@ public class HomeFragment extends Fragment {
     private ViewStub stubList;
     private ListView listView;
     private GridView gridView;
-    private SpendingListViewAdapter listViewAdapter;
-    private SpendingGridViewAdapter gridViewAdapter;
+    private PlanningSpendingListViewAdapter listViewAdapter;
+    private PlanningSpendingGridViewAdapter gridViewAdapter;
     private List<PlannedSpending> PlannedSpendingList;
     private int currentViewMode = 0;
     MyBudgetDB myBudgetDB;
@@ -77,7 +76,7 @@ public class HomeFragment extends Fragment {
         btSeeMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), SpendingHistory.class));
+                startActivity(new Intent(getContext(), PlannedSpending.class));
             }
         });
 
@@ -112,10 +111,10 @@ public class HomeFragment extends Fragment {
 
     private void setAdapters() {
         if(VIEW_MODE_LISTVIEW == currentViewMode) {
-            listViewAdapter = new SpendingListViewAdapter(getActivity(), R.layout.spending_list_item, PlannedSpendingList);
+            listViewAdapter = new PlanningSpendingListViewAdapter(getActivity(), R.layout.spending_list_item, PlannedSpendingList);
             listView.setAdapter(listViewAdapter);
         } else {
-            gridViewAdapter = new SpendingGridViewAdapter(getActivity(), R.layout.spending_grid_item, PlannedSpendingList);
+            gridViewAdapter = new PlanningSpendingGridViewAdapter(getActivity(), R.layout.spending_grid_item, PlannedSpendingList);
             gridView.setAdapter(gridViewAdapter);
         }
     }
@@ -140,9 +139,9 @@ public class HomeFragment extends Fragment {
                     res.getString(2),
                     res.getString(3),
                     res.getString(4),
-                    res.getString(7),
                     res.getString(5),
-                    res.getString(6)
+                    res.getString(6),
+                    res.getString(7)
             );
             PlannedSpendingList.add(spending);
         }

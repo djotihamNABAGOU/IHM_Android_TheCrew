@@ -53,10 +53,10 @@ public class MyBudgetDB extends SQLiteOpenHelper {
                 "cout FLOAT NOT NULL)");*/
 
         db.execSQL(" create table " + PAST_PLANNING_SPENDING_TABLE +
-                        " ( id INTEGER PRIMARY KEY AUTOINCREMENT, spending_type TEXT NOT NULL, " +
-                        "libelle_aliment TEXT NOT NULL, date_debut TEXT NOT NULL, date_fin TEXT NOT NULL, " +
-                        "frequence TEXT NOT NULL, duree INTEGER NOT NULL, cout FLOAT NOT NULL)");
-        
+                " ( id INTEGER PRIMARY KEY AUTOINCREMENT, spending_type TEXT NOT NULL, " +
+                "libelle_aliment TEXT NOT NULL, date_debut TEXT NOT NULL, date_fin TEXT NOT NULL, " +
+                "frequence TEXT NOT NULL, duree INTEGER NOT NULL, cout FLOAT NOT NULL)");
+
         db.execSQL(" create table " + SPENDING_TABLE +
                 " ( id INTEGER PRIMARY KEY AUTOINCREMENT, spending_type TEXT NOT NULL, " +
                 "libelle_aliment TEXT NOT NULL, date TEXT NOT NULL, cout FLOAT NOT NULL, past BOOLEAN NOT NULL)");
@@ -72,7 +72,7 @@ public class MyBudgetDB extends SQLiteOpenHelper {
     }
 
 
-    public ContentValues getContentSpending(String spending_type, String libelle_aliment, String date_debut, String frequence, int duree, float cout){
+    public ContentValues getContentSpending(String spending_type, String libelle_aliment, String date_debut, String frequence, int duree, float cout) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(SPENDING_TYPE, spending_type);
@@ -97,21 +97,22 @@ public class MyBudgetDB extends SQLiteOpenHelper {
         return contentValues;
     }
 
+    /***********************************************************************/
 
     // Table PLANNING_SPENDING_TABLE
     // Insertion
     public boolean insertPlanningSpending(String spending_type, String libelle_aliment, String date_debut, String frequence, int duree, float cout) {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = this.getContentSpending(spending_type,libelle_aliment,date_debut,frequence,duree,cout);
-        long result = db.insert(PLANNING_SPENDING_TABLE, null,contentValues);
+        ContentValues contentValues = this.getContentSpending(spending_type, libelle_aliment, date_debut, frequence, duree, cout);
+        long result = db.insert(PLANNING_SPENDING_TABLE, null, contentValues);
         if (result == -1) return false;
         else {
             //On insère les futures dépenses avec l'attribut past à false pour dire que c'est à faire
             //Il faut insérer selon la fréquence et la date de début
             //1- enregistrer le premier jour où la dépense commence
-            insertSpending(spending_type,libelle_aliment,date_debut,cout,false);
+            insertSpending(spending_type, libelle_aliment, date_debut, cout, false);
             //2-enregistrer les autres jours de dépense selon la fréquence définie
-            for (int i = 0; i<duree-1;i++){
+            for (int i = 0; i < duree - 1; i++) {
                 Cursor date = null;
                 if (frequence.equals("Journalier"))
                     date = db.rawQuery(" select date('" + date_debut + "','+" + 1 + " day') ", null);
@@ -123,7 +124,7 @@ public class MyBudgetDB extends SQLiteOpenHelper {
                     date = db.rawQuery(" select date('" + date_debut + "','+" + 1 + " year') ", null);
                 date.moveToNext();
                 date_debut = date.getString(0);
-                insertSpending(spending_type,libelle_aliment,date_debut,cout,false);
+                insertSpending(spending_type, libelle_aliment, date_debut, cout, false);
             }
             return true;
         }
@@ -136,11 +137,33 @@ public class MyBudgetDB extends SQLiteOpenHelper {
         return res;
     }
 
+    // Avoir les mois des dépenses planifiées
+    public Cursor getCurrentMonthsPlanningSpending() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery(" select DISTINCT strftime('%m', date_debut) as month, strftime('%Y', date_debut) as year from " + PLANNING_SPENDING_TABLE + " order by year, month ", null);
+        return res;
+    }
+
+    public Cursor getPlanningSpendingOfMonth(String month) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery(" select * from " + PLANNING_SPENDING_TABLE + " where cast(strftime('%m', date_debut) as integer) = " + month + " order by libelle_aliment ", null);
+        return res;
+    }
+
+    /***********************************************************************/
     // Table PAST_PLANNING_SPENDING_TABLE
     //Insertion
-    public boolean insertPastPlanningSpending(String spending_type, String libelle_aliment, String date_debut, String frequence, int duree, float cout) {
+    public boolean insertPastPlanningSpending(String spending_type, String libelle_aliment, String date_debut, String date_fin, String frequence, int duree, float cout) {
         SQLiteDatabase db = this.getWritableDatabase();
-        long result = db.insert(PAST_PLANNING_SPENDING_TABLE, null, this.getContentSpending(spending_type,libelle_aliment,date_debut,frequence,duree,cout));
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(SPENDING_TYPE, spending_type);
+        contentValues.put(LIBELLE_ALIMENT, libelle_aliment);
+        contentValues.put(DATE_DEBUT, date_debut);
+        contentValues.put(DATE_FIN, date_fin);
+        contentValues.put(FREQUENCE, frequence);
+        contentValues.put(DUREE, duree);
+        contentValues.put(COUT, cout);
+        long result = db.insert(PAST_PLANNING_SPENDING_TABLE, null, contentValues);
         if (result == -1) return false;
         else return true;
     }
@@ -153,7 +176,7 @@ public class MyBudgetDB extends SQLiteOpenHelper {
     }
 
     //    ### Met à jour l'historique
-    
+
     public void UpdateSpendingHistory() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery(" select * from " + PLANNING_SPENDING_TABLE + " order by libelle_aliment ", null);
@@ -169,25 +192,29 @@ public class MyBudgetDB extends SQLiteOpenHelper {
                     res.getString(2),
                     res.getString(3),
                     res.getString(4),
-                    res.getString(7),
                     res.getString(5),
-                    res.getString(6)
+                    res.getString(6),
+                    res.getString(7)
             );
+            System.out.println(spending.toString());
 
 
             try {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 Date date1 = sdf.parse(formattedDate);
                 Date date2 = sdf.parse(spending.getDate_fin());
+                System.out.println("date 1 comp:" + date1);
+                System.out.println("date 2 comp:" + date2);
 
                 if (date2.before(date1)) {
                     insertPastPlanningSpending(
                             spending.getSpending_type(),
                             spending.getLibelle_aliment(),
                             spending.getDate_debut(),
+                            spending.getDate_fin(),
                             spending.getFrequence(),
-                            Integer.valueOf(spending.getCout()),
-                            Float.valueOf(spending.getDuree())
+                            Integer.valueOf(spending.getDuree()),
+                            Float.valueOf(spending.getCout())
                     );
 
                     db.execSQL(" delete from " + PLANNING_SPENDING_TABLE +
@@ -200,6 +227,7 @@ public class MyBudgetDB extends SQLiteOpenHelper {
         }
     }
 
+    /***********************************************************************/
     // Table SPENDING_TABLE pour les dépenses éffectuées
     //Insertion
     public boolean insertSpending(String spending_type, String libelle_aliment, String date, float cout, boolean past) {
@@ -219,6 +247,19 @@ public class MyBudgetDB extends SQLiteOpenHelper {
     public Cursor getSpending() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " WHERE past is true order by libelle_aliment ", null);
+        return res;
+    }
+
+    public Cursor getSpendingOfMonth(String month) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " where cast(strftime('%m', date) as integer) = " + month + " and past = 1 order by libelle_aliment ", null);
+        return res;
+    }
+
+    // Avoir les mois des dépenses effectuées
+    public Cursor getCurrentMonthsSpending() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery(" select DISTINCT strftime('%m', date) as month, strftime('%Y', date) as year from " + SPENDING_TABLE + " where past = 1 order by year, month ", null);
         return res;
     }
 

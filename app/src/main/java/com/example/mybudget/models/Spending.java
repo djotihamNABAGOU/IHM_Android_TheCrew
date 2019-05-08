@@ -11,13 +11,13 @@ public class Spending {
     public boolean past;
 
 
-    public Spending(String id,String spending_type,String libelle_aliment,String date,String cout, boolean past) {
+    public Spending(String id,String spending_type,String libelle_aliment,String date,String cout, String past) {
         this.id =  id;
         this.spending_type = spending_type;
         this.libelle_aliment = libelle_aliment;
         this.date = date;
         this.cout = cout;
-        this.past = past;
+        this.past = Boolean.parseBoolean(past);
     }
 
     public String getId() {

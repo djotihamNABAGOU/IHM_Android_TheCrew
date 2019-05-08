@@ -1,21 +1,22 @@
 package com.example.mybudget.adapters;
 
+import android.widget.ArrayAdapter;
+
+import com.example.mybudget.models.PlannedSpending;
+
 import android.content.Context;
 import android.support.annotation.NonNull;
+import com.example.mybudget.R;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
-import com.example.mybudget.R;
-import com.example.mybudget.models.Spending;
 
 import java.util.List;
 
-public class SpendingGridViewAdapter extends ArrayAdapter<Spending> {
+public class PlanningSpendingGridViewAdapter extends ArrayAdapter<PlannedSpending> {
 
-    public SpendingGridViewAdapter(Context context, int resource, List<Spending> objects) {
+    public PlanningSpendingGridViewAdapter(Context context, int resource, List<PlannedSpending> objects) {
         super(context, resource, objects);
     }
 
@@ -29,7 +30,7 @@ public class SpendingGridViewAdapter extends ArrayAdapter<Spending> {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = inflater.inflate(R.layout.spending_grid_item, null);
         }
-        Spending spending = getItem(position);
+        PlannedSpending spending = getItem(position);
 //        ImageView img = (ImageView) v.findViewById(R.id.imageView);
         TextView txtCout = (TextView) v.findViewById(R.id.txtCout);
         txtCout.setText("oki");
@@ -39,7 +40,7 @@ public class SpendingGridViewAdapter extends ArrayAdapter<Spending> {
         System.out.println(spending.getCout());
 //        img.setImageResource(product.getImageId());
         txtCout.setText(spending.getCout());
-        txtFrequence.setVisibility(View.INVISIBLE);
+        txtFrequence.setText(spending.getFrequence());
         txtLibelle.setText(spending.getLibelle_aliment());
         return v;
     }

@@ -42,6 +42,7 @@
         android:layout_marginLeft="60dp"
         android:layout_marginTop="66dp"
         android:layout_marginRight="60dp"
+        android:clickable="false"
         android:background="@color/colorPrimary"
         android:textColor="@color/colorWhite"
         android:text="Mois Année"/>
@@ -54,7 +55,7 @@
         android:layout_marginLeft="10dp"
         android:background="@color/colorPrimary"
         android:textColor="@color/colorWhite"
-        android:text="Historique complet"/>
+        android:text="Switcher"/>
 
     <ImageView
         android:id="@+id/sortSpendings"

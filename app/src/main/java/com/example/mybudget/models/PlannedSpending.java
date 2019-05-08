@@ -87,4 +87,18 @@ public class PlannedSpending{
     public void setCout(String cout) {
         this.cout = cout;
     }
+
+    @Override
+    public String toString() {
+        return "PlannedSpending{" +
+                "id='" + id + '\'' +
+                ", spending_type='" + spending_type + '\'' +
+                ", libelle_aliment='" + libelle_aliment + '\'' +
+                ", date_debut='" + date_debut + '\'' +
+                ", date_fin='" + date_fin + '\'' +
+                ", frequence='" + frequence + '\'' +
+                ", duree='" + duree + '\'' +
+                ", cout='" + cout + '\'' +
+                '}';
+    }
 }

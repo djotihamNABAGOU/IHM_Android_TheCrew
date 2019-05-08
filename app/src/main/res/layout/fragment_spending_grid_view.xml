@@ -4,11 +4,12 @@
     android:layout_height="match_parent"
     android:background="#d1d1d1">
 
+    <!--
     <TextView
         android:layout_width="429dp"
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />
-
+-->
 
     <GridView
         android:id="@+id/spendinggridview"

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_add_spending_imp"
+            android:icon="@drawable/ic_save_black_24dp"
+            android:title="@string/sub_addSpending" />
+        <item
+            android:id="@+id/drawer_history"
+            android:icon="@drawable/ic_history_black_24dp"
+            android:title="@string/sub_spendingHistory" />
+    </group>
+</menu>

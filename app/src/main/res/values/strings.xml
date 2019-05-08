@@ -12,7 +12,7 @@
     <string name="toolbar_param">myBudget - Paramètres</string>
 
     <!-- ToolBar subtitles-->
-    <string name="sub_addSpending">Enregistrer une dépense imprévue</string>
+    <string name="sub_addSpending">Enregistrer un imprévu</string>
     <string name="sub_planningSpending">Planifier une dépense</string>
     <string name="sub_spendingPlanned">Dépenses planifiées</string>
     <string name="sub_spendingHistory">Historique des dépenses</string>
