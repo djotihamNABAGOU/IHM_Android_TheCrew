@@ -166,12 +166,14 @@
                         android:layout_marginLeft="16dp"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/alert_circle_red_512" />
+
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_marginLeft="16dp"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/alert_circle_orange_512" />
+
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
@@ -191,21 +193,21 @@
                         android:textStyle="normal|bold" />
                 </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/edRecommendation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:text="Vous devez réduire vos dépenses/ Vous dépensez raisonnablement, continuez ainsi afin de réussir votre épargne / Vous devez limiter vos dépenses pour accoître votre épargne (code couleur en fonction de la requête)"
-                    android:textSize="18sp"
-                    android:textStyle="normal|bold" />
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/edRecommendation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:text="Vous devez réduire vos dépenses/ Vous dépensez raisonnablement, continuez ainsi afin de réussir votre épargne / Vous devez limiter vos dépenses pour accoître votre épargne (code couleur en fonction de la requête)"
+                        android:textSize="18sp"
+                        android:textStyle="normal|bold" />
+                </LinearLayout>
 
 
                 <FrameLayout
@@ -250,18 +252,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Aucune dépense enregistrée récemment"
-                        android:visibility="invisible"
                         android:textSize="18sp"
-                        android:textStyle="normal" />
+                        android:textStyle="normal"
+                        android:visibility="invisible" />
 
                     <Button
                         android:id="@+id/btnSeeMore"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/Green_600"
+                        android:text="Voir plus"
                         android:textColor="@android:color/white"
-                        android:visibility="invisible"
-                        android:text="Voir plus" />
+                        android:visibility="invisible" />
 
                 </LinearLayout>
 
@@ -279,6 +281,29 @@
                         android:textColor="@color/Green_900"
                         android:textSize="18sp"
                         android:textStyle="normal|bold|italic" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="500dp">
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/bar_chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:visibility="gone">
+
+                    </com.github.mikephil.charting.charts.BarChart>
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/pieChart"
+                        android:layout_margin="10dp"
+                        android:visibility="gone">
+
+                    </com.github.mikephil.charting.charts.PieChart>
                 </FrameLayout>
 
 

@@ -20,6 +20,14 @@ import com.example.mybudget.models.PlannedSpending;
 import com.example.mybudget.adapters.PlanningSpendingGridViewAdapter;
 import com.example.mybudget.adapters.PlanningSpendingListViewAdapter;
 import com.example.mybudget.database.MyBudgetDB;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +54,9 @@ public class HomeFragment extends Fragment {
     private Button btSeeMore;
 
     private TextView edDepensesVide;
+
+    private BarChart barChart;
+    private PieChart pieChart;
 
 
     public HomeFragment() {
@@ -88,6 +99,57 @@ public class HomeFragment extends Fragment {
         currentViewMode = sharedPreferences.getInt("currentViewMode", VIEW_MODE_GRIDVIEW);//Default is view listview
 
         switchView();
+
+        //graphe
+        barChart = homeView.findViewById(R.id.bar_chart);
+        pieChart = homeView.findViewById(R.id.pieChart);
+        ArrayList<BarEntry> barEntries = new ArrayList<>();
+
+        barEntries.add(new BarEntry(44f,0));
+        barEntries.add(new BarEntry(88f,1));
+        barEntries.add(new BarEntry(32f,2));
+        barEntries.add(new BarEntry(53f,3));
+        barEntries.add(new BarEntry(12f,4));
+        barEntries.add(new BarEntry(6f,5));
+        BarDataSet barDataSet = new BarDataSet(barEntries, "Dates");
+        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+
+        ArrayList<String> dates = new ArrayList<>();
+        dates.add("Janvier");
+        dates.add("Février");
+        dates.add("Mars");
+        dates.add("Avril");
+        dates.add("Mai");
+        //BarDataSet barDataSet2 = new BarDataSet(dates, "Dates");
+        //dates.add("Juin");
+        /*dates.add("");
+        dates.add("");
+        dates.add("");
+        dates.add("");
+        dates.add("");
+        dates.add("");
+        dates.add("");
+        dates.add("");
+        dates.add("");
+        dates.add("");
+        dates.add("");*/
+        BarData barData = new BarData(barDataSet);
+        barData.setBarWidth(0.9f);
+        //barChart.setData(theData);
+
+        barChart.setVisibility(View.VISIBLE);
+        barChart.animateY(5000);
+        barChart.setData(barData);
+        barChart.setFitBars(true);
+
+        Description description = new Description();
+        description.setText("Description test");
+        barChart.setDescription(description);
+        barChart.invalidate();
+
+        //barChart.setEnabled(true);
+        //barChart.setDragEnabled(true);
+        //barChart.setScaleEnabled(true);
 
         return homeView;
     }
