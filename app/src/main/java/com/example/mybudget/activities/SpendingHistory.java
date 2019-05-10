@@ -45,6 +45,7 @@ public class SpendingHistory extends AppCompatActivity {
     MyBudgetDB myBudgetDB;
     static final int VIEW_MODE_LISTVIEW = 0;
     static final int VIEW_MODE_GRIDVIEW = 1;
+    private String currentText;
 
     private Button btH;
     private boolean actived = false;
@@ -87,23 +88,21 @@ public class SpendingHistory extends AppCompatActivity {
                     actived = true;
                     previousMonth.setVisibility(View.GONE);
                     nextMonth.setVisibility(View.GONE);
-                    month.setVisibility(View.GONE);
+                    currentText = month.getText().toString();
+                    month.setText("Complet");
+//                  month.setVisibility(View.GONE);
                     btH.setText("Historique Normal");
                     getSpendingListH();
                     currentViewMode = VIEW_MODE_GRIDVIEW;
                     //Switch view
                     switchView();
-                    //Save view mode in share reference
-//                    SharedPreferences sharedPreferences = getSharedPreferences("ViewMode", MODE_PRIVATE);
-//                    SharedPreferences.Editor editor = sharedPreferences.edit();
-//                    editor.putInt("currentViewMode", currentViewMode);
-//                    editor.commit();
                 } else {
                     actived = false;
                     btH.setText("Historique Complet");
                     previousMonth.setVisibility(View.VISIBLE);
                     nextMonth.setVisibility(View.VISIBLE);
-                    month.setVisibility(View.VISIBLE);
+                    month.setText(currentText);
+//                    month.setVisibility(View.VISIBLE);
                     currentViewMode = VIEW_MODE_LISTVIEW;
                     getSpendingList(currentMonth);
                     //Switch view

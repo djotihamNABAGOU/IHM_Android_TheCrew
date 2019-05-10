@@ -278,13 +278,13 @@ public class MyBudgetDB extends SQLiteOpenHelper {
     //   ### Avoir la liste des dépenses achevées
     public Cursor getSpending() {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " WHERE past =" + 1 +" order by libelle_aliment ", null);
+        Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " WHERE past =" + 1 +" order by date ASC ", null);
         return res;
     }
 
     public Cursor getSpendingOfMonth(String month) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " where cast(strftime('%m', date) as integer) = " + month + " and past = 1 order by libelle_aliment ", null);
+        Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " where cast(strftime('%m', date) as integer) = " + month + " and past = 1 order by date ASC ", null);
         return res;
     }
 
