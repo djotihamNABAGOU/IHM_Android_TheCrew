@@ -21,7 +21,7 @@ import com.example.mybudget.activities.SpendingPlanned;
 public class PlanningFragment extends Fragment {
 
     ImageView planningSpending;
-    ImageView spendingPlanned;
+    ImageView historyPlanningSpending;
 
     public PlanningFragment() {
         // Required empty public constructor
@@ -33,6 +33,7 @@ public class PlanningFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View planningView = inflater.inflate(R.layout.fragment_planning, container, false);
+
         planningSpending = (ImageView) planningView.findViewById(R.id.addPurchaseImage);
         planningSpending.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,13 +42,16 @@ public class PlanningFragment extends Fragment {
             }
         });
 
-        spendingPlanned = (ImageView) planningView.findViewById(R.id.expendituresImage);
-        spendingPlanned.setOnClickListener(new View.OnClickListener() {
+        historyPlanningSpending = (ImageView) planningView.findViewById(R.id.expendituresImage);
+        historyPlanningSpending.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), SpendingPlanned.class));
             }
         });
+
+
+
 
         return planningView;
     }

@@ -1,6 +1,7 @@
 package com.example.mybudget.adapters;
 
 import android.content.Context;
+import android.icu.text.SimpleDateFormat;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.example.mybudget.R;
 import com.example.mybudget.models.Spending;
 
+import java.util.Date;
 import java.util.List;
 
 public class SpendingGridViewAdapter extends ArrayAdapter<Spending> {
@@ -36,10 +38,17 @@ public class SpendingGridViewAdapter extends ArrayAdapter<Spending> {
         TextView txtFrequence = (TextView) v.findViewById(R.id.txtFrequence);
         TextView txtLibelle = (TextView) v.findViewById(R.id.txtLibelle);
 
-        System.out.println(spending.getCout());
+//        System.out.println(spending.getCout());
 //        img.setImageResource(product.getImageId());
-        txtCout.setText(spending.getCout());
-        txtFrequence.setVisibility(View.INVISIBLE);
+        txtCout.setText(spending.getCout()+"€");
+        try {
+            Date initDate = new SimpleDateFormat("yyyy-MM-dd").parse(spending.getDate());
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            String parsedDate = formatter.format(initDate);
+            txtFrequence.setText(parsedDate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         txtLibelle.setText(spending.getLibelle_aliment());
         return v;
     }

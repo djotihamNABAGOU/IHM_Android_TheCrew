@@ -1,5 +1,6 @@
 package com.example.mybudget.adapters;
 
+import android.icu.text.SimpleDateFormat;
 import android.widget.ArrayAdapter;
 
 import com.example.mybudget.models.PlannedSpending;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Date;
 import java.util.List;
 
 public class PlanningSpendingListViewAdapter extends ArrayAdapter<PlannedSpending> {
@@ -38,10 +40,19 @@ public class PlanningSpendingListViewAdapter extends ArrayAdapter<PlannedSpendin
         TextView txtFrequence = (TextView) v.findViewById(R.id.textFrequence);
         TextView txtLibelle = (TextView) v.findViewById(R.id.textLibelle);
 
-
-//        img.setImageResource(product.getImageId());
-        txtCout.setText(spending.getCout());
-        txtFrequence.setText(spending.getFrequence());
+        txtFrequence.setTextSize(15);
+//
+        txtCout.setText(spending.getCout()+"€");
+        try {
+            Date initDate = new SimpleDateFormat("yyyy-MM-dd").parse(spending.getDate_debut());
+            Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(spending.getDate_fin());
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            String parsedDateInit = formatter.format(initDate);
+            String parsedDateEnd = formatter.format(endDate);
+            txtFrequence.setText(parsedDateInit + " au "+parsedDateEnd);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         txtLibelle.setText(spending.getLibelle_aliment());
         return v;
     }

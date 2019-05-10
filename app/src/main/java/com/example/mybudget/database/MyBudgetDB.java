@@ -9,6 +9,7 @@ import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 
 import com.example.mybudget.models.PlannedSpending;
+import com.example.mybudget.models.Spending;
 
 import java.util.Date;
 
@@ -207,15 +208,16 @@ public class MyBudgetDB extends SQLiteOpenHelper {
                 System.out.println("date 2 comp:" + date2);
 
                 if (date2.before(date1)) {
-                    insertPastPlanningSpending(
-                            spending.getSpending_type(),
-                            spending.getLibelle_aliment(),
-                            spending.getDate_debut(),
-                            spending.getDate_fin(),
-                            spending.getFrequence(),
-                            Integer.valueOf(spending.getDuree()),
-                            Float.valueOf(spending.getCout())
-                    );
+//                    ### On n'en a plus besoin
+//                    insertPastPlanningSpending(
+//                            spending.getSpending_type(),
+//                            spending.getLibelle_aliment(),
+//                            spending.getDate_debut(),
+//                            spending.getDate_fin(),
+//                            spending.getFrequence(),
+//                            Integer.valueOf(spending.getDuree()),
+//                            Float.valueOf(spending.getCout())
+//                    );
 
                     db.execSQL(" delete from " + PLANNING_SPENDING_TABLE +
                             "  WHERE id = " + spending.getId());
@@ -225,7 +227,37 @@ public class MyBudgetDB extends SQLiteOpenHelper {
                 e.printStackTrace();
             }
         }
+
+
+//        ### Mettre à jour la table des dépenses
+        Cursor resSp = db.rawQuery(" select * from " + SPENDING_TABLE + " order by libelle_aliment ", null);
+        while (resSp.moveToNext()) {
+            Spending spending = new Spending(
+                    resSp.getString(0),
+                    resSp.getString(1),
+                    resSp.getString(2),
+                    resSp.getString(3),
+                    resSp.getString(4),
+                    resSp.getString(5)
+            );
+//            System.out.println(spending.toString());
+
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date date1 = sdf.parse(formattedDate);
+                Date date2 = sdf.parse(spending.getDate());
+
+                if (date2.before(date1)) {
+                    db.execSQL(" UPDATE " + SPENDING_TABLE + " SET past = "+1+
+                            "  WHERE id = " + spending.getId());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
     }
+
 
     /***********************************************************************/
     // Table SPENDING_TABLE pour les dépenses éffectuées
@@ -246,7 +278,7 @@ public class MyBudgetDB extends SQLiteOpenHelper {
     //   ### Avoir la liste des dépenses planifiées & achevées
     public Cursor getSpending() {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " WHERE past is true order by libelle_aliment ", null);
+        Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " WHERE past =" + 1 +" order by libelle_aliment ", null);
         return res;
     }
 

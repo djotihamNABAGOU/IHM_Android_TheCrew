@@ -22,6 +22,7 @@ import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import com.example.mybudget.R;
 import com.example.mybudget.adapters.SpendingGridViewAdapter;
@@ -46,6 +47,7 @@ public class SpendingHistory extends AppCompatActivity {
     static final int VIEW_MODE_GRIDVIEW = 1;
 
     private Button btH;
+    private boolean actived = false;
 
     //gestion calendrier des dépenses
     private Button month;
@@ -54,12 +56,16 @@ public class SpendingHistory extends AppCompatActivity {
     private ArrayList<String> availableMonths;
     private ArrayList<Integer> availableMonthsInt;
     private String actualMonth;
+    private String currentMonth;
     private int monthSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spending_history);
+
+//        SimpleDateFormat month_date = new SimpleDateFormat("MMMM", Locale.US);
+//        System.out.println(month_date.toString());
 
         //La BD
         myBudgetDB = new MyBudgetDB(getApplicationContext());
@@ -76,19 +82,30 @@ public class SpendingHistory extends AppCompatActivity {
         btH.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                System.out.println("ici");
-                if(VIEW_MODE_LISTVIEW == currentViewMode) {
+
+                if (actived == false) {
+                    actived = true;
+                    getSpendingListH();
                     currentViewMode = VIEW_MODE_GRIDVIEW;
+                    //Switch view
+                    switchView();
+                    //Save view mode in share reference
+                    SharedPreferences sharedPreferences = getSharedPreferences("ViewMode", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt("currentViewMode", currentViewMode);
+                    editor.commit();
                 } else {
+                    actived = false;
                     currentViewMode = VIEW_MODE_LISTVIEW;
+                    getSpendingList(currentMonth);
+                    //Switch view
+                    switchView();
+                    //Save view mode in share reference
+                    SharedPreferences sharedPreferences = getSharedPreferences("ViewMode", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt("currentViewMode", currentViewMode);
+                    editor.commit();
                 }
-                //Switch view
-                switchView();
-                //Save view mode in share reference
-                SharedPreferences sharedPreferences = getSharedPreferences("ViewMode", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putInt("currentViewMode", currentViewMode);
-                editor.commit();
             }
         });
 
@@ -107,6 +124,7 @@ public class SpendingHistory extends AppCompatActivity {
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("MM");
         actualMonth = df.format(c);
+        currentMonth = actualMonth;
         //System.out.println("actualMonth "+actualMonth);
         String edText = (new DateFormatSymbols().getMonths()[Integer.parseInt(actualMonth) - 1]).toUpperCase();
         SimpleDateFormat year = new SimpleDateFormat("yyyy");
@@ -120,19 +138,19 @@ public class SpendingHistory extends AppCompatActivity {
         previousMonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (availableMonths.size()!=0){
+                if (availableMonths.size() != 0) {
                     int indexMonthSet = availableMonthsInt.indexOf(monthSet);
-                    if (indexMonthSet!= -1 && indexMonthSet >0){
-                        monthSet = availableMonthsInt.get(indexMonthSet-1);//on décale
+                    if (indexMonthSet != -1 && indexMonthSet > 0) {
+                        monthSet = availableMonthsInt.get(indexMonthSet - 1);//on décale
                         getSpendingList(String.valueOf(monthSet));
-                        month.setText(availableMonths.get(indexMonthSet-1));
+                        month.setText(availableMonths.get(indexMonthSet - 1));
                         setAdapters();
-                    }else {
+                    } else {
                         Toast.makeText(getApplicationContext(),
                                 "Il n'y a pas de dépenses éffectuées en aval",
                                 Toast.LENGTH_LONG).show();
                     }
-                }else {
+                } else {
                     Toast.makeText(getApplicationContext(),
                             "Il n'y a aucune dépense éffectuée",
                             Toast.LENGTH_LONG).show();
@@ -144,19 +162,19 @@ public class SpendingHistory extends AppCompatActivity {
         nextMonth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (availableMonths.size()!=0){
+                if (availableMonths.size() != 0) {
                     int indexMonthSet = availableMonthsInt.indexOf(monthSet);
-                    if (indexMonthSet!= -1 && indexMonthSet <availableMonths.size()-1){
-                        monthSet = availableMonthsInt.get(indexMonthSet+1);//on décale
+                    if (indexMonthSet != -1 && indexMonthSet < availableMonths.size() - 1) {
+                        monthSet = availableMonthsInt.get(indexMonthSet + 1);//on décale
                         getSpendingList(String.valueOf(monthSet));
-                        month.setText(availableMonths.get(indexMonthSet+1));
+                        month.setText(availableMonths.get(indexMonthSet + 1));
                         setAdapters();
-                    }else {
+                    } else {
                         Toast.makeText(getApplicationContext(),
                                 "Il n'y a pas de dépenses éffectuées en amont",
                                 Toast.LENGTH_LONG).show();
                     }
-                }else {
+                } else {
                     Toast.makeText(getApplicationContext(),
                             "il n'y a aucune dépense éffectuée",
                             Toast.LENGTH_LONG).show();
@@ -189,13 +207,12 @@ public class SpendingHistory extends AppCompatActivity {
 
     private void switchView() {
 
-        if(VIEW_MODE_LISTVIEW == currentViewMode) {
+        if (VIEW_MODE_LISTVIEW == currentViewMode) {
             //Display listview
             stubList.setVisibility(View.VISIBLE);
             //Hide gridview
             stubGrid.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             //Hide listview
             stubList.setVisibility(View.GONE);
             //Display gridview
@@ -205,7 +222,7 @@ public class SpendingHistory extends AppCompatActivity {
     }
 
     private void setAdapters() {
-        if(VIEW_MODE_LISTVIEW == currentViewMode) {
+        if (VIEW_MODE_LISTVIEW == currentViewMode) {
             listViewAdapter = new SpendingListViewAdapter(this, R.layout.spending_list_item, SpendingList);
             listView.setAdapter(listViewAdapter);
         } else {
@@ -216,8 +233,25 @@ public class SpendingHistory extends AppCompatActivity {
 
 
     public void getSpendingList(String month) {
+        currentMonth = month;
         SpendingList = new ArrayList<>();
         Cursor res = myBudgetDB.getSpendingOfMonth(month);
+        while (res.moveToNext()) {
+            Spending spending = new Spending(
+                    res.getString(0),
+                    res.getString(1),
+                    res.getString(2),
+                    res.getString(3),
+                    res.getString(4),
+                    res.getString(5)
+            );
+            SpendingList.add(spending);
+        }
+    }
+
+    public void getSpendingListH() {
+        SpendingList = new ArrayList<>();
+        Cursor res = myBudgetDB.getSpending();
         while (res.moveToNext()) {
             Spending spending = new Spending(
                     res.getString(0),

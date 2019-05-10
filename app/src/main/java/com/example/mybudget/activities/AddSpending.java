@@ -112,7 +112,7 @@ public class AddSpending extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //check data before save them
-                if (v == btEnregistrer && verifierDonnees()) {
+                if (v == btEnregistrer) {
                     //alert de confirmation ou non
                     alert("INFORMATION", "Êtes vous sûr de vouloir enregistrer cette dépense comme imprévue?", true, 2);
                 }
