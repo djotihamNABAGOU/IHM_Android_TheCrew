@@ -295,11 +295,16 @@
                         android:visibility="gone">
 
                     </com.github.mikephil.charting.charts.BarChart>
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="500dp">
 
                     <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/pieChart"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/pieChart"
                         android:layout_margin="10dp"
                         android:visibility="gone">
 

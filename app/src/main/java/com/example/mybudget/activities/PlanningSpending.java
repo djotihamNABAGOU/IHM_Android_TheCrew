@@ -71,7 +71,7 @@ public class PlanningSpending extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //check data before save them
-                if (v == btPlanifier) {
+                if (v == btPlanifier && verifierDonnees()) {
                     //alert de confirmation ou non
                     alert("INFORMATION","Êtes vous sûr de vouloir planifier cette dépense?",true,2);
                 }
