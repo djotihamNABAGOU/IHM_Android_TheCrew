@@ -173,8 +173,8 @@ public class SpendingPlanned extends AppCompatActivity {
 
 
         //Get current view mode in share reference
-        SharedPreferences sharedPreferences = getSharedPreferences("ViewMode", MODE_PRIVATE);
-        currentViewMode = sharedPreferences.getInt("currentViewMode", VIEW_MODE_LISTVIEW);//Default is view listview
+//        SharedPreferences sharedPreferences = getSharedPreferences("ViewMode", MODE_PRIVATE);
+//        currentViewMode = sharedPreferences.getInt("currentViewMode", VIEW_MODE_LISTVIEW);//Default is view listview
 
         switchView();
 

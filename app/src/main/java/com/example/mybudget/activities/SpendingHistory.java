@@ -85,26 +85,34 @@ public class SpendingHistory extends AppCompatActivity {
 
                 if (actived == false) {
                     actived = true;
+                    previousMonth.setVisibility(View.GONE);
+                    nextMonth.setVisibility(View.GONE);
+                    month.setVisibility(View.GONE);
+                    btH.setText("Historique Normal");
                     getSpendingListH();
                     currentViewMode = VIEW_MODE_GRIDVIEW;
                     //Switch view
                     switchView();
                     //Save view mode in share reference
-                    SharedPreferences sharedPreferences = getSharedPreferences("ViewMode", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putInt("currentViewMode", currentViewMode);
-                    editor.commit();
+//                    SharedPreferences sharedPreferences = getSharedPreferences("ViewMode", MODE_PRIVATE);
+//                    SharedPreferences.Editor editor = sharedPreferences.edit();
+//                    editor.putInt("currentViewMode", currentViewMode);
+//                    editor.commit();
                 } else {
                     actived = false;
+                    btH.setText("Historique Complet");
+                    previousMonth.setVisibility(View.VISIBLE);
+                    nextMonth.setVisibility(View.VISIBLE);
+                    month.setVisibility(View.VISIBLE);
                     currentViewMode = VIEW_MODE_LISTVIEW;
                     getSpendingList(currentMonth);
                     //Switch view
                     switchView();
                     //Save view mode in share reference
-                    SharedPreferences sharedPreferences = getSharedPreferences("ViewMode", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putInt("currentViewMode", currentViewMode);
-                    editor.commit();
+//                    SharedPreferences sharedPreferences = getSharedPreferences("ViewMode", MODE_PRIVATE);
+//                    SharedPreferences.Editor editor = sharedPreferences.edit();
+//                    editor.putInt("currentViewMode", currentViewMode);
+//                    editor.commit();
                 }
             }
         });
@@ -198,8 +206,8 @@ public class SpendingHistory extends AppCompatActivity {
         //getSpendingList();
 
         //Get current view mode in share reference
-        SharedPreferences sharedPreferences = getSharedPreferences("ViewMode", MODE_PRIVATE);
-        currentViewMode = sharedPreferences.getInt("currentViewMode", VIEW_MODE_LISTVIEW);//Default is view listview
+//        SharedPreferences sharedPreferences = getSharedPreferences("ViewMode", MODE_PRIVATE);
+//        currentViewMode = sharedPreferences.getInt("currentViewMode", VIEW_MODE_LISTVIEW);//Default is view listview
 
         switchView();
 
