@@ -75,7 +75,6 @@ public class HomeFragment extends Fragment {
     private ArrayList<String> prizeSpengingMonths;
 
 
-    ImageView addSpending;
     View rootView ;
     private Context context;
 
