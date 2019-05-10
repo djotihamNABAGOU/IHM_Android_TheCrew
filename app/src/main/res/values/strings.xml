@@ -19,4 +19,10 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">MOIS 2019</string>
+
+    <!-- Share App-->
+    <string name="share_text">L’application «myBudget» est une application Android de gestion de budget financier.
+        Elle permet de savoir quel type d’article acheter tout les jours et quel budget mettre dans ceux ci pour respecter le budget de l’utilisateur et le contenter.
+        «myBudget» Peut être utilisée sur toute smartphone avec une version Android supérieure à Android 7.0</string>
+
 </resources>
