@@ -1,25 +1,34 @@
 package com.example.mybudget.fragments;
 
 
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mybudget.R;
 import com.example.mybudget.models.PlannedSpending;
 import com.example.mybudget.adapters.PlanningSpendingGridViewAdapter;
 import com.example.mybudget.adapters.PlanningSpendingListViewAdapter;
 import com.example.mybudget.database.MyBudgetDB;
+import com.example.mybudget.services.Screenshot;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -33,6 +42,7 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.text.DateFormatSymbols;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +74,13 @@ public class HomeFragment extends Fragment {
     private ArrayList<String> spendingMonths;
     private ArrayList<String> prizeSpengingMonths;
 
+
+    ImageView addSpending;
+    View rootView ;
+    private Context context;
+
+
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -74,6 +91,9 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View homeView = inflater.inflate(R.layout.fragment_home, container, false);
+
+        context = this.getActivity().getApplicationContext();
+
 
         stubList = (ViewStub) homeView.findViewById(R.id.stub_list_home);
         stubGrid = (ViewStub) homeView.findViewById(R.id.stub_grid_home);
@@ -164,6 +184,7 @@ public class HomeFragment extends Fragment {
         barChart.setDescription(description);
         barChart.invalidate();
 
+
         //Pour le graphe Pie
         List<PieEntry> pieEntries = new ArrayList<>();
 
@@ -195,6 +216,27 @@ public class HomeFragment extends Fragment {
         //barChart.setEnabled(true);
         //barChart.setDragEnabled(true);
         //barChart.setScaleEnabled(true);
+
+
+        // Amine
+        rootView = this.getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
+
+        FloatingActionButton floatingActionButton = homeView.findViewById(R.id.fab);
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Bitmap bitmap = Screenshot.getScreenShot(rootView);
+                File file = Screenshot.saveBitmap(bitmap,"screenshot.png");
+                Uri uri= FileProvider.getUriForFile(context,
+                        context.getApplicationContext()
+                                .getPackageName() + ".fileprovider", file);
+                shareImage(uri);
+
+            }
+        });
+
 
         return homeView;
     }
@@ -272,6 +314,22 @@ public class HomeFragment extends Fragment {
             cout = res.getString(0);
         }
         return cout;
+    }
+
+
+    private void shareImage(Uri uri){
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.setType("image/*");
+
+        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "");
+        intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        try {
+            startActivity(Intent.createChooser(intent, "Share Screenshot"));
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(context, "No App Available", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

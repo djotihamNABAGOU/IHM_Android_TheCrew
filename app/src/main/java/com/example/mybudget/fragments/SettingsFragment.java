@@ -19,6 +19,7 @@ import com.example.mybudget.activities.Account;
 import com.example.mybudget.activities.Help;
 import com.example.mybudget.activities.MainActivity;
 import com.example.mybudget.activities.Revenus;
+import com.example.mybudget.activities.Share;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -87,6 +88,13 @@ public class SettingsFragment extends Fragment {
                 }
                 if (position==3){
                     Intent intent = new Intent(getActivity(), About.class);
+
+                    intent.putExtra("Activity", listView.getItemAtPosition(position).toString());
+
+                    startActivity(intent);
+                }
+                if (position==4){
+                    Intent intent = new Intent(getActivity(), Share.class);
 
                     intent.putExtra("Activity", listView.getItemAtPosition(position).toString());
 
