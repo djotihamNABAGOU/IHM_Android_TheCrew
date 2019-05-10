@@ -71,7 +71,7 @@ public class PlanningSpending extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //check data before save them
-                if (v == btPlanifier && verifierDonnees()) {
+                if (v == btPlanifier /*&& verifierDonnees()*/) {
                     //alert de confirmation ou non
                     alert("INFORMATION","Êtes vous sûr de vouloir planifier cette dépense?",true,2);
                 }
@@ -146,7 +146,7 @@ public class PlanningSpending extends AppCompatActivity {
                 //Log.d("date of day", dateOfDay.toString());
                 int diff = (int) ((beginingDate.getTime() - dateOfDay.getTime()) / (24 * 60 * 60 * 1000));
                 //Log.d("Difference :", Integer.toString(diff));
-                if (diff != 0) {
+                if (diff > 0) {
                     return true;
                 } else {
                     alert("ERREUR", "Vous ne pouvez planifier une dépense aujourd'hui ou antérieure à la date d'aujourd'hui, veuillez modifier la date de début.",false,0);

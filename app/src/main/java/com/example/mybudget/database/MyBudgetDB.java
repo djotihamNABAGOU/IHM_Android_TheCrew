@@ -243,7 +243,7 @@ public class MyBudgetDB extends SQLiteOpenHelper {
         else return true;
     }
 
-    //   ### Avoir la liste des dépenses planifiées & achevées
+    //   ### Avoir la liste des dépenses achevées
     public Cursor getSpending() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " WHERE past is true order by libelle_aliment ", null);
@@ -260,6 +260,12 @@ public class MyBudgetDB extends SQLiteOpenHelper {
     public Cursor getCurrentMonthsSpending() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery(" select DISTINCT strftime('%m', date) as month, strftime('%Y', date) as year from " + SPENDING_TABLE + " where past = 1 order by year, month ", null);
+        return res;
+    }
+
+    public Cursor getSumSpendingOfMonth(String month) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery(" select sum(cout) as cout_total from " + SPENDING_TABLE + " where cast(strftime('%m', date) as integer) = " + month + " and past = 1 order by libelle_aliment ", null);
         return res;
     }
 
