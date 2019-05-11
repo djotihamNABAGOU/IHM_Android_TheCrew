@@ -46,7 +46,7 @@
 
 
                     <TextView
-                        android:id="@+id/revenu"
+                        android:id="@+id/textRevenu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
@@ -57,7 +57,7 @@
                         android:textStyle="normal|bold" />
 
                     <TextView
-                        android:id="@+id/edRevenu"
+                        android:id="@+id/txtValeurRevenu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="16dp"

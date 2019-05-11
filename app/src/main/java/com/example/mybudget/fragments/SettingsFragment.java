@@ -18,6 +18,7 @@ import com.example.mybudget.activities.About;
 import com.example.mybudget.activities.Account;
 import com.example.mybudget.activities.Help;
 import com.example.mybudget.activities.MainActivity;
+import com.example.mybudget.activities.Preferences;
 import com.example.mybudget.activities.Revenus;
 import com.example.mybudget.activities.Share;
 
@@ -42,7 +43,8 @@ public class SettingsFragment extends Fragment {
                 false);
 
         String[] settings = {"Compte",
-                "Revenus et préférences",
+                "Ajouter un revenu",
+                "Consulter/Modifier les préférences",
                 "Aide",
                 "Á propos",
                 "Partager",
@@ -80,20 +82,27 @@ public class SettingsFragment extends Fragment {
                     startActivity(intent);
                 }
                 if (position==2){
-                    Intent intent = new Intent(getActivity(), Help.class);
+                    Intent intent = new Intent(getActivity(), Preferences.class);
 
                     intent.putExtra("Activity", listView.getItemAtPosition(position).toString());
 
                     startActivity(intent);
                 }
                 if (position==3){
-                    Intent intent = new Intent(getActivity(), About.class);
+                    Intent intent = new Intent(getActivity(), Help.class);
 
                     intent.putExtra("Activity", listView.getItemAtPosition(position).toString());
 
                     startActivity(intent);
                 }
                 if (position==4){
+                    Intent intent = new Intent(getActivity(), About.class);
+
+                    intent.putExtra("Activity", listView.getItemAtPosition(position).toString());
+
+                    startActivity(intent);
+                }
+                if (position==5){
                     Intent intent = new Intent(getActivity(), Share.class);
 
                     intent.putExtra("Activity", listView.getItemAtPosition(position).toString());

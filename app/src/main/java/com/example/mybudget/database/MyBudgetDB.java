@@ -23,6 +23,7 @@ public class MyBudgetDB extends SQLiteOpenHelper {
     public static final String UNEXPECTED_SPENDING_TABLE = "UnexpectedSpending";
     public static final String PAST_PLANNING_SPENDING_TABLE = "PastPlanningSpending";
     public static final String SPENDING_TABLE = "Spending";
+    public static final String REVENU = "revenu";
 
     //Data
     public static final String ID = "id";
@@ -61,6 +62,10 @@ public class MyBudgetDB extends SQLiteOpenHelper {
         db.execSQL(" create table " + SPENDING_TABLE +
                 " ( id INTEGER PRIMARY KEY AUTOINCREMENT, spending_type TEXT NOT NULL, " +
                 "libelle_aliment TEXT NOT NULL, date TEXT NOT NULL, cout FLOAT NOT NULL, past BOOLEAN NOT NULL)");
+
+        db.execSQL(" create table " + REVENU +
+                " ( id INTEGER PRIMARY KEY AUTOINCREMENT, mois INTEGER NOT NULL, " +
+                "annee INTEGER NOT NULL, revenu FLOAT NOT NULL, epargne FLOAT NOT NULL)");
     }
 
     @Override
@@ -69,6 +74,7 @@ public class MyBudgetDB extends SQLiteOpenHelper {
         //db.execSQL(" drop table if exists " + UNEXPECTED_SPENDING_TABLE);
         db.execSQL(" drop table if exists " + PAST_PLANNING_SPENDING_TABLE);
         db.execSQL(" drop table if exists " + SPENDING_TABLE);
+        db.execSQL(" drop table if exists " + REVENU);
         onCreate(db);
     }
 
@@ -248,7 +254,7 @@ public class MyBudgetDB extends SQLiteOpenHelper {
                 Date date2 = sdf.parse(spending.getDate());
 
                 if (date2.before(date1)) {
-                    db.execSQL(" UPDATE " + SPENDING_TABLE + " SET past = "+1+
+                    db.execSQL(" UPDATE " + SPENDING_TABLE + " SET past = " + 1 +
                             "  WHERE id = " + spending.getId());
                 }
             } catch (Exception e) {
@@ -278,7 +284,7 @@ public class MyBudgetDB extends SQLiteOpenHelper {
     //   ### Avoir la liste des dépenses achevées
     public Cursor getSpending() {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " WHERE past =" + 1 +" order by date ASC ", null);
+        Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " WHERE past =" + 1 + " order by date ASC ", null);
         return res;
     }
 
@@ -299,6 +305,49 @@ public class MyBudgetDB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery(" select sum(cout) as cout_total from " + SPENDING_TABLE + " where cast(strftime('%m', date) as integer) = " + month + " and past = 1 order by libelle_aliment ", null);
         return res;
+    }
+
+    // Table REVENU
+    //Insertion
+    public boolean insertRevenu(int mois, int annee, float revenu, float epargne) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("mois", mois);
+        contentValues.put("annee", annee);
+        contentValues.put("revenu", revenu);
+        contentValues.put("epargne", epargne);
+        long result = db.insert(REVENU, null, contentValues);
+        if (result == -1) return false;
+        else return true;
+    }
+
+    public Cursor getRevenueMonths() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery(" select DISTINCT mois, annee from " + REVENU + " order by annee, mois ", null);
+        return res;
+    }
+
+    public Cursor getRevenuesOfMonth(int month) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery(" select * from " + REVENU + " where mois = " + month + " order by annee, mois ASC ", null);
+        return res;
+    }
+
+    public boolean updateRevenu(int mois, int annee, float revenu, float epargne) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("mois", mois);
+        contentValues.put("annee", annee);
+        contentValues.put("revenu", revenu);
+        contentValues.put("epargne", epargne);
+        long result = db.update(REVENU, contentValues, "mois = ? and annee = ?", new String[]{Integer.toString(mois), Integer.toString(annee)});
+        if (result == -1) return false;
+        else return true;
+        /*db.execSQL("update "+REVENU+" set revenu = "+ revenu+", epargne = "+epargne+" where mois = "+mois+" and annee = "+annee);
+        //db.update()
+        //Cursor res = db.rawQuery(" select * from " + REVENU + " where mois = " + month + " order by annee, mois ASC ", null);
+        //return res;
+        return true;*/
     }
 
     /* Table UNEXPECTED_SPENDING_TABLE
