@@ -84,6 +84,7 @@
         </activity>
 
         <service android:name=".services.NotifyService" />
+        <service android:name=".services.CheckPlannedSpendindService" />
     </application>
 
 </manifest>

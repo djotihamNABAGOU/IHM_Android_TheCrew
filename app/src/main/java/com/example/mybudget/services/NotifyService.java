@@ -14,6 +14,10 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.example.mybudget.R;
+import com.example.mybudget.database.MyBudgetDB;
+import com.example.mybudget.services.NotifyService;
+
+import java.util.ArrayList;
 
 public class NotifyService extends Service {
     public static final String CHANNEL_ID = "channelMyBudget";
@@ -106,14 +110,18 @@ public class NotifyService extends Service {
             }
 
             if(rqs==RQS_SEND_SERVICE){
-                Log.d(TAG,"NTS---> Notification eceived by the service.");
-                sendNotification("xx","xx");
+                Log.d(TAG,"NTS---> Notification received by the service.");
+                sendNotification("fuck","you");
+                MyBudgetDB myBudgetDB = new MyBudgetDB(getApplicationContext());
+                ArrayList<String> notifications =new ArrayList<>();
+                notifications = myBudgetDB.getNotificationsList();
+                for ( String n: notifications ) {
+                    sendNotification("Dépense planifiée",n);
+                 }
+                }
             }
 
         }
-
-
-    }
 
 }
 

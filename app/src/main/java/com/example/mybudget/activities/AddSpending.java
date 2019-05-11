@@ -94,9 +94,10 @@ public class AddSpending extends AppCompatActivity {
 
         //Button
         btEnregistrer = (Button) findViewById(R.id.btnAddSpendingImprevu);
-        Button btnTesting = (Button) findViewById(R.id.btnTesting);
-        Intent intent = new Intent(this,NotifyService.class);
+
+        /*Intent intent = new Intent(this,NotifyService.class);
         startService(intent);
+        Button btnTesting = (Button) findViewById(R.id.btnTesting);
         btnTesting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
@@ -107,7 +108,7 @@ public class AddSpending extends AppCompatActivity {
                 sendBroadcast(intent);
             }
 
-        });
+        });*/
         btEnregistrer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

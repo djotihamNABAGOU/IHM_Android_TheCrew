@@ -19,6 +19,7 @@ import com.example.mybudget.fragments.HomeFragment;
 import com.example.mybudget.fragments.PlanningFragment;
 import com.example.mybudget.fragments.SettingsFragment;
 import com.example.mybudget.fragments.SpendingsFragment;
+import com.example.mybudget.services.CheckPlannedSpendindService;
 
 public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -35,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Intent intentForStartCPSS = new Intent(getApplicationContext(), CheckPlannedSpendindService.class);
+        startService(intentForStartCPSS);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -81,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
         //set a default fragment depends on the first launching app or a back from another activity
         setDefaultFragment();
+
     }
 
     @Override
