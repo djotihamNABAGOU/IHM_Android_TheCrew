@@ -34,10 +34,18 @@ public class MainActivity extends AppCompatActivity {
     private PlanningFragment planningFragment = new PlanningFragment();
     private SettingsFragment settingsFragment = new SettingsFragment();
 
+    final static String SERVICE_RECEIVER = "registerReceiver";
+
+    final static String SERVICE_BROADCAST_KEY = "CPSService";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent intentForStartCPSS = new Intent(getApplicationContext(), CheckPlannedSpendindService.class);
         startService(intentForStartCPSS);
+        Intent intentToSend = new Intent();
+        intentToSend.setAction(SERVICE_RECEIVER);
+        intentToSend.putExtra(SERVICE_BROADCAST_KEY,2); //2 MEANS START CHECKING
+        sendBroadcast(intentToSend);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
