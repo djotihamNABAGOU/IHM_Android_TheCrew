@@ -48,12 +48,15 @@ public class SpendingHistory extends AppCompatActivity {
     private String currentText;
 
     private Button btH;
+    private Button btTextH;
     private boolean actived = false;
+    private int sortApply = 1;
 
     //gestion calendrier des dépenses
     private Button month;
     private ImageView previousMonth;
     private ImageView nextMonth;
+    private ImageView sortSpending;
     private ArrayList<String> availableMonths;
     private ArrayList<Integer> availableMonthsInt;
     private String actualMonth;
@@ -80,6 +83,8 @@ public class SpendingHistory extends AppCompatActivity {
 
         //Button
         btH = (Button) findViewById(R.id.completeHistory);
+        btTextH = (Button) findViewById(R.id.testHistory);
+//
         btH.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,6 +145,14 @@ public class SpendingHistory extends AppCompatActivity {
         monthSet = Integer.parseInt(actualMonth);
         //requête en fonction du mois actuel
         getSpendingList(actualMonth);
+
+        sortSpending = findViewById(R.id.sortSpendings);
+        sortSpending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refreshSort();
+            }
+        });
 
         previousMonth = findViewById(R.id.previousMonth);
         previousMonth.setOnClickListener(new View.OnClickListener() {
@@ -228,6 +241,48 @@ public class SpendingHistory extends AppCompatActivity {
         setAdapters();
     }
 
+
+    private void refreshSort() {
+        if(sortApply!=4) {
+            sortApply += 1;
+        }else{
+            sortApply = 1;
+        }
+
+        if (actived == true) {
+            if (sortApply == 1) {
+                getSpendingListH();
+                btTextH.setText("↗DATE");
+            } else if (sortApply == 2) {
+                getSpendingListH();
+                btTextH.setText("↙DATE");
+            } else if (sortApply == 3) {
+                getSpendingListH();
+                btTextH.setText("↗COût");
+            } else if (sortApply == 4) {
+                getSpendingListH();
+                btTextH.setText("↙COût");
+            }
+            setAdapters();
+        } else {
+            if (sortApply == 1) {
+                getSpendingList(currentMonth);
+                btTextH.setText("↗DATE");
+            } else if (sortApply == 2) {
+                getSpendingList(currentMonth);
+                btTextH.setText("↙DATE");
+            } else if (sortApply == 3) {
+                getSpendingList(currentMonth);
+                btTextH.setText("↗COût");
+            } else if (sortApply == 4) {
+                getSpendingList(currentMonth);
+                btTextH.setText("↙COût");
+            }
+            setAdapters();
+        }
+    }
+
+
     private void setAdapters() {
         if (VIEW_MODE_LISTVIEW == currentViewMode) {
             listViewAdapter = new SpendingListViewAdapter(this, R.layout.spending_list_item, SpendingList);
@@ -242,7 +297,17 @@ public class SpendingHistory extends AppCompatActivity {
     public void getSpendingList(String month) {
         currentMonth = month;
         SpendingList = new ArrayList<>();
-        Cursor res = myBudgetDB.getSpendingOfMonth(month);
+        Cursor res = null;
+        if(sortApply==1){
+            res = myBudgetDB.getSpendingOfMonth(month);
+        }else if(sortApply==2){
+            res = myBudgetDB.getSpendingOfMonthDateDesc(month);
+        }else if(sortApply==3){
+            res = myBudgetDB.getSpendingOfMonthPrice(month);
+        }else if(sortApply==4){
+            res = myBudgetDB.getSpendingOfMonthPriceDesc(month);
+        }
+
         while (res.moveToNext()) {
             Spending spending = new Spending(
                     res.getString(0),
@@ -258,7 +323,17 @@ public class SpendingHistory extends AppCompatActivity {
 
     public void getSpendingListH() {
         SpendingList = new ArrayList<>();
-        Cursor res = myBudgetDB.getSpending();
+        Cursor res = null;
+        if(sortApply==1){
+            res = myBudgetDB.getSpending();
+        }else if(sortApply==2){
+            res = myBudgetDB.getSpendingByDateDesc();
+        }else if(sortApply==3){
+            res = myBudgetDB.getSpendingByPrice();
+        }else if(sortApply==4){
+            res = myBudgetDB.getSpendingByPriceDesc();
+        }
+
         while (res.moveToNext()) {
             Spending spending = new Spending(
                     res.getString(0),
