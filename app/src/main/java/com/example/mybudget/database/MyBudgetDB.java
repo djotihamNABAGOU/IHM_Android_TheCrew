@@ -11,6 +11,7 @@ import android.icu.util.Calendar;
 import com.example.mybudget.models.PlannedSpending;
 import com.example.mybudget.models.Spending;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MyBudgetDB extends SQLiteOpenHelper {
@@ -24,6 +25,8 @@ public class MyBudgetDB extends SQLiteOpenHelper {
     public static final String PAST_PLANNING_SPENDING_TABLE = "PastPlanningSpending";
     public static final String SPENDING_TABLE = "Spending";
     public static final String REVENU = "revenu";
+
+    public ArrayList<String> notificationsList;
 
     //Data
     public static final String ID = "id";
@@ -203,7 +206,6 @@ public class MyBudgetDB extends SQLiteOpenHelper {
                     res.getString(6),
                     res.getString(7)
             );
-            System.out.println(spending.toString());
 
 
             try {
@@ -265,6 +267,47 @@ public class MyBudgetDB extends SQLiteOpenHelper {
     }
 
 
+    public boolean notifications(){
+        boolean rep = false;
+        notificationsList = new ArrayList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " order by libelle_aliment ", null);
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = df.format(c);
+        Cursor resSp = db.rawQuery(" select * from " + SPENDING_TABLE + " order by libelle_aliment ", null);
+        while (resSp.moveToNext()) {
+            Spending spending = new Spending(
+                    resSp.getString(0),
+                    resSp.getString(1),
+                    resSp.getString(2),
+                    resSp.getString(3),
+                    resSp.getString(4),
+                    resSp.getString(5)
+            );
+//            System.out.println(spending.toString());
+
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date date1 = sdf.parse(formattedDate);
+                Date date2 = sdf.parse(spending.getDate());
+
+                if ((date1.compareTo(date2) == 0)){
+                    notificationsList.add("Dépense : Achat de "+spending.getLibelle_aliment()+" , coût : "+spending.getCout()+"€ a été prélevée avec succès.");
+                    rep = true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return rep;
+    }
+
+    public ArrayList<String> getNotificationsList(){
+      return notificationsList;
+    }
+
     /***********************************************************************/
     // Table SPENDING_TABLE pour les dépenses éffectuées
     //Insertion
@@ -288,9 +331,48 @@ public class MyBudgetDB extends SQLiteOpenHelper {
         return res;
     }
 
+    public Cursor getSpendingByDateDesc() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " WHERE past =" + 1 +" order by date DESC ", null);
+        return res;
+    }
+
+    public Cursor getSpendingByPrice() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " WHERE past =" + 1 +" order by cout ASC ", null);
+        return res;
+    }
+
+    public Cursor getSpendingByPriceDesc() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " WHERE past =" + 1 +" order by cout DESC ", null);
+        return res;
+    }
+
+
+
+
     public Cursor getSpendingOfMonth(String month) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " where cast(strftime('%m', date) as integer) = " + month + " and past = 1 order by date ASC ", null);
+        return res;
+    }
+
+    public Cursor getSpendingOfMonthDateDesc(String month) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " where cast(strftime('%m', date) as integer) = " + month + " and past = 1 order by date DESC ", null);
+        return res;
+    }
+
+    public Cursor getSpendingOfMonthPrice(String month) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " where cast(strftime('%m', date) as integer) = " + month + " and past = 1 order by cout ASC ", null);
+        return res;
+    }
+
+    public Cursor getSpendingOfMonthPriceDesc(String month) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " where cast(strftime('%m', date) as integer) = " + month + " and past = 1 order by cout DESC ", null);
         return res;
     }
 

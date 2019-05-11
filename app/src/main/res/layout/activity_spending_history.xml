@@ -55,7 +55,7 @@
         android:layout_marginLeft="10dp"
         android:background="@color/colorPrimary"
         android:textColor="@color/colorWhite"
-        android:text="Historique Complet"/>
+        android:text="Historique complet"/>
 
     <ImageView
         android:id="@+id/sortSpendings"
@@ -65,6 +65,17 @@
         android:layout_marginLeft="200dp"
         android:textColor="@color/colorWhite"
         android:src="@drawable/ic_round_sort_24px"/>
+
+    <Button
+        android:id="@+id/testHistory"
+        android:layout_width="87dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="260dp"
+        android:layout_marginTop="120dp"
+        android:background="@color/colorPrimary"
+        android:text="↗DATE"
+        android:textColor="@color/colorWhite" />
+
     <!--
     <Button
         android:id="@+id/ok"

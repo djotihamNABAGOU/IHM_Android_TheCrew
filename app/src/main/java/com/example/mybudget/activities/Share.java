@@ -36,8 +36,6 @@ public class Share extends AppCompatActivity {
 
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,8 +65,8 @@ public class Share extends AppCompatActivity {
 
                 Intent myIntent = new Intent(Intent.ACTION_SEND);
                 myIntent.setType("text/plain");
-                String shareBody = "myBudget by team THE CREW";
-                String shareSub = "Subject";
+                String shareBody = getResources().getString(R.string.share_text);
+                String shareSub = "myBudget by team THE CREW";
                 myIntent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
                 myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
                 startActivity(Intent.createChooser(myIntent,"Share using"));
@@ -79,18 +77,5 @@ public class Share extends AppCompatActivity {
 
     }
 
-    private void shareImage(Uri uri){
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_SEND);
-        intent.setType("image/*");
 
-        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "");
-        intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
-        intent.putExtra(Intent.EXTRA_STREAM, uri);
-        try {
-            startActivity(Intent.createChooser(intent, "Share Screenshot"));
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(context, "No App Available", Toast.LENGTH_SHORT).show();
-        }
-    }
 }

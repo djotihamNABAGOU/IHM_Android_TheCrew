@@ -75,7 +75,6 @@ public class HomeFragment extends Fragment {
     private ArrayList<String> prizeSpengingMonths;
 
 
-    ImageView addSpending;
     View rootView ;
     private Context context;
 
@@ -326,7 +325,7 @@ public class HomeFragment extends Fragment {
         intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
         intent.putExtra(Intent.EXTRA_STREAM, uri);
         try {
-            startActivity(Intent.createChooser(intent, "Share Screenshot"));
+            startActivity(Intent.createChooser(intent, "Share Data"));
         } catch (ActivityNotFoundException e) {
             Toast.makeText(context, "No App Available", Toast.LENGTH_SHORT).show();
         }
