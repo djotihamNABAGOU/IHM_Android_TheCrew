@@ -72,12 +72,6 @@
                 android:textColor="@android:color/white"
                 android:text="Enregistrer" />
 
-            <Button
-                android:id="@+id/btnTesting"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Button" />
-
         </LinearLayout>
 
 
