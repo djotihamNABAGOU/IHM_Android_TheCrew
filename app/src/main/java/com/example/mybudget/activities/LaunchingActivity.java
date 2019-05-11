@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import com.example.mybudget.R;
 import com.example.mybudget.database.MyBudgetDB;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class LaunchingActivity extends AppCompatActivity {
@@ -37,7 +38,13 @@ public class LaunchingActivity extends AppCompatActivity {
 //        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 //        String formattedDate = df.format(c);
 //        System.out.println(formattedDate);
-//        System.out.println("Reponse "+myBudgetDB.notifications());
+        System.out.println("Reponse "+myBudgetDB.notifications());
+        ArrayList<String> notif = myBudgetDB.getNotificationsList();
+        for (int i=0;i<notif.size();i++) {
+            System.out.println(notif.get(i));
+        }
+
+
         logo = (RelativeLayout) findViewById(R.id.loadingPanel);
         //findViewById(R.id.loadingPanel).setVisibility(View.GONE);
 

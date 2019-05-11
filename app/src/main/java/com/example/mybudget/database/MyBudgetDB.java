@@ -11,6 +11,7 @@ import android.icu.util.Calendar;
 import com.example.mybudget.models.PlannedSpending;
 import com.example.mybudget.models.Spending;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MyBudgetDB extends SQLiteOpenHelper {
@@ -23,6 +24,8 @@ public class MyBudgetDB extends SQLiteOpenHelper {
     public static final String UNEXPECTED_SPENDING_TABLE = "UnexpectedSpending";
     public static final String PAST_PLANNING_SPENDING_TABLE = "PastPlanningSpending";
     public static final String SPENDING_TABLE = "Spending";
+
+    public ArrayList<String> notificationsList;
 
     //Data
     public static final String ID = "id";
@@ -259,6 +262,8 @@ public class MyBudgetDB extends SQLiteOpenHelper {
 
 
     public boolean notifications(){
+        boolean rep = false;
+        notificationsList = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " order by libelle_aliment ", null);
         Date c = Calendar.getInstance().getTime();
@@ -282,15 +287,19 @@ public class MyBudgetDB extends SQLiteOpenHelper {
                 Date date2 = sdf.parse(spending.getDate());
 
                 if ((date1.compareTo(date2) == 0)){
-//                    System.out.println(spending.libelle_aliment);
-                    return true;
+                    notificationsList.add("Dépense : Achat de "+spending.getLibelle_aliment()+" , coût : "+spending.getCout()+"€ a été prélevée avec succès.");
+                    rep = true;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-        return false;
+        return rep;
+    }
+
+    public ArrayList<String> getNotificationsList(){
+      return notificationsList;
     }
 
     /***********************************************************************/
