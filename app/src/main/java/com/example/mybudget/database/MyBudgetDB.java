@@ -11,6 +11,7 @@ import android.icu.util.Calendar;
 import com.example.mybudget.models.PlannedSpending;
 import com.example.mybudget.models.Spending;
 
+import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -267,7 +268,7 @@ public class MyBudgetDB extends SQLiteOpenHelper {
     }
 
 
-    public boolean notifications(){
+    public boolean notifications() {
         boolean rep = false;
         notificationsList = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
@@ -286,14 +287,13 @@ public class MyBudgetDB extends SQLiteOpenHelper {
                     resSp.getString(5)
             );
 //            System.out.println(spending.toString());
-
             try {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 Date date1 = sdf.parse(formattedDate);
                 Date date2 = sdf.parse(spending.getDate());
 
-                if ((date1.compareTo(date2) == 0)){
-                    notificationsList.add("Dépense : Achat de "+spending.getLibelle_aliment()+" , coût : "+spending.getCout()+"€ a été prélevée avec succès.");
+                if ((date1.compareTo(date2) == 0)) {
+                    notificationsList.add("Dépense : Achat de " + spending.getLibelle_aliment() + " , coût : " + spending.getCout() + "€ a été prélevée avec succès.");
                     rep = true;
                 }
             } catch (Exception e) {
@@ -304,8 +304,8 @@ public class MyBudgetDB extends SQLiteOpenHelper {
         return rep;
     }
 
-    public ArrayList<String> getNotificationsList(){
-      return notificationsList;
+    public ArrayList<String> getNotificationsList() {
+        return notificationsList;
     }
 
     /***********************************************************************/
@@ -333,23 +333,21 @@ public class MyBudgetDB extends SQLiteOpenHelper {
 
     public Cursor getSpendingByDateDesc() {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " WHERE past =" + 1 +" order by date DESC ", null);
+        Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " WHERE past =" + 1 + " order by date DESC ", null);
         return res;
     }
 
     public Cursor getSpendingByPrice() {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " WHERE past =" + 1 +" order by cout ASC ", null);
+        Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " WHERE past =" + 1 + " order by cout ASC ", null);
         return res;
     }
 
     public Cursor getSpendingByPriceDesc() {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " WHERE past =" + 1 +" order by cout DESC ", null);
+        Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " WHERE past =" + 1 + " order by cout DESC ", null);
         return res;
     }
-
-
 
 
     public Cursor getSpendingOfMonth(String month) {
@@ -454,5 +452,62 @@ public class MyBudgetDB extends SQLiteOpenHelper {
         Cursor res = db.rawQuery(" select * from " + UNEXPECTED_SPENDING_TABLE + " order by libelle_aliment ", null);
         return res;
     }*/
+
+    //    ### Requête avec les revenus
+
+    public int getRevenusForActualMonth() {
+        int rep = 0;
+        Calendar c = Calendar.getInstance();
+        int monthId = c.get(Calendar.MONTH) + 1;
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery(" select * from " + REVENU + " where mois = " + monthId + " and annee = " + year, null);
+        while (res.moveToNext()) {
+            rep = Integer.valueOf(res.getString(3));
+        }
+        return rep;
+    }
+
+
+    public int getEpargneForActualMonth() {
+        int rep = 0;
+        Calendar c = Calendar.getInstance();
+        int monthId = c.get(Calendar.MONTH) + 1;
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery(" select * from " + REVENU + " where mois = " + monthId + " and annee = " + year, null);
+        while (res.moveToNext()) {
+            rep = Integer.valueOf(res.getString(4));
+        }
+        return rep;
+    }
+
+
+    public int getSoldeForActualMonth() {
+        int rep = 0;
+//        String[] monthName = {"Janvier",
+//                "Février",
+//                "Mars",
+//                "Avril",
+//                "Mai",
+//                "Juin",
+//                "Juillet",
+//                "Août",
+//                "Septembre",
+//                "Octobre",
+//                "Novembre",
+//                "Décembre"};
+        Calendar c = Calendar.getInstance();
+        int monthId = c.get(Calendar.MONTH) + 1;
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery(" select sum(cout) as cout_total from " + SPENDING_TABLE + " where cast(strftime('%m', date) as integer) = " + Integer.toString(monthId) + " and past = 1 and cast(strftime('%Y', date) as integer) = " + year, null);
+        while (res.moveToNext()) {
+            rep = Integer.valueOf(res.getString(0));
+        }
+        int rev = getRevenusForActualMonth();
+        rep = rev - rep;
+        return rep;
+    }
 
 }
