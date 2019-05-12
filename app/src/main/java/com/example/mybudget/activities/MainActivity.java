@@ -125,10 +125,8 @@ public class MainActivity extends AppCompatActivity {
         switch (item) {
             case R.id.dash_acceuil:
                 toolbar.setTitle(R.string.toolbar_acceuil);
-                setFragment(homeFragment,"HOME");
+                setFragment(homeFragment);
                 ((Constants) this.getApplication()).setFragmentActivated(R.id.dash_acceuil);
-//                HomeFragment fragm = (HomeFragment)getSupportFragmentManager().findFragmentByTag("HOME");
-//                fragm.refreshActualSolde();
                 return true;
 
                 /*
@@ -140,13 +138,13 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.dash_planification:
                 toolbar.setTitle(R.string.toolbar_planification);
-                setFragment(planningFragment,"PLANNIFICATION");
+                setFragment(planningFragment);
                 ((Constants) this.getApplication()).setFragmentActivated(R.id.dash_planification);
                 return true;
 
             case R.id.dash_parametres:
                 toolbar.setTitle(R.string.toolbar_param);
-                setFragment(settingsFragment,"PARAMETRE");
+                setFragment(settingsFragment);
                 ((Constants) this.getApplication()).setFragmentActivated(R.id.dash_parametres);
                 return true;
 
@@ -155,12 +153,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setFragment(Fragment fragment, String tag) {
+    private void setFragment(Fragment fragment) {
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment,tag);
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commitAllowingStateLoss();
-//        HomeFragment.refreshActualSolde();
     }
 
     @Override

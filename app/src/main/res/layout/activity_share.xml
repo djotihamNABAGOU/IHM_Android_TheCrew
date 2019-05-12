@@ -23,7 +23,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="300dp"
             android:background="@drawable/ripple_effect"
-            android:text="  Partager  " />
+            android:text="  Partager l'Application  " />
     </LinearLayout>
 
 

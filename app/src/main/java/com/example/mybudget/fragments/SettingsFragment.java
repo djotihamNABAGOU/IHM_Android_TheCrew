@@ -1,7 +1,6 @@
 package com.example.mybudget.fragments;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,7 +16,6 @@ import com.example.mybudget.R;
 import com.example.mybudget.activities.About;
 import com.example.mybudget.activities.Account;
 import com.example.mybudget.activities.Help;
-import com.example.mybudget.activities.MainActivity;
 import com.example.mybudget.activities.Preferences;
 import com.example.mybudget.activities.Revenus;
 import com.example.mybudget.activities.Share;

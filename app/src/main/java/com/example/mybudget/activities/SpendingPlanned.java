@@ -1,14 +1,17 @@
 package com.example.mybudget.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewStub;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -200,9 +203,41 @@ public class SpendingPlanned extends AppCompatActivity {
         if (VIEW_MODE_LISTVIEW == currentViewMode) {
             listViewAdapter = new PlanningSpendingListViewAdapter(this, R.layout.spending_list_item, PlannedSpendingList);
             listView.setAdapter(listViewAdapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> parent,
+                                        View view,
+                                        int position,
+                                        long id) {
+
+                    Intent bluetoothIntent = new Intent(getApplicationContext(), BluetoothActivity.class);
+                    bluetoothIntent.putExtra("Activity", listView.getItemAtPosition(position).toString());
+                    bluetoothIntent.putExtra("spending", (Parcelable) PlannedSpendingList.get(position));
+
+                        startActivity(bluetoothIntent);
+                    }
+        });
         } else {
             gridViewAdapter = new PlanningSpendingGridViewAdapter(this, R.layout.spending_grid_item, PlannedSpendingList);
             gridView.setAdapter(gridViewAdapter);
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> parent,
+                                        View view,
+                                        int position,
+                                        long id) {
+
+
+
+                    Intent bluetoothIntent = new Intent(getApplicationContext(), BluetoothActivity.class);
+                    bluetoothIntent.putExtra("Activity", listView.getItemAtPosition(position).toString());
+                    bluetoothIntent.putExtra("spending", (Parcelable) PlannedSpendingList.get(position));
+
+                    startActivity(bluetoothIntent);
+                }
+            });
         }
     }
 

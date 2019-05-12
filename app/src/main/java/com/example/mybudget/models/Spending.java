@@ -1,6 +1,8 @@
 package com.example.mybudget.models;
 
-public class Spending {
+import java.io.Serializable;
+
+public class Spending implements Serializable {
 
 
     public  String id;
@@ -68,4 +70,5 @@ public class Spending {
     public void setPast(boolean past) {
         this.past = past;
     }
+
 }

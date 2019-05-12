@@ -272,11 +272,11 @@ public class MyBudgetDB extends SQLiteOpenHelper {
         boolean rep = false;
         notificationsList = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery(" select * from " + SPENDING_TABLE + " order by libelle_aliment ", null);
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = df.format(c);
-        Cursor resSp = db.rawQuery(" select * from " + SPENDING_TABLE + " order by libelle_aliment ", null);
+        String type = "plannifie";
+        Cursor resSp = db.rawQuery(" select * from " + SPENDING_TABLE , null);
         while (resSp.moveToNext()) {
             Spending spending = new Spending(
                     resSp.getString(0),
@@ -286,13 +286,13 @@ public class MyBudgetDB extends SQLiteOpenHelper {
                     resSp.getString(4),
                     resSp.getString(5)
             );
-//            System.out.println(spending.toString());
+//           System.out.println(spending.toString());
             try {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 Date date1 = sdf.parse(formattedDate);
                 Date date2 = sdf.parse(spending.getDate());
 
-                if ((date1.compareTo(date2) == 0)) {
+                if ((date1.compareTo(date2) == 0) && spending.getSpending_type().equals("plannifie")) {
                     notificationsList.add("Dépense : Achat de " + spending.getLibelle_aliment() + " , coût : " + spending.getCout() + "€ a été prélevée avec succès.");
                     rep = true;
                 }
@@ -508,6 +508,22 @@ public class MyBudgetDB extends SQLiteOpenHelper {
         int rev = getRevenusForActualMonth();
         rep = rev - rep;
         return rep;
+    }
+
+    public boolean addSpending(PlannedSpending spending){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(SPENDING_TYPE, spending.spending_type);
+        contentValues.put(LIBELLE_ALIMENT, spending.libelle_aliment);
+        contentValues.put(DATE_DEBUT, spending.date_debut);
+        contentValues.put(DATE_FIN, spending.date_fin);
+        contentValues.put(COUT, spending.cout);
+        contentValues.put(DUREE, spending.duree);
+        contentValues.put(FREQUENCE,spending.frequence);
+        long result = db.insert(PLANNING_SPENDING_TABLE, null, contentValues);
+        if (result == -1) return false;
+        else return true;
+
     }
 
 }

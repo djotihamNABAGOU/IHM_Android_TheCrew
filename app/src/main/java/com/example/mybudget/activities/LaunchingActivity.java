@@ -32,6 +32,8 @@ public class LaunchingActivity extends AppCompatActivity {
         myBudgetDB.UpdateSpendingHistory();
 
 
+
+
         Date c = Calendar.getInstance().getTime();
 //        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 //        String formattedDate = df.format(c);
@@ -41,6 +43,7 @@ public class LaunchingActivity extends AppCompatActivity {
         for (int i=0;i<notif.size();i++) {
             System.out.println(notif.get(i));
         }
+
 
 
         logo = (RelativeLayout) findViewById(R.id.loadingPanel);
