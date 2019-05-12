@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.icu.text.SimpleDateFormat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -21,7 +22,6 @@ import com.example.mybudget.R;
 import com.example.mybudget.database.MyBudgetDB;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -38,6 +38,7 @@ public class PlanningSpending extends AppCompatActivity {
     private Date beginingDate, dateOfDay;
     static final int DIALOG_ID_NAISSANCE = 1;
 
+    private String dateDebut;
     MyBudgetDB myBudgetDB;
 
     @Override
@@ -73,7 +74,7 @@ public class PlanningSpending extends AppCompatActivity {
                 //check data before save them
                 if (v == btPlanifier && verifierDonnees()) {
                     //alert de confirmation ou non
-                    alert("INFORMATION","Êtes vous sûr de vouloir planifier cette dépense?",true,2);
+                    alert("INFORMATION", "Êtes vous sûr de vouloir planifier cette dépense?", true, 2);
                 }
             }
         });
@@ -90,17 +91,17 @@ public class PlanningSpending extends AppCompatActivity {
 
     private void registerPlanningSpending() {
         final String libelle_aliment = edAliment.getText().toString().trim();
-        final String date_debut = android.text.format.DateFormat.format("yyyy-MM-dd",beginingDate).toString();
+        final String date_debut = android.text.format.DateFormat.format("yyyy-MM-dd", beginingDate).toString();
         //System.out.println(DateFormat.getDateInstance(DateFormat.WEEK_OF_MONTH_FIELD+2).format(beginingDate));
         final String frequence = spFrequence.getSelectedItem().toString().trim();
         final int duree = Integer.parseInt(edDuree.getText().toString().trim());
         final float cout = Float.parseFloat(edCout.getText().toString().trim());
 
-        if (myBudgetDB.insertPlanningSpending("plannifie",libelle_aliment, date_debut, frequence, duree, cout)) {
-            alert("INFORMATION", "Dépense planifiée avec succès",true,1);
+        if (myBudgetDB.insertPlanningSpending("plannifie", libelle_aliment, date_debut, frequence, duree, cout)) {
+            alert("INFORMATION", "Dépense planifiée avec succès", true, 1);
             //finish();
         } else
-            alert("ERREUR", "Données non sauvegardées",false,0);
+            alert("ERREUR", "Données non sauvegardées", false, 0);
     }
 
     @Override
@@ -132,6 +133,7 @@ public class PlanningSpending extends AppCompatActivity {
             //dateDebut = year_x + "-" + month_x + "-" + day_x;
             //Log.d("Date debut modif", dateDebut);
             //Affichage
+            dateDebut = year_x + "-" + (month_x+1)  + "-" + day_x;
             beginingDate = new Date(year_x - 1900, month_x, day_x);
             String dateString = DateFormat.getDateInstance(DateFormat.FULL).format(beginingDate);
             btDateDebut.setText("Date de début: " + dateString);
@@ -144,16 +146,38 @@ public class PlanningSpending extends AppCompatActivity {
                 //System.out.println("Date de test : "+android.text.format.DateFormat.format("yyyy-MM-dd",beginingDate).toString());
                 //Log.d("beginning date", beginingDate.toString());
                 //Log.d("date of day", dateOfDay.toString());
-                int diff = (int) ((beginingDate.getTime() - dateOfDay.getTime()) / (24 * 60 * 60 * 1000));
+
+//                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//                Date date2 = sdf.parse(spending.getDate());
+//                System.out.println("debut " + beginingDate);
+                int diff=1;
+
+
+                Date c = android.icu.util.Calendar.getInstance().getTime();
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                String formattedDate = df.format(c);
+                try {
+                    Date date1 = df.parse(formattedDate);
+                    Date date2 = df.parse(dateDebut);
+
+                    if (date2.before(date1) || (date1.compareTo(date2) == 0)) {
+                        diff = 0;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+//                int diff = (int) ((beginingDate.getTime() - dateOfDay.getTime()) / (24 * 60 * 60 * 1000));
                 //Log.d("Difference :", Integer.toString(diff));
                 if (diff != 0) {
                     return true;
                 } else {
-                    alert("ERREUR", "Vous ne pouvez planifier une dépense aujourd'hui ou antérieure à la date d'aujourd'hui, veuillez modifier la date de début.",false,0);
+                    alert("ERREUR", "Vous ne pouvez planifier une dépense aujourd'hui ou antérieure à la date d'aujourd'hui, veuillez modifier la date de début.", false, 0);
                     return false;
                 }
             } else {
-                alert("ERREUR", "Veuillez renseigner la date de début.",false,0);
+                alert("ERREUR", "Veuillez renseigner la date de début.", false, 0);
                 return false;
             }
         }
