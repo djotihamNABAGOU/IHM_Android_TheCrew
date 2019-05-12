@@ -20,6 +20,7 @@ import com.example.mybudget.fragments.PlanningFragment;
 import com.example.mybudget.fragments.SettingsFragment;
 import com.example.mybudget.fragments.SpendingsFragment;
 import com.example.mybudget.services.CheckPlannedSpendindService;
+import com.example.mybudget.services.NotifyService;
 
 public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -35,16 +36,18 @@ public class MainActivity extends AppCompatActivity {
     private SettingsFragment settingsFragment = new SettingsFragment();
 
     final static String SERVICE_RECEIVER = "registerReceiver";
-
+    final static int RQS_CHECK_SERVICE = 2;
     final static String SERVICE_BROADCAST_KEY = "CPSService";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Intent intentForStartNS = new Intent(getApplicationContext(), NotifyService.class);
+        startService(intentForStartNS);
         Intent intentForStartCPSS = new Intent(getApplicationContext(), CheckPlannedSpendindService.class);
         startService(intentForStartCPSS);
         Intent intentToSend = new Intent();
         intentToSend.setAction(SERVICE_RECEIVER);
-        intentToSend.putExtra(SERVICE_BROADCAST_KEY,2); //2 MEANS START CHECKING
+        intentToSend.putExtra(SERVICE_BROADCAST_KEY,RQS_CHECK_SERVICE);
         sendBroadcast(intentToSend);
 
         super.onCreate(savedInstanceState);

@@ -21,8 +21,10 @@ public class CheckPlannedSpendindService extends Service {
     final static String SERVICE_RECEIVER = "registerReceiver";
 
     final static String SERVICE_BROADCAST_KEY = "CPSService";
+    final static String SERVICE_BROADCAST_KEY2 = "MyBudgetService";
     final static int RQS_STOP_SERVICE = 1;
     final static int RQS_CHECK_SERVICE = 2;
+    final static int RQS_SEND_SERVICE = 2;
 
     private static final String TAG = "CPSService";
     private CPSServiceReceiver cpsServiceReceiver;
@@ -56,9 +58,20 @@ public class CheckPlannedSpendindService extends Service {
 
         Log.d(TAG,"CPSService:registerReceiver");
         registerReceiver(cpsServiceReceiver,intentFilter);
+        MyBudgetDB myBudgetDB = new MyBudgetDB(getApplicationContext());
+        if(myBudgetDB.notifications()){
+            Intent intentForStartNS = new Intent(getApplicationContext(),NotifyService.class);
+            startService(intentForStartNS);
+            Intent intentToSend = new Intent();
+            intentToSend.setAction(SERVICE_RECEIVER);
+            intentToSend.putExtra(SERVICE_BROADCAST_KEY2,RQS_SEND_SERVICE);
+            sendBroadcast(intentToSend);
+            Log.d(TAG,"CPSService:rmyBudgetBDCchecked------>yes notifications");
 
+        }
+        Log.d(TAG,"CPSService:rmyBudgetBDCchecked");
 
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
 
@@ -79,6 +92,10 @@ public class CheckPlannedSpendindService extends Service {
                 Log.d(TAG, "CPS---> Service will start checking.");
                 /*checking if there is some notifications*
                   if there is notifications-->show them by calling Notification Service
+                  while(true){
+                  maFonction();
+                  tonThread.sleep(1000);
+                  }
                 */
                 MyBudgetDB myBudgetDB = new MyBudgetDB(getApplicationContext());
                 if(myBudgetDB.notifications()){

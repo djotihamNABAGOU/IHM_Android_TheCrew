@@ -15,7 +15,6 @@ import android.util.Log;
 
 import com.example.mybudget.R;
 import com.example.mybudget.database.MyBudgetDB;
-import com.example.mybudget.services.NotifyService;
 
 import java.util.ArrayList;
 
@@ -119,6 +118,7 @@ public class NotifyService extends Service {
                     sendNotification("Dépense planifiée",n);
                  }
                 }
+
             }
 
         }
