@@ -24,6 +24,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activities.BluetoothActivity"
+            android:parentActivityName=".activities.MainActivity" ></activity>
+
+
+        <activity android:name=".activities.Preferences" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -54,9 +59,6 @@
             android:parentActivityName=".activities.MainActivity" />
         <activity
             android:name=".activities.Revenus"
-            android:parentActivityName=".activities.MainActivity" />
-        <activity
-            android:name=".activities.Preferences"
             android:parentActivityName=".activities.MainActivity" />
         <activity
             android:name=".activities.About"

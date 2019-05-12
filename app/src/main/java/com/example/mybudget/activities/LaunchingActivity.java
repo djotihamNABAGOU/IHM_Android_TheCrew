@@ -32,6 +32,8 @@ public class LaunchingActivity extends AppCompatActivity {
         myBudgetDB.UpdateSpendingHistory();
 
 
+
+
         Date c = Calendar.getInstance().getTime();
 //        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 //        String formattedDate = df.format(c);

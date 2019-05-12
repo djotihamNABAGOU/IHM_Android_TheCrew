@@ -69,12 +69,7 @@ public class HomeFragment extends Fragment {
     private Button btSeeMore;
 
     private TextView edDepensesVide;
-    private TextView edRevenu;
-    private TextView edEpargne;
-    private TextView edSolde;
-    private String actualRevenu;
-    private String actualEpargne;
-    private String actualSolde;
+
     private BarChart barChart;
     private PieChart pieChart;
     private ArrayList<String> spendingMonths;
@@ -130,16 +125,6 @@ public class HomeFragment extends Fragment {
 
         switchView();
 
-        // Text
-        edRevenu = homeView.findViewById(R.id.edRevenuA);
-        edRevenu.setText(getActualRevenu());
-        edEpargne = homeView.findViewById(R.id.edEpargne);
-        edEpargne.setText(getActualEpargne());
-        edSolde = homeView.findViewById(R.id.edSolde);
-        edSolde.setText(getActualSolde());
-
-
-
         //Graphes
         barChart = homeView.findViewById(R.id.bar_chart);
         pieChart = homeView.findViewById(R.id.pieChart);
@@ -171,7 +156,6 @@ public class HomeFragment extends Fragment {
 
         return homeView;
     }
-
 
     private void setGraph() {
         //graphe
@@ -289,10 +273,6 @@ public class HomeFragment extends Fragment {
     }
 
 
-//    @Override
-//    public @
-
-
     public void getPlanningSpendingList() {
         PlannedSpendingList = new ArrayList<>();
         //database
@@ -329,27 +309,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    public String getActualRevenu() {
-        //database
-        myBudgetDB = new MyBudgetDB(getContext());
-        actualRevenu = Integer.toString(myBudgetDB.getRevenusForActualMonth()) + " €";
-        return actualRevenu;
-    }
-
-    public String getActualEpargne() {
-        //database
-        myBudgetDB = new MyBudgetDB(getContext());
-        actualEpargne = Integer.toString(myBudgetDB.getEpargneForActualMonth()) + " €";
-        return actualEpargne;
-    }
-
-    public String getActualSolde() {
-        //database
-        myBudgetDB = new MyBudgetDB(getContext());
-        actualSolde = Integer.toString(myBudgetDB.getSoldeForActualMonth()) + " €";
-        return actualSolde;
-    }
-
     private String getSpendingPrizeOfMonth(String month) {
         prizeSpengingMonths = new ArrayList<>();
         //database
@@ -368,6 +327,7 @@ public class HomeFragment extends Fragment {
         intent.setAction(Intent.ACTION_SEND);
         intent.setType("image/*");
 
+        intent.setPackage("com.android.bluetooth");
         intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "");
         intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
         intent.putExtra(Intent.EXTRA_STREAM, uri);
@@ -376,18 +336,6 @@ public class HomeFragment extends Fragment {
         } catch (ActivityNotFoundException e) {
             Toast.makeText(context, "No App Available", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    public void refreshActualSolde() {
-        //database
-        actualSolde = Integer.toString(myBudgetDB.getSoldeForActualMonth()) + " €";
-        edSolde.setText(actualSolde);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        refreshActualSolde();
     }
 
 }

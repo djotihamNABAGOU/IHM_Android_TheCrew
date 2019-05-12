@@ -41,9 +41,9 @@ public class Revenus extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        edAnnee = findViewById(R.id.edAnnee);
+        edAnnee = findViewById(R.id.annee);
         edRevenu = findViewById(R.id.salaire);
-        edEpargne = findViewById(R.id.editEpargne);
+        edEpargne = findViewById(R.id.epargne);
 
         myBudgetDB = new MyBudgetDB(getApplicationContext());
 

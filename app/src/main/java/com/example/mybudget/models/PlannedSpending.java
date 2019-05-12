@@ -1,7 +1,12 @@
 package com.example.mybudget.models;
 
 
-public class PlannedSpending{
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
+public class PlannedSpending implements Parcelable, Serializable {
 
     public  String id;
     public String spending_type;
@@ -23,6 +28,29 @@ public class PlannedSpending{
         this.duree = duree;
         this.cout = cout;
     }
+
+    protected PlannedSpending(Parcel in) {
+        id = in.readString();
+        spending_type = in.readString();
+        libelle_aliment = in.readString();
+        date_debut = in.readString();
+        date_fin = in.readString();
+        frequence = in.readString();
+        duree = in.readString();
+        cout = in.readString();
+    }
+
+    public static final Creator<PlannedSpending> CREATOR = new Creator<PlannedSpending>() {
+        @Override
+        public PlannedSpending createFromParcel(Parcel in) {
+            return new PlannedSpending(in);
+        }
+
+        @Override
+        public PlannedSpending[] newArray(int size) {
+            return new PlannedSpending[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -100,5 +128,22 @@ public class PlannedSpending{
                 ", duree='" + duree + '\'' +
                 ", cout='" + cout + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(spending_type);
+        dest.writeString(libelle_aliment);
+        dest.writeString(date_debut);
+        dest.writeString(date_fin);
+        dest.writeString(frequence);
+        dest.writeString(duree);
+        dest.writeString(cout);
     }
 }

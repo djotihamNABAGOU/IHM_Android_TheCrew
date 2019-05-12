@@ -57,7 +57,7 @@
                         android:textStyle="normal|bold" />
 
                     <TextView
-                        android:id="@+id/edRevenuA"
+                        android:id="@+id/txtValeurRevenu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="16dp"
@@ -324,7 +324,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:src="@drawable/ic_share_black_24dp"/>
+        android:backgroundTint="@color/Blue_900"
+        android:src="@drawable/ic_bluetooth_black_24dp"/>
 
 </FrameLayout>
