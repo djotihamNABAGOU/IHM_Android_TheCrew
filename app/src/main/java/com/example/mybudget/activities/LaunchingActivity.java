@@ -45,6 +45,7 @@ public class LaunchingActivity extends AppCompatActivity {
         }
 
 
+
         logo = (RelativeLayout) findViewById(R.id.loadingPanel);
         //findViewById(R.id.loadingPanel).setVisibility(View.GONE);
 
