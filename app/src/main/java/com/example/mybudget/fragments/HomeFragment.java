@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mybudget.R;
+import com.example.mybudget.activities.SpendingPlanned;
 import com.example.mybudget.models.PlannedSpending;
 import com.example.mybudget.adapters.PlanningSpendingGridViewAdapter;
 import com.example.mybudget.adapters.PlanningSpendingListViewAdapter;
@@ -111,7 +112,7 @@ public class HomeFragment extends Fragment {
         btSeeMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), PlannedSpending.class));
+                startActivity(new Intent(getContext(), SpendingPlanned.class));
             }
         });
 
@@ -124,9 +125,40 @@ public class HomeFragment extends Fragment {
 
         switchView();
 
-        //graphe
+        //Graphes
         barChart = homeView.findViewById(R.id.bar_chart);
         pieChart = homeView.findViewById(R.id.pieChart);
+        //Pour le graph normal
+        setGraph();
+
+        //Pour le pie graph
+        setPieGraph();
+
+        // Amine
+        rootView = this.getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
+
+        FloatingActionButton floatingActionButton = homeView.findViewById(R.id.fab);
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Bitmap bitmap = Screenshot.getScreenShot(rootView);
+                File file = Screenshot.saveBitmap(bitmap,"screenshot.png");
+                Uri uri= FileProvider.getUriForFile(context,
+                        context.getApplicationContext()
+                                .getPackageName() + ".fileprovider", file);
+                shareImage(uri);
+
+            }
+        });
+
+
+        return homeView;
+    }
+
+    private void setGraph() {
+        //graphe
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         //BarEntry barEntryTest = new BarEntry(31f,7);
         //barEntryTest.setData("Mai 2018");
@@ -182,8 +214,9 @@ public class HomeFragment extends Fragment {
         description.setText("Description test");
         barChart.setDescription(description);
         barChart.invalidate();
+    }
 
-
+    private void setPieGraph() {
         //Pour le graphe Pie
         List<PieEntry> pieEntries = new ArrayList<>();
 
@@ -211,33 +244,6 @@ public class HomeFragment extends Fragment {
         description1.setText("Dépenses par mois");
         pieChart.setDescription(description1);
         pieChart.invalidate();
-
-        //barChart.setEnabled(true);
-        //barChart.setDragEnabled(true);
-        //barChart.setScaleEnabled(true);
-
-
-        // Amine
-        rootView = this.getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
-
-        FloatingActionButton floatingActionButton = homeView.findViewById(R.id.fab);
-
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Bitmap bitmap = Screenshot.getScreenShot(rootView);
-                File file = Screenshot.saveBitmap(bitmap,"screenshot.png");
-                Uri uri= FileProvider.getUriForFile(context,
-                        context.getApplicationContext()
-                                .getPackageName() + ".fileprovider", file);
-                shareImage(uri);
-
-            }
-        });
-
-
-        return homeView;
     }
 
     private void switchView() {

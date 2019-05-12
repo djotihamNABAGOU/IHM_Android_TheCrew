@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                         menuItem.setChecked(true);
                         drawerLayout.closeDrawers();
                         startActivity(new Intent(getApplicationContext(), AddSpending.class));
+                        onRestart();
                         return true;
 
                     case R.id.drawer_history:
