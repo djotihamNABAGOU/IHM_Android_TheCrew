@@ -110,14 +110,17 @@ public class NotifyService extends Service {
 
             if(rqs==RQS_SEND_SERVICE){
                 Log.d(TAG,"NTS---> Notification received by the service.");
-                sendNotification("fuck","you");
                 MyBudgetDB myBudgetDB = new MyBudgetDB(getApplicationContext());
-                ArrayList<String> notifications =new ArrayList<>();
-                notifications = myBudgetDB.getNotificationsList();
-                for ( String n: notifications ) {
-                    sendNotification("Dépense planifiée",n);
-                 }
+                if(myBudgetDB.notifications()){
+                    ArrayList<String> notifications =new ArrayList<>();
+                    notifications = myBudgetDB.getNotificationsList();
+                    if(!notifications.isEmpty()){
+                        for ( String n: notifications ) {
+                            sendNotification("Dépense planifiée",n);
+                        }
+                    }
                 }
+               }
 
             }
 
