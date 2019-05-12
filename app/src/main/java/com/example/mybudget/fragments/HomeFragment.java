@@ -172,6 +172,7 @@ public class HomeFragment extends Fragment {
         return homeView;
     }
 
+
     private void setGraph() {
         //graphe
         ArrayList<BarEntry> barEntries = new ArrayList<>();
@@ -288,6 +289,10 @@ public class HomeFragment extends Fragment {
     }
 
 
+//    @Override
+//    public @
+
+
     public void getPlanningSpendingList() {
         PlannedSpendingList = new ArrayList<>();
         //database
@@ -371,6 +376,18 @@ public class HomeFragment extends Fragment {
         } catch (ActivityNotFoundException e) {
             Toast.makeText(context, "No App Available", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void refreshActualSolde() {
+        //database
+        actualSolde = Integer.toString(myBudgetDB.getSoldeForActualMonth()) + " €";
+        edSolde.setText(actualSolde);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshActualSolde();
     }
 
 }

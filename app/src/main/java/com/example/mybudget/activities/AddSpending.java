@@ -1,6 +1,7 @@
 package com.example.mybudget.activities;
 
 import android.app.AlertDialog;
+import android.app.FragmentManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 
 import com.example.mybudget.R;
 import com.example.mybudget.database.MyBudgetDB;
+import com.example.mybudget.fragments.HomeFragment;
 import com.example.mybudget.services.NotifyService;
 
 import java.text.SimpleDateFormat;
@@ -33,6 +35,7 @@ public class AddSpending extends AppCompatActivity {
 
     private EditText edAliment, edCout;
     private Button btEnregistrer;
+
 
     MyBudgetDB myBudgetDB;
     private static final String TAG = "AddSpending";
