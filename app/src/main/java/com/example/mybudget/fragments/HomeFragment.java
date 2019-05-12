@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -69,7 +70,18 @@ public class HomeFragment extends Fragment {
     private Button btSeeMore;
 
     private TextView edDepensesVide;
+    private TextView edRevenu;
+    private TextView edEpargne;
+    private TextView edSolde;
+    private TextView edSituation;
+    private TextView edRecommendation;
+    private ImageView orange;
+    private ImageView danger;
+    private ImageView green;
 
+    private int actualRevenu;
+    private int actualEpargne;
+    private int actualSolde;
     private BarChart barChart;
     private PieChart pieChart;
     private ArrayList<String> spendingMonths;
@@ -125,14 +137,24 @@ public class HomeFragment extends Fragment {
 
         switchView();
 
+        // Text
+        edRevenu = homeView.findViewById(R.id.edRevenuA);
+        edEpargne = homeView.findViewById(R.id.edEpargne);
+        edSolde = homeView.findViewById(R.id.edSolde);
+        edRecommendation = homeView.findViewById(R.id.edRecommendation);
+        danger = homeView.findViewById(R.id.edRecommendationDanger);
+        orange = homeView.findViewById(R.id.edRecommendationOrange);
+        green = homeView.findViewById(R.id.edRecommendationGreen);
+        edSituation = homeView.findViewById(R.id.edSituation);
+
+
+
+
+
         //Graphes
         barChart = homeView.findViewById(R.id.bar_chart);
         pieChart = homeView.findViewById(R.id.pieChart);
-        //Pour le graph normal
-        setGraph();
-
-        //Pour le pie graph
-        setPieGraph();
+        refreshActualData();
 
         // Amine
         rootView = this.getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
@@ -156,6 +178,7 @@ public class HomeFragment extends Fragment {
 
         return homeView;
     }
+
 
     private void setGraph() {
         //graphe
@@ -273,6 +296,10 @@ public class HomeFragment extends Fragment {
     }
 
 
+//    @Override
+//    public @
+
+
     public void getPlanningSpendingList() {
         PlannedSpendingList = new ArrayList<>();
         //database
@@ -309,6 +336,27 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    public int getActualRevenu() {
+        //database
+        myBudgetDB = new MyBudgetDB(getContext());
+        actualRevenu = myBudgetDB.getRevenusForActualMonth();
+        return actualRevenu;
+    }
+
+    public int getActualEpargne() {
+        //database
+        myBudgetDB = new MyBudgetDB(getContext());
+        actualEpargne = myBudgetDB.getEpargneForActualMonth();
+        return actualEpargne;
+    }
+
+    public int getActualSolde() {
+        //database
+        myBudgetDB = new MyBudgetDB(getContext());
+        actualSolde = myBudgetDB.getSoldeForActualMonth();
+        return actualSolde;
+    }
+
     private String getSpendingPrizeOfMonth(String month) {
         prizeSpengingMonths = new ArrayList<>();
         //database
@@ -327,7 +375,6 @@ public class HomeFragment extends Fragment {
         intent.setAction(Intent.ACTION_SEND);
         intent.setType("image/*");
 
-        intent.setPackage("com.android.bluetooth");
         intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "");
         intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
         intent.putExtra(Intent.EXTRA_STREAM, uri);
@@ -336,6 +383,48 @@ public class HomeFragment extends Fragment {
         } catch (ActivityNotFoundException e) {
             Toast.makeText(context, "No App Available", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void refreshActualData() {
+        edRevenu.setText(getActualRevenu()+ " €");
+        edRevenu.setTextColor(Color.rgb(0,128,0));
+        edEpargne.setText(getActualEpargne()+ " €");
+        edSolde.setText(getActualSolde()+ " €");
+        int diff = actualSolde - actualEpargne;
+//        int diffEp = diff - actualEpargne;
+        if(diff==0){
+            edSituation.setText("Vous avez le même solde que votre épargne prévue");
+            edSituation.setTextColor(Color.rgb(255,165,0));
+            edRecommendation.setText("Vous devez limiter vos dépenses pour accoître votre épargne");
+            edRecommendation.setTextColor(Color.rgb(255,165,0));
+            orange.setVisibility(View.VISIBLE);
+            green.setVisibility(View.GONE);
+            danger.setVisibility(View.GONE);
+        } else if(diff>0){
+            edSituation.setText("Excédentaire (Vous avez "+diff+" € de plus que votre épargne prévue)");
+            edSituation.setTextColor(Color.	rgb(0,128,0));
+            edRecommendation.setText("Vous dépensez raisonnablement, continuez ainsi afin de réussir votre épargne");
+            edRecommendation.setTextColor(Color.rgb(0,128,0));
+            green.setVisibility(View.VISIBLE);
+            danger.setVisibility(View.GONE);
+            orange.setVisibility(View.GONE);
+        }else {
+            edSituation.setText("Déficitaire (Vous avez "+ (-1*diff)+" € de moins que votre épargne prévue)");
+            edSituation.setTextColor(Color.rgb(178,34,34));
+            edRecommendation.setText("Vous devez réduire vos dépenses pour avoir une bonne épargne");
+            edRecommendation.setTextColor(Color.rgb(178,34,34));
+            danger.setVisibility(View.VISIBLE);
+            orange.setVisibility(View.GONE);
+            green.setVisibility(View.GONE);
+        }
+        setGraph();
+        setPieGraph();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshActualData();
     }
 
 }

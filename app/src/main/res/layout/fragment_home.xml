@@ -57,7 +57,7 @@
                         android:textStyle="normal|bold" />
 
                     <TextView
-                        android:id="@+id/txtValeurRevenu"
+                        android:id="@+id/edRevenuA"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="16dp"
@@ -161,6 +161,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:id="@+id/edRecommendationDanger"
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_marginLeft="16dp"
@@ -168,6 +169,7 @@
                         app:srcCompat="@drawable/alert_circle_red_512" />
 
                     <ImageView
+                        android:id="@+id/edRecommendationOrange"
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_marginLeft="16dp"
@@ -175,6 +177,7 @@
                         app:srcCompat="@drawable/alert_circle_orange_512" />
 
                     <ImageView
+                        android:id="@+id/edRecommendationGreen"
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_marginLeft="16dp"
