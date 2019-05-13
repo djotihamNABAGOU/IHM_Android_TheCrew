@@ -104,7 +104,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="15dp"
                         android:background="@drawable/ripple_effect"
-                        android:text="Consulter les données reçues" />
+                        android:text=" ACCUEIL " />
                 </LinearLayout>
 
             </LinearLayout>
