@@ -49,7 +49,7 @@ public class SpendingReceived extends AppCompatActivity {
         /**ToolBar*/
         toolbar = findViewById(R.id.include);
         toolbar.setTitle(R.string.app_name);
-        toolbar.setSubtitle(R.string.sub_spendingReceived);
+        toolbar.setSubtitle("Dépenses partagées");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
