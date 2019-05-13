@@ -47,7 +47,7 @@
                     android:layout_marginTop="15dp"
                     android:background="@drawable/ripple_effect"
                     android:onClick="btnEnableDisable_Discoverable"
-                    android:text="Enable Discoverable" />
+                    android:text="Activer le mode découvrable" />
 
 
                 <Button
@@ -59,7 +59,7 @@
                     android:layout_marginTop="15dp"
                     android:background="@drawable/ripple_effect"
                     android:onClick="btnDiscover"
-                    android:text="Discover" />
+                    android:text="Découvrir" />
 
 
 
@@ -71,7 +71,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/ripple_effect"
-                    android:text="Start Connection"
+                    android:text="Démarrer la connexion"
                     android:textAlignment="center" />
 
                 <ListView
