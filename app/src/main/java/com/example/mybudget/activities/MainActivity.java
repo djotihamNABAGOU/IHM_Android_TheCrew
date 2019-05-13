@@ -109,6 +109,12 @@ public class MainActivity extends AppCompatActivity {
                         drawerLayout.closeDrawers();
                         startActivity(new Intent(getApplicationContext(), SpendingHistory.class));
                         return true;
+
+                    case R.id.drawer_spending_received:
+                        menuItem.setChecked(true);
+                        drawerLayout.closeDrawers();
+                        startActivity(new Intent(getApplicationContext(), SpendingReceived.class));
+                        return true;
                 }
                 return false;
             }

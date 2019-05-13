@@ -9,5 +9,9 @@
             android:id="@+id/drawer_history"
             android:icon="@drawable/ic_history_black_24dp"
             android:title="@string/sub_spendingHistory" />
+        <item
+            android:id="@+id/drawer_spending_received"
+            android:icon="@drawable/ic_call_received_black_24dp"
+            android:title="@string/sub_spendingReceived" />
     </group>
 </menu>

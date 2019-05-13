@@ -34,12 +34,14 @@ import com.example.mybudget.services.Screenshot;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
@@ -82,7 +84,7 @@ public class HomeFragment extends Fragment {
     private int actualRevenu;
     private int actualEpargne;
     private int actualSolde;
-    private BarChart barChart;
+   // private BarChart barChart;
     private PieChart pieChart;
     private ArrayList<String> spendingMonths;
     private ArrayList<String> prizeSpengingMonths;
@@ -152,7 +154,7 @@ public class HomeFragment extends Fragment {
 
 
         //Graphes
-        barChart = homeView.findViewById(R.id.bar_chart);
+        //barChart = homeView.findViewById(R.id.bar_chart);
         pieChart = homeView.findViewById(R.id.pieChart);
         refreshActualData();
 
@@ -228,15 +230,17 @@ public class HomeFragment extends Fragment {
         barData.setBarWidth(0.9f);
         //barChart.setData(theData);
 
-        barChart.setVisibility(View.VISIBLE);
+        //barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(dates));
+        //barChart.getData().setValueTextSize(15);
+        /*barChart.setVisibility(View.VISIBLE);
         barChart.animateY(5000);
         barChart.setData(barData);
-        barChart.setFitBars(true);
+        barChart.setFitBars(true);*/
 
         Description description = new Description();
         description.setText("Description test");
-        barChart.setDescription(description);
-        barChart.invalidate();
+       /* barChart.setDescription(description);
+        barChart.invalidate();*/
     }
 
     private void setPieGraph() {
@@ -256,8 +260,9 @@ public class HomeFragment extends Fragment {
 
         pieChart.setVisibility(View.VISIBLE);
         pieChart.animateXY(5000, 5000);
+        //pieChart.setCenterTextSize(20);
 
-        PieDataSet pieDataSet = new PieDataSet(pieEntries, "Pie Graph");
+        PieDataSet pieDataSet = new PieDataSet(pieEntries, "Mois");
         pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
         PieData pieData = new PieData(pieDataSet);
@@ -270,7 +275,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void switchView() {
-
+        currentViewMode = VIEW_MODE_GRIDVIEW;
         if (VIEW_MODE_LISTVIEW == currentViewMode) {
             //Display listview
             stubList.setVisibility(View.VISIBLE);

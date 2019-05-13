@@ -286,7 +286,7 @@
                         android:textStyle="normal|bold|italic" />
                 </FrameLayout>
 
-                <!--<FrameLayout
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="500dp">
 
@@ -298,7 +298,7 @@
                         android:visibility="gone">
 
                     </com.github.mikephil.charting.charts.BarChart>
-                </FrameLayout>-->
+                </FrameLayout>
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -325,9 +325,9 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
+        android:layout_gravity="end|top"
         android:layout_margin="16dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:src="@drawable/ic_share_black_24dp"/>
+        android:backgroundTint="@color/Blue_900"
+        android:src="@drawable/ic_bluetooth_black_24dp"/>
 
 </FrameLayout>
