@@ -1,5 +1,8 @@
 package com.example.mybudget.activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -22,6 +25,8 @@ import com.example.mybudget.fragments.SpendingsFragment;
 import com.example.mybudget.services.CheckPlannedSpendindService;
 import com.example.mybudget.services.NotifyService;
 
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
@@ -38,17 +43,31 @@ public class MainActivity extends AppCompatActivity {
     final static String SERVICE_RECEIVER = "registerReceiver";
     final static int RQS_CHECK_SERVICE = 2;
     final static String SERVICE_BROADCAST_KEY = "CPSService";
+    private AlarmManager alarmMgr;
+    private PendingIntent alarmIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent intentForStartNS = new Intent(getApplicationContext(), NotifyService.class);
         startService(intentForStartNS);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 12);
+        calendar.set(Calendar.MINUTE,44 );
         Intent intentForStartCPSS = new Intent(getApplicationContext(), CheckPlannedSpendindService.class);
-        startService(intentForStartCPSS);
-        Intent intentToSend = new Intent();
+        alarmIntent = PendingIntent.getService(getApplicationContext(), 0, intentForStartCPSS, 0);
+        // With setInexactRepeating(), you have to use one of the AlarmManager interval
+        // constants--in this case, AlarmManager.INTERVAL_DAY.
+        alarmMgr = (AlarmManager) getApplication().getSystemService(
+                Context.ALARM_SERVICE);
+        alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+               1000*60*1, alarmIntent);
+        //Intent intentForStartCPSS = new Intent(getApplicationContext(), CheckPlannedSpendindService.class);
+        //startService(intentForStartCPSS);
+        /*Intent intentToSend = new Intent();
         intentToSend.setAction(SERVICE_RECEIVER);
         intentToSend.putExtra(SERVICE_BROADCAST_KEY,RQS_CHECK_SERVICE);
-        sendBroadcast(intentToSend);
+        sendBroadcast(intentToSend);*/
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
