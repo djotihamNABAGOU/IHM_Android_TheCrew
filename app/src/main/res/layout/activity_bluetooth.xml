@@ -9,102 +9,107 @@
 
 
     <include layout="@layout/toolbar" />
-
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="58dp">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:gravity="center"
-            android:orientation="vertical">
-
-
-
-            <Button
-                android:id="@+id/btnONOFF"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="50dp"
-                android:background="@drawable/ripple_effect"
-                android:text="ON/OFF" />
-
-
-
-            <Button
-                android:id="@+id/btnDiscoverable_on_off"
-                android:layout_width="wrap_content"
-
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/ripple_effect"
-                android:onClick="btnEnableDisable_Discoverable"
-                android:text="Enable Discoverable" />
-
-
-            <Button
-                android:id="@+id/btnFindUnpairedDevices"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/ripple_effect"
-                android:onClick="btnDiscover"
-                android:text="Discover" />
-
-
-
-
-            <Button
-                android:id="@+id/btnStartConnection"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/ripple_effect"
-                android:text="Start Connection"
-                android:textAlignment="center" />
-
-            <ListView
-                android:id="@+id/lvNewDevices"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp">
-
-            </ListView>
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/btnSend"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/ripple_effect"
-                    android:text="Envoyer" />
+
 
                 <Button
-                    android:id="@+id/btnDestroy"
+                    android:id="@+id/btnONOFF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/ripple_effect"
+                    android:text="ON/OFF" />
+
+
+
+                <Button
+                    android:id="@+id/btnDiscoverable_on_off"
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/ripple_effect"
+                    android:onClick="btnEnableDisable_Discoverable"
+                    android:text="Enable Discoverable" />
+
+
+                <Button
+                    android:id="@+id/btnFindUnpairedDevices"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/ripple_effect"
-                    android:text="ACCUEIL" />
+                    android:onClick="btnDiscover"
+                    android:text="Discover" />
+
+
+
+
+                <Button
+                    android:id="@+id/btnStartConnection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/ripple_effect"
+                    android:text="Start Connection"
+                    android:textAlignment="center" />
+
+                <ListView
+                    android:id="@+id/lvNewDevices"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp">
+
+                </ListView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/btnSend"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/ripple_effect"
+                        android:text="Envoyer" />
+
+                    <Button
+                        android:id="@+id/btnDestroy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/ripple_effect"
+                        android:text="Consulter les données reçues" />
+                </LinearLayout>
+
             </LinearLayout>
+        </ScrollView>
 
-        </LinearLayout>
-    </ScrollView>
+    </RelativeLayout>
 
 </RelativeLayout>

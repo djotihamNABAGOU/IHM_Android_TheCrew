@@ -256,8 +256,9 @@ public class HomeFragment extends Fragment {
 
         pieChart.setVisibility(View.VISIBLE);
         pieChart.animateXY(5000, 5000);
+        //pieChart.setCenterTextSize(20);
 
-        PieDataSet pieDataSet = new PieDataSet(pieEntries, "Pie Graph");
+        PieDataSet pieDataSet = new PieDataSet(pieEntries, "Mois");
         pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
         PieData pieData = new PieData(pieDataSet);
