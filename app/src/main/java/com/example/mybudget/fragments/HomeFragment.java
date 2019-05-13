@@ -84,7 +84,7 @@ public class HomeFragment extends Fragment {
     private int actualRevenu;
     private int actualEpargne;
     private int actualSolde;
-    private BarChart barChart;
+   // private BarChart barChart;
     private PieChart pieChart;
     private ArrayList<String> spendingMonths;
     private ArrayList<String> prizeSpengingMonths;
@@ -154,7 +154,7 @@ public class HomeFragment extends Fragment {
 
 
         //Graphes
-        barChart = homeView.findViewById(R.id.bar_chart);
+        //barChart = homeView.findViewById(R.id.bar_chart);
         pieChart = homeView.findViewById(R.id.pieChart);
         refreshActualData();
 
@@ -232,15 +232,15 @@ public class HomeFragment extends Fragment {
 
         //barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(dates));
         //barChart.getData().setValueTextSize(15);
-        barChart.setVisibility(View.VISIBLE);
+        /*barChart.setVisibility(View.VISIBLE);
         barChart.animateY(5000);
         barChart.setData(barData);
-        barChart.setFitBars(true);
+        barChart.setFitBars(true);*/
 
         Description description = new Description();
         description.setText("Description test");
-        barChart.setDescription(description);
-        barChart.invalidate();
+       /* barChart.setDescription(description);
+        barChart.invalidate();*/
     }
 
     private void setPieGraph() {

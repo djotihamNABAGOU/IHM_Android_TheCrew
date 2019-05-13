@@ -14,9 +14,6 @@ import com.example.mybudget.database.MyBudgetDB;
 
 
 public class CheckPlannedSpendindService extends Service {
-
-    public static final String CHANNEL_ID = "channelCPS";
-    public static final int NOTIFICATION_ID = 23456;
     final static String ACTION = "registerReceiver";
     final static String SERVICE_RECEIVER = "registerReceiver";
 
@@ -31,7 +28,7 @@ public class CheckPlannedSpendindService extends Service {
     @Override
     public void onDestroy(){
         super.onDestroy();
-        this.unregisterReceiver(cpsServiceReceiver);
+        //this.unregisterReceiver(cpsServiceReceiver);
     }
     @Override
     public IBinder onBind(Intent arg0){
@@ -60,8 +57,8 @@ public class CheckPlannedSpendindService extends Service {
         registerReceiver(cpsServiceReceiver,intentFilter);
         MyBudgetDB myBudgetDB = new MyBudgetDB(getApplicationContext());
         if(myBudgetDB.notifications()){
-            Intent intentForStartNS = new Intent(getApplicationContext(),NotifyService.class);
-            startService(intentForStartNS);
+            //Intent intentForStartNS = new Intent(getApplicationContext(),NotifyService.class);
+            //startService(intentForStartNS);
             Intent intentToSend = new Intent();
             intentToSend.setAction(SERVICE_RECEIVER);
             intentToSend.putExtra(SERVICE_BROADCAST_KEY2,RQS_SEND_SERVICE);
@@ -70,8 +67,7 @@ public class CheckPlannedSpendindService extends Service {
 
         }
         Log.d(TAG,"CPSService:rmyBudgetBDCchecked");
-
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
 
@@ -92,10 +88,6 @@ public class CheckPlannedSpendindService extends Service {
                 Log.d(TAG, "CPS---> Service will start checking.");
                 /*checking if there is some notifications*
                   if there is notifications-->show them by calling Notification Service
-                  while(true){
-                  maFonction();
-                  tonThread.sleep(1000);
-                  }
                 */
                 MyBudgetDB myBudgetDB = new MyBudgetDB(getApplicationContext());
                 if(myBudgetDB.notifications()){
@@ -103,7 +95,7 @@ public class CheckPlannedSpendindService extends Service {
                     startService(intentForStartNS);
                     Intent intentToSend = new Intent();
                     intentToSend.setAction(SERVICE_RECEIVER);
-                    intentToSend.putExtra(SERVICE_BROADCAST_KEY,2); //2 MEANS THERE SOMETHING TO NOTIFY
+                    intentToSend.putExtra(SERVICE_BROADCAST_KEY2,RQS_SEND_SERVICE); //2 MEANS THERE SOMETHING TO NOTIFY
                     sendBroadcast(intentToSend);
 
                 }

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class NotifyService extends Service {
     public static final String CHANNEL_ID = "channelMyBudget";
-    public static final int NOTIFICATION_ID = 23456;
+    public static int NOTIFICATION_ID = 23456;
     final static String ACTION = "registerReceiver";
 
     final static String SERVICE_BROADCAST_KEY = "MyBudgetService";
@@ -85,6 +85,7 @@ public class NotifyService extends Service {
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
         notificationManagerCompat.notify(NOTIFICATION_ID,notificationBuilder.build());
+        NOTIFICATION_ID++;
 
     }
 
