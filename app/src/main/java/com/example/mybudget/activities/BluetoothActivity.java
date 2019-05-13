@@ -266,7 +266,7 @@ public class BluetoothActivity extends AppCompatActivity implements AdapterView.
         btnDestroy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentMainMenu = new Intent(getApplicationContext(), PlannedSpending.class);
+                Intent intentMainMenu = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intentMainMenu);
             }
         });
