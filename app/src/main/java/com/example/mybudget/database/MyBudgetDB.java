@@ -545,6 +545,23 @@ public class MyBudgetDB extends SQLiteOpenHelper {
         return rep;
     }
 
+
+    public int getActualSolde(int monthId, int year) {
+        int rep = 0;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery(" select sum(cout) as cout_total from " + SPENDING_TABLE + " where cast(strftime('%m', date) as integer) = " + Integer.toString(monthId) + " and past = 1 and cast(strftime('%Y', date) as integer) = " + year, null);
+        while (res.moveToNext() && res.getCount()!=0) {
+            try{
+                rep = Integer.valueOf(res.getString(0));
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        int rev = getRevenusForMonth(monthId,year);
+        rep = rev - rep;
+        return rep;
+    }
+
     public boolean addSpending(PlannedSpending spending){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();

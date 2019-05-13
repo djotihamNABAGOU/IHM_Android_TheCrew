@@ -271,7 +271,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void switchView() {
-
+        currentViewMode = VIEW_MODE_GRIDVIEW;
         if (VIEW_MODE_LISTVIEW == currentViewMode) {
             //Display listview
             stubList.setVisibility(View.VISIBLE);
