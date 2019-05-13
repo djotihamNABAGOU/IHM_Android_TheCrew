@@ -468,6 +468,16 @@ public class MyBudgetDB extends SQLiteOpenHelper {
         return rep;
     }
 
+    public int getRevenusForMonth(int monthId,int year) {
+        int rep = 0;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery(" select * from " + REVENU + " where mois = " + monthId + " and annee = " + year, null);
+        while (res.moveToNext()) {
+            rep = Integer.valueOf(res.getString(3));
+        }
+        return rep;
+    }
+
 
     public int getEpargneForActualMonth() {
         int rep = 0;
@@ -502,10 +512,35 @@ public class MyBudgetDB extends SQLiteOpenHelper {
         int year = Calendar.getInstance().get(Calendar.YEAR);
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery(" select sum(cout) as cout_total from " + SPENDING_TABLE + " where cast(strftime('%m', date) as integer) = " + Integer.toString(monthId) + " and past = 1 and cast(strftime('%Y', date) as integer) = " + year, null);
-        while (res.moveToNext()) {
-            rep = Integer.valueOf(res.getString(0));
+        while (res.moveToNext() && res.getCount()!=0) {
+//            System.out.println("NB "+res.getCount());
+//            System.out.println("TAB "+ res.getString(0));
+            try{
+                rep = Integer.valueOf(res.getString(0));
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         int rev = getRevenusForActualMonth();
+        rep = rev - rep;
+        return rep;
+    }
+
+
+    public int getSoldeForMonth(int monthId, int year) {
+        int rep = 0;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery(" select sum(cout) as cout_total from " + SPENDING_TABLE + " where cast(strftime('%m', date) as integer) = " + Integer.toString(monthId) + " and past = 1 and cast(strftime('%Y', date) as integer) = " + year, null);
+        while (res.moveToNext() && res.getCount()!=0) {
+//            System.out.println("NB "+res.getCount());
+//            System.out.println("TAB "+ res.getString(0));
+            try{
+                rep = Integer.valueOf(res.getString(0));
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        int rev = getRevenusForMonth(monthId,year);
         rep = rev - rep;
         return rep;
     }

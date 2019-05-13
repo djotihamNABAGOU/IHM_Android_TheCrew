@@ -3,6 +3,7 @@ package com.example.mybudget.activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
+import android.icu.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -37,6 +38,8 @@ public class Preferences extends AppCompatActivity {
     private ArrayList<String> availableMonths;
     private ArrayList<Integer> availableMonthsInt;
     private ArrayList<Integer> availableYearsInt;
+    int moisDeDate;
+    int currrentYear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +69,15 @@ public class Preferences extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
             finish();
         }
+
+        boolean first = true;
         //sinon il y en a
         while (months.moveToNext()) {
+            if(first){
+                moisDeDate = Integer.parseInt(months.getString(0));
+                currrentYear = Integer.parseInt(months.getString(1));
+                first = false;
+            }
             availableMonthsInt.add(Integer.parseInt(months.getString(0)));
             availableYearsInt.add(Integer.parseInt(months.getString(1)));
             System.out.println("********************"+months.getString(0));
@@ -86,6 +96,49 @@ public class Preferences extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 for (int i=0; i<availableMonths.size(); i++){
                     if (availableMonths.get(i).equals(parent.getItemAtPosition(position))){
+                        String[] splited = availableMonths.get(i).split("\\s+");
+//                        alert("ERREUR", " : "+splited[0], false, 0);
+                        switch (splited[0].toLowerCase()) {
+                            case "janvier":
+                                moisDeDate = 1;
+                                break;
+                            case "février":
+                                moisDeDate = 2;
+                                break;
+                            case "mars":
+                                moisDeDate = 3;
+                                break;
+                            case "avril":
+                                moisDeDate = 4;
+                                break;
+                            case "mai":
+                                moisDeDate = 5;
+                                break;
+                            case "juin":
+                                moisDeDate = 6;
+                                break;
+                            case "juillet":
+                                moisDeDate = 7;
+                                break;
+                            case "août":
+                                moisDeDate = 8;
+                                break;
+                            case "septembre":
+                                moisDeDate = 9;
+                                break;
+                            case "octobre":
+                                moisDeDate = 10;
+                                break;
+                            case "novembre":
+                                moisDeDate = 11;
+                                break;
+                            case "décembre":
+                                moisDeDate = 12;
+                                break;
+                            default:
+                                moisDeDate = -1;
+                        }
+                        currrentYear = Integer.valueOf(splited[1]);
                         Cursor revenues = myBudgetDB.getRevenuesOfMonth(availableMonthsInt.get(i));
                         while (revenues.moveToNext()) {
                             edRevenu.setText(revenues.getString(3));
@@ -164,9 +217,35 @@ public class Preferences extends AppCompatActivity {
     }
 
     private boolean verifierDonnees() {
-        if (!controlchampsvide(edRevenu) && !controlchampsvide(edEpargne))
-            return true;
+        if (!controlchampsvide(edRevenu) && !controlchampsvide(edEpargne)){
 
+            Calendar c = Calendar.getInstance();
+            int monthId = c.get(Calendar.MONTH) + 1;
+            int year = Calendar.getInstance().get(Calendar.YEAR);
+
+            int precedentRevenu = myBudgetDB.getRevenusForMonth(moisDeDate,currrentYear);
+            int Revenu = Integer.valueOf(edRevenu.getText().toString());
+            int Epargne = Integer.valueOf(edEpargne.getText().toString());
+
+
+            if(Revenu<=precedentRevenu){
+                alert("ERREUR", "Votre nouveau revenu ne peut être inférieure  à l'ancien", false, 0);
+                return false;
+            }
+
+            int solde = myBudgetDB.getSoldeForMonth(moisDeDate,currrentYear);
+//            alert("ERREUR", "Solde "+ solde,false, 0);
+            solde = solde + (Revenu - precedentRevenu);
+//            alert("ERREUR", "diff "+ (Revenu - precedentRevenu),false, 0);
+
+//            alert("ERREUR", "Epargne "+ Epargne,false, 0);
+            if(Epargne>=solde){
+                alert("ERREUR", "Vous ne pouvez pas épargner au delà de votre solde", false, 0);
+                return false;
+            }
+//            alert("ERREUR", " mois "+moisDeDate+" year "+currrentYear, false, 0);
+            return true;
+        }
         return false;
     }
 
