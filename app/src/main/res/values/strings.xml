@@ -16,7 +16,7 @@
     <string name="sub_planningSpending">Planifier une dépense</string>
     <string name="sub_spendingPlanned">Dépenses planifiées</string>
     <string name="sub_spendingHistory">Historique des dépenses</string>
-    <string name="sub_spendingReceived">Dépenses partagées reçues</string>
+    <string name="sub_spendingReceived">Dépenses partagées</string>
 
     <string name="app_bar_menu_add">Ajouter un nouveau revenu</string>
     <string name="app_bar_menu_consult">Consulter les revenus</string>
