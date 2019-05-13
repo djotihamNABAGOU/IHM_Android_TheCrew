@@ -327,7 +327,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
-        android:backgroundTint="@color/Blue_900"
-        android:src="@drawable/ic_bluetooth_black_24dp"/>
+        android:backgroundTint="@color/colorPrimary"
+        android:src="@drawable/ic_share_black_24dp"/>
 
 </FrameLayout>

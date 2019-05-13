@@ -25,9 +25,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".activities.SpendingReceived"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
             android:name=".activities.BluetoothActivity"
-            android:parentActivityName=".activities.MainActivity"></activity>
-
+            android:parentActivityName=".activities.MainActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

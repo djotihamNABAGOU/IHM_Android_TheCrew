@@ -26,6 +26,7 @@ public class MyBudgetDB extends SQLiteOpenHelper {
     public static final String PAST_PLANNING_SPENDING_TABLE = "PastPlanningSpending";
     public static final String SPENDING_TABLE = "Spending";
     public static final String REVENU = "revenu";
+    public static final String SHARED_PLANNING_SPENDING_TABLE = "Partage";
 
     public ArrayList<String> notificationsList;
 
@@ -70,6 +71,11 @@ public class MyBudgetDB extends SQLiteOpenHelper {
         db.execSQL(" create table " + REVENU +
                 " ( id INTEGER PRIMARY KEY AUTOINCREMENT, mois INTEGER NOT NULL, " +
                 "annee INTEGER NOT NULL, revenu FLOAT NOT NULL, epargne FLOAT NOT NULL)");
+
+        db.execSQL(" create table " + SHARED_PLANNING_SPENDING_TABLE +
+                " ( id INTEGER PRIMARY KEY AUTOINCREMENT, spending_type TEXT NOT NULL, " +
+                "libelle_aliment TEXT NOT NULL, date_debut TEXT NOT NULL, date_fin TEXT NOT NULL, " +
+                "frequence TEXT NOT NULL, duree INTEGER NOT NULL, cout FLOAT NOT NULL)");
     }
 
     @Override
@@ -562,6 +568,7 @@ public class MyBudgetDB extends SQLiteOpenHelper {
         return rep;
     }
 
+    //Ajout de dépense partagée
     public boolean addSpending(PlannedSpending spending){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -572,10 +579,16 @@ public class MyBudgetDB extends SQLiteOpenHelper {
         contentValues.put(COUT, spending.cout);
         contentValues.put(DUREE, spending.duree);
         contentValues.put(FREQUENCE,spending.frequence);
-        long result = db.insert(PLANNING_SPENDING_TABLE, null, contentValues);
+        long result = db.insert(SHARED_PLANNING_SPENDING_TABLE, null, contentValues);
         if (result == -1) return false;
         else return true;
 
+    }
+
+    public Cursor getSharedPlanningSpending() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery(" select * from " + SHARED_PLANNING_SPENDING_TABLE + " order by libelle_aliment ", null);
+        return res;
     }
 
 }

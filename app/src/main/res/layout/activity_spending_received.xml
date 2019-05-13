@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".activities.SpendingReceived">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:textSize="20dp"
+        android:text="Dépenses partagées reçues"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="120dp"
+        android:orientation="vertical">
+
+        <ViewStub
+            android:id="@+id/stub_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inflatedId="@+id/showlayout"
+            android:layout="@layout/fragment_spending_list_view" />
+
+        <ViewStub
+            android:id="@+id/stub_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inflatedId="@+id/showlayout"
+            android:layout="@layout/fragment_spending_grid_view" />
+
+    </LinearLayout>
+
+
+    <!--</ScrollView>-->
+
+</android.support.design.widget.CoordinatorLayout>

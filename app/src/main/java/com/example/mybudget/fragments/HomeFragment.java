@@ -34,12 +34,14 @@ import com.example.mybudget.services.Screenshot;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
@@ -228,6 +230,8 @@ public class HomeFragment extends Fragment {
         barData.setBarWidth(0.9f);
         //barChart.setData(theData);
 
+        //barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(dates));
+        //barChart.getData().setValueTextSize(15);
         barChart.setVisibility(View.VISIBLE);
         barChart.animateY(5000);
         barChart.setData(barData);
