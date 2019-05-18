@@ -61,13 +61,7 @@ public class MainActivity extends AppCompatActivity {
         alarmMgr = (AlarmManager) getApplication().getSystemService(
                 Context.ALARM_SERVICE);
         alarmMgr.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-               1000*60*1, alarmIntent);
-        //Intent intentForStartCPSS = new Intent(getApplicationContext(), CheckPlannedSpendindService.class);
-        //startService(intentForStartCPSS);
-        /*Intent intentToSend = new Intent();
-        intentToSend.setAction(SERVICE_RECEIVER);
-        intentToSend.putExtra(SERVICE_BROADCAST_KEY,RQS_CHECK_SERVICE);
-        sendBroadcast(intentToSend);*/
+                AlarmManager.INTERVAL_DAY, alarmIntent);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
